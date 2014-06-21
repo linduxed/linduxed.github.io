@@ -7,6 +7,8 @@ categories: [personal]
 ---
 This is my new digital home.
 
+<!--more-->
+
 I have contemplated the creation of this site for the longest time, but never got around doing it.
 I'm not a perfectionist by nature, but there are certain areas that I get very meticulous about, most often areas that I already know how to maneuver in, where I can have a reasonable and educated opinion. Design, while not being an expertise of any sort, is one of those areas; my page had to look and work great for me to bear with it.
 Additionally, I was always bridled by the thought that my writing bore close to no relevance, interesting to me almost exclusively.
