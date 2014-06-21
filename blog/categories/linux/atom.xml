@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: GNU/Linux | Rants of a geek]]></title>
-  <link href="http://linduxed.com/blog/categories/gnu-slash-linux/atom.xml" rel="self"/>
+  <title><![CDATA[Category: linux | Rants of a geek]]></title>
+  <link href="http://linduxed.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://linduxed.com/"/>
-  <updated>2014-06-21T21:05:03+02:00</updated>
+  <updated>2014-06-21T23:31:07+02:00</updated>
   <id>http://linduxed.com/</id>
   <author>
     <name><![CDATA[linduxed]]></name>

@@ -1,0 +1,491 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Configuring your Awesome 3.x install - Rants of a geek</title>
+  <meta name="author" content="linduxed">
+
+  
+  <meta name="description" content="After posting my guide on installing Awesome 3.x I got the inevitable question
+of how to actually configure it. This WM is not for the faint of heart &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://linduxed.com/blog/2009/06/15/configuring-your-awesome-3-dot-x-install">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Rants of a geek" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Rants of a geek</a></h1>
+  
+    <h2>linduxed's ramblings</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:linduxed.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Configuring your Awesome 3.x install</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-15T02:59:35+02:00" pubdate data-updated="true">Jun 15<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>After posting my guide on installing Awesome 3.x I got the inevitable question
+of how to actually configure it. This WM is not for the faint of heart.<br/>
+On the other hand it does offer a lot of customization, should you know the lua
+programming language. I for one don&rsquo;t, but that didn&rsquo;t stop me from tweaking
+the defaults, and for most people that will be enough to get them started.</p>
+
+<!--more-->
+
+
+<p>As soon as one starts to see the possibilities offered by Awesome, very soon
+the <code>#awesome@irc.oftc.net</code> channel will have a new visitor.</p>
+
+<h2>Startup applications</h2>
+
+<p>The first thing to adjust is to get your startup applications going. I&rsquo;m using
+Ubuntu right now, so the locations of the files will vary from distro to distro,
+but the content that I will outline will not.<br/>
+The thing to look up is the <code>xsession</code> file that that your desktop manager uses
+to execute <code>awesome</code> after login. For me the file lies here:</p>
+
+<pre><code>/usr/share/xsessions/awesome.desktop
+</code></pre>
+
+<p>This file looked like this in it&rsquo;s original state for me:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[Desktop Entry]
+</span><span class='line'>Encoding=UTF-8
+</span><span class='line'>Name=awesome
+</span><span class='line'>Comment=Highly configurable framework window manager
+</span><span class='line'>TryExec=awesome
+</span><span class='line'>Exec=awesome</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For configuration purposes, I changed this to the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[Desktop Entry]
+</span><span class='line'>Encoding=UTF-8
+</span><span class='line'>Name=Awesome
+</span><span class='line'>Comment=Starts Awesome 3
+</span><span class='line'>Exec=/usr/share/xsessions/awesome_fixed.sh
+</span><span class='line'>Type=Application</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The main change is that that the <code>awesome_fixed.sh</code> file is run instead of
+<code>awesome.</code> You can call the <code>awesome_fixed.sh</code> file anything, but do end it with
+a <code>.sh</code> suffix.</p>
+
+<p>You will now need to create the mentioned file and fill it with the wished for
+applications:</p>
+
+<pre><code>sudo vim /usr/share/xsessions/awesome_fixed.sh
+</code></pre>
+
+<p>My file currently looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Colemak necessities.</span>
+</span><span class='line'>xset r 66 &amp;
+</span><span class='line'>xmodmap -e <span class="s2">&quot;remove Lock = Caps_Lock&quot;</span> &amp;
+</span><span class='line'>
+</span><span class='line'>gnome-settings-daemon &amp;
+</span><span class='line'>
+</span><span class='line'><span class="c"># Wallpaper switching.</span>
+</span><span class='line'>habak -ms -hi /home/linduxed/Pictures/wallpapers/ &amp;
+</span><span class='line'>
+</span><span class='line'><span class="c"># Tray apps.</span>
+</span><span class='line'>nm-applet &amp;
+</span><span class='line'>gnome-power-manager &amp;
+</span><span class='line'>update-notifier &amp;
+</span><span class='line'>gnome-do &amp;
+</span><span class='line'><span class="c"># alarm-clock &amp;</span>
+</span><span class='line'><span class="c"># blueproximity &amp;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">exec</span> /usr/bin/awesome
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that all entries before the exec line need to be marked as background
+processes with an ampersand (<code>&amp;</code>).</p>
+
+<h2>Configuring the WM</h2>
+
+<p>Most configuration of the WM itself (and also all that I have ever touched) is
+done in the central <code>rc.lua</code> file:</p>
+
+<pre><code>sudo vim /etc/xdg/awesome/rc.lua
+</code></pre>
+
+<p>Here you will be presented with a long file that basically decides how Awesome
+will behave. There are tons of lines to configure, but the defaults are really
+good so we&rsquo;ll focus on the critical ones to tweak.</p>
+
+<p>At the time of writing my configuration file looks like <a href="https://github.com/linduxed/dotfiles/blob/0033a11d10560fa78acd10569316a6aabdad9075/.config/awesome/rc.lua">this</a>
+(<strong>EDIT</strong>: old file no longer available, this is most likely not far off). It&rsquo;s
+designed for a colemak keyboard layout.</p>
+
+<h3>The tweaks</h3>
+
+<p>There are bunch of tweaks that you figure out on your own, thanks to the
+included comments above various configuration options, so I&rsquo;ll just mention
+a couple of the changes. The following pieces of code are mostly excerpts from
+larger blocks of code:</p>
+
+<figure class='code'><figcaption><span>Floating</span><a href='https://github.com/linduxed/dotfiles/blob/0033a11d10560fa78acd10569316a6aabdad9075/.config/awesome/rc.lua#L319-L320'>start:319</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="p">{</span> <span class="n">rule</span> <span class="o">=</span> <span class="p">{</span> <span class="n">class</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">MPlayer&quot;</span> <span class="p">},</span>
+</span><span class='line'>  <span class="n">properties</span> <span class="o">=</span> <span class="p">{</span> <span class="n">floating</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">},</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lines like these force applications to float, or (if you&rsquo;d need it) the
+opposite. One thing to always remember is to have all except the last line in
+a list be ended with a comma, otherwise Awesome will not start at all.</p>
+
+<figure class='code'><figcaption><span>Desktop auto-tagging</span><a href='https://github.com/linduxed/dotfiles/blob/0033a11d10560fa78acd10569316a6aabdad9075/.config/awesome/rc.lua#L327-L330'>start:327</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="p">{</span> <span class="n">rule</span> <span class="o">=</span> <span class="p">{</span> <span class="n">class</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">Thunderbird&quot;</span> <span class="p">},</span>
+</span><span class='line'>  <span class="n">properties</span> <span class="o">=</span> <span class="p">{</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">tags</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">8</span><span class="p">]</span> <span class="p">}</span> <span class="p">},</span>
+</span><span class='line'><span class="p">{</span> <span class="n">rule</span> <span class="o">=</span> <span class="p">{</span> <span class="n">role</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">ncmpcpp&quot;</span> <span class="p">},</span>
+</span><span class='line'>  <span class="n">properties</span> <span class="o">=</span> <span class="p">{</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">tags</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">9</span><span class="p">]</span> <span class="p">}</span> <span class="p">},</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you&rsquo;ve got an application that you always start and then move to a specific
+desktop (or &ldquo;give it a tag&rdquo; as it&rsquo;s called in Awesome) then this section is for
+you. Just as in the float-apps section, remember the commas!</p>
+
+<p>Next up are the key bindings. I like to keep every thing centered around
+a arrow-key-layout, so the most frequently used commands will be on the
+QWERTY-layout keys JKLI, a bit less used ones on YHUO so that everything is
+close.</p>
+
+<figure class='code'><figcaption><span>Cycle between desktops</span><a href='https://github.com/linduxed/dotfiles/blob/0033a11d10560fa78acd10569316a6aabdad9075/.config/awesome/rc.lua#L171-L172'>start:171</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">l&quot;</span><span class="p">,</span> <span class="n">awful</span><span class="p">.</span><span class="n">tag</span><span class="p">.</span><span class="n">viewprev</span> <span class="p">),</span>
+</span><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">y&quot;</span><span class="p">,</span> <span class="n">awful</span><span class="p">.</span><span class="n">tag</span><span class="p">.</span><span class="n">viewnext</span> <span class="p">),</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Cycle between windows</span><a href='https://github.com/linduxed/dotfiles/blob/0033a11d10560fa78acd10569316a6aabdad9075/.config/awesome/rc.lua#L175-L184'>start:175</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">i&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="k">function</span> <span class="p">()</span>
+</span><span class='line'>        <span class="n">awful</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="n">focus</span><span class="p">.</span><span class="n">byidx</span><span class="p">(</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">focus</span> <span class="k">then</span> <span class="n">client</span><span class="p">.</span><span class="n">focus</span><span class="p">:</span><span class="n">raise</span><span class="p">()</span> <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span><span class="p">),</span>
+</span><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">n&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="k">function</span> <span class="p">()</span>
+</span><span class='line'>        <span class="n">awful</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="n">focus</span><span class="p">.</span><span class="n">byidx</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">client</span><span class="p">.</span><span class="n">focus</span> <span class="k">then</span> <span class="n">client</span><span class="p">.</span><span class="n">focus</span><span class="p">:</span><span class="n">raise</span><span class="p">()</span> <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span><span class="p">),</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Move the windows around</span><a href='https://github.com/linduxed/dotfiles/blob/0033a11d10560fa78acd10569316a6aabdad9075/.config/awesome/rc.lua#L189-L190'>start:189</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">Shift&quot;</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">i&quot;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="n">awful</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="n">swap</span><span class="p">.</span><span class="n">byidx</span><span class="p">(</span> <span class="mi">1</span><span class="p">)</span> <span class="k">end</span><span class="p">),</span>
+</span><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">Shift&quot;</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">n&quot;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="n">awful</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="n">swap</span><span class="p">.</span><span class="n">byidx</span><span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">end</span><span class="p">),</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Switch which screen is focused</span><a href='https://github.com/linduxed/dotfiles/blob/0033a11d10560fa78acd10569316a6aabdad9075/.config/awesome/rc.lua#L191-L192'>start:191</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">Control&quot;</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">i&quot;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="n">awful</span><span class="p">.</span><span class="n">screen</span><span class="p">.</span><span class="n">focus_relative</span><span class="p">(</span> <span class="mi">1</span><span class="p">)</span> <span class="k">end</span><span class="p">),</span>
+</span><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">Control&quot;</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">n&quot;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="n">awful</span><span class="p">.</span><span class="n">screen</span><span class="p">.</span><span class="n">focus_relative</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">end</span><span class="p">),</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Jump to client with urgent-flag</span><a href='https://github.com/linduxed/dotfiles/blob/0033a11d10560fa78acd10569316a6aabdad9075/.config/awesome/rc.lua#L186'>start:186</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span>  <span class="p">},</span> <span class="s2">&quot;</span><span class="s">u&quot;</span><span class="p">,</span> <span class="n">awful</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="n">urgent</span><span class="p">.</span><span class="n">jumpto</span><span class="p">),</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Some applications can send urgent-flags (IMs for instance), this jumps to them
+(regardless of what tag is currently up).</p>
+
+<figure class='code'><figcaption><span>Move delimiter</span><a href='https://github.com/linduxed/dotfiles/blob/0033a11d10560fa78acd10569316a6aabdad9075/.config/awesome/rc.lua#L206-L207'>start:206</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">u&quot;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="n">awful</span><span class="p">.</span><span class="n">tag</span><span class="p">.</span><span class="n">incmwfact</span><span class="p">(</span> <span class="mf">0.05</span><span class="p">)</span> <span class="k">end</span><span class="p">),</span>
+</span><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">e&quot;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="n">awful</span><span class="p">.</span><span class="n">tag</span><span class="p">.</span><span class="n">incmwfact</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">)</span> <span class="k">end</span><span class="p">),</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In a lot of its layouts, Awesome splits the desktop into two halves, with
+a delimiter in the middle. Make sure to place this on easily accessible keys,
+because it&rsquo;s often used.</p>
+
+<figure class='code'><figcaption><span>Adjust window count</span><a href='https://github.com/linduxed/dotfiles/blob/0033a11d10560fa78acd10569316a6aabdad9075/.config/awesome/rc.lua#L208-L209'>start:208</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">Shift&quot;</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">u&quot;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="n">awful</span><span class="p">.</span><span class="n">tag</span><span class="p">.</span><span class="n">incnmaster</span><span class="p">(</span> <span class="mi">1</span><span class="p">)</span> <span class="k">end</span><span class="p">),</span>
+</span><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">Shift&quot;</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">e&quot;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="n">awful</span><span class="p">.</span><span class="n">tag</span><span class="p">.</span><span class="n">incnmaster</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">end</span><span class="p">),</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Where in the previous snippet we moved the delimiter, this adjusts the amount
+of windows on the main side of the delimiter. Hard to explain, easy to grasp
+once you use it. Keep this easily accessible too.</p>
+
+<figure class='code'><figcaption><span>Adjust column count</span><a href='https://github.com/linduxed/dotfiles/blob/0033a11d10560fa78acd10569316a6aabdad9075/.config/awesome/rc.lua#L210-L211'>start:210</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">Control&quot;</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">u&quot;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="n">awful</span><span class="p">.</span><span class="n">tag</span><span class="p">.</span><span class="n">incncol</span><span class="p">(</span> <span class="mi">1</span><span class="p">)</span> <span class="k">end</span><span class="p">),</span>
+</span><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">Control&quot;</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">e&quot;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="n">awful</span><span class="p">.</span><span class="n">tag</span><span class="p">.</span><span class="n">incncol</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">end</span><span class="p">),</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Same as previous, but increases/decreases amount of columns (that&rsquo;s what the
+config file calls them) on the secondary side of the delimiter. Again, try it
+out to understand what I&rsquo;m talking about.</p>
+
+<figure class='code'><figcaption><span>Fullscreen</span><a href='https://github.com/linduxed/dotfiles/blob/0033a11d10560fa78acd10569316a6aabdad9075/.config/awesome/rc.lua#L228'>start:228</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">f&quot;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="n">c</span><span class="p">.</span><span class="n">fullscreen</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">c</span><span class="p">.</span><span class="n">fullscreen</span> <span class="k">end</span><span class="p">),</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Kill application</span><a href='https://github.com/linduxed/dotfiles/blob/0033a11d10560fa78acd10569316a6aabdad9075/.config/awesome/rc.lua#L229'>start:229</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="n">awful</span><span class="p">.</span><span class="n">key</span><span class="p">({</span> <span class="n">modkey</span><span class="p">,</span> <span class="p">},</span> <span class="s2">&quot;</span><span class="s">`&quot;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="n">c</span><span class="p">:</span><span class="n">kill</span><span class="p">()</span> <span class="k">end</span><span class="p">),</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Conclusion</h2>
+
+<p>So those are the basics. I will most likely post follow-ups on this HOWTO when
+I find some new tricks that make using Awesome even better. I&rsquo;ve barely
+scratched the surface, so if someone has some hacks that they&rsquo;d like to share
+I&rsquo;d be glad to post them here.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">linduxed</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-15T02:59:35+02:00" pubdate data-updated="true">Jun 15<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tutorial/'>tutorial</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://linduxed.com/blog/2009/06/15/configuring-your-awesome-3-dot-x-install/" data-via="linduxed" data-counturl="http://linduxed.com/blog/2009/06/15/configuring-your-awesome-3-dot-x-install/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2009/06/09/pirate-party-gets-into-eu-parliament/" title="Previous Post: Pirate Party gets into EU-parliament">&laquo; Pirate Party gets into EU-parliament</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2009/06/15/configuring-your-awesome-3-dot-x-install/">Configuring your Awesome 3.x install</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2009/06/09/pirate-party-gets-into-eu-parliament/">Pirate Party gets into EU-parliament</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2009/06/03/unreal-tournament-3-plus-titan-pack/">Unreal Tournament 3 + Titan Pack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2009/06/02/why-american-humour-doesnt-humour-me/">Why American humour doesn't humour me</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2009/05/29/no-vista-no-gaming-hate-vista-love-gaming/">No Vista - No gaming ; Hate Vista - Love gaming</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - linduxed -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
