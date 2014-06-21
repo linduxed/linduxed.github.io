@@ -10,6 +10,8 @@ I was quite hesitant at first to order the ticket, having two exams the same
 week. In retrospect however, I would never be able to forgive myself for not
 taking the opportunity to see my favorite comedian, bar none.
 
+<!--more-->
+
 Me and my friend [FreddyBoy](http://www.pinheadlounge.com/FreddyBoy) (with whom
 I went to see the performance) are the type of people who have seen the
 [Black Books series](http://www.imdb.com/title/tt0262150/) somewhere around
