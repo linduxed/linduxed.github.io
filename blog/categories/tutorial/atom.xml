@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Rants of a geek]]></title>
-  <link href="http://linduxed.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: tutorial | Rants of a geek]]></title>
+  <link href="http://linduxed.com/blog/categories/tutorial/atom.xml" rel="self"/>
   <link href="http://linduxed.com/"/>
   <updated>2014-06-21T18:08:31+02:00</updated>
   <id>http://linduxed.com/</id>
@@ -79,11 +79,10 @@ enabled). With that fixed, you should edit /etc/modprobe.d/alsa-base:</p>
 <p>If you don&rsquo;t use Vim, do. In absolute emergency <code>nano</code> may be used.
 Add this to the end of the file:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>alias snd-card-0 snd-hda-intel
-</span><span class='line'>options snd-hda-intel model=auto</span></code></pre></td></tr></table></div></figure>
-
+<p><code>
+alias snd-card-0 snd-hda-intel
+options snd-hda-intel model=auto
+</code></p>
 
 <p>A reboot should now be sufficient, if this method works for you that is.
 Remember to go into <code>alsamixer</code> to unmute and pull up all the different
@@ -177,9 +176,9 @@ tar xzvf hda-verb-0.3.tar.gz
 to <code>/usr/local/bin</code> and insert the following line on the bottom of
 <code>/etc/rc.local</code> (but before the <code>exit 0</code> line):</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/local/bin/hda-verb /dev/snd/hwC0D0 0x15 SET_EAPD_BTLENABLE 2</span></code></pre></td></tr></table></div></figure>
-
+<p><code>
+/usr/local/bin/hda-verb /dev/snd/hwC0D0 0x15 SET_EAPD_BTLENABLE 2
+</code></p>
 
 <p>This automation didn&rsquo;t work for me though, and at times the device <code>hwC0D0</code>
 disappeared, making the command ineffective, forcing me to reboot if I wanted
@@ -193,40 +192,6 @@ auto configure all the speakers for everyone using this laptop. If none of
 these methods work for you I encourage you to google the problem, the Intel HD
 Audio cards are being pushed into more and more computers, so solutions should
 be aplenty.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hello World!]]></title>
-    <link href="http://linduxed.com/blog/2009/05/21/hello-world/"/>
-    <updated>2009-05-21T16:26:52+02:00</updated>
-    <id>http://linduxed.com/blog/2009/05/21/hello-world</id>
-    <content type="html"><![CDATA[<p>This is my new digital home.</p>
-
-<!--more-->
-
-
-<p>I have contemplated the creation of this site for the longest time, but never got around doing it.
-I&rsquo;m not a perfectionist by nature, but there are certain areas that I get very meticulous about, most often areas that I already know how to maneuver in, where I can have a reasonable and educated opinion. Design, while not being an expertise of any sort, is one of those areas; my page had to look and work great for me to bear with it.
-Additionally, I was always bridled by the thought that my writing bore close to no relevance, interesting to me almost exclusively.</p>
-
-<p>The first problem was solved by Squarespace (or indirectly by CO-OP, an amazing game-show that had SS as a sponsor). Not only did it help me to create a design I could feel content with, but it also gives me powerful tools to manage all aspects of the page in a simple way. This might not be a final design, nor might it be the last hosting service I&rsquo;m using, but I&rsquo;m very pleased with what I&rsquo;ve got now.</p>
-
-<p>The second problem, while more profound, was solved swiftly over the course of a few days about half a year ago, namely when I began my scholarship at KTH.
-I do believe that most of my Computer Science friends will agree when I say that we are, to a large extent, a congregation of geeks. I, for the most parts of my life, have found myself being the nerd of the pack; a nerd with the uncanny skill of being able to communicate with human beings, but nonetheless a nerd at his finest.
-The things running through my head we&rsquo;re neither of others concern nor of their interest. Not the case where I&rsquo;m now.</p>
-
-<h2>What the future holds</h2>
-
-<p>So with a page up, and incentive to write, two questions arise: What and how?</p>
-
-<p>I can&rsquo;t predict what path this site of mine will take, but I know my current intentions. The two main sections will be the Journal and the Notes. The Notes section will be where articles, tutorials and reviews will be stored, expect tech-related work. The Journal on the other hand will be taking care of the white noise running through my head, or at least the portion that gets transcribed.
-Hopefully, these two in conjunction will have me coming back to add more content. That concludes the &ldquo;What&rdquo;.</p>
-
-<p>&ldquo;How&rdquo; is a question regarding language. My main audience will undoubtedly be Swedish, but the things I&rsquo;ll write will most likely concern an international audience, regardless of how slim it may be. Knowing that we Swedes are really good at English, I&rsquo;ve decided I&rsquo;ll start off English only. I suspect I will sooner or later add a Swedish section of some sort, but I can&rsquo;t say anything for sure.
-End of beginning</p>
-
-<p>To wrap this first post up, I want to say that my hope is that the website I&rsquo;ve created will some day be revered for the marvelous content it regularly gets updated with. One can only hope&hellip;</p>
 ]]></content>
   </entry>
   
