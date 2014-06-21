@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Getting Awesome 3.x in Ubuntu 9.04 - Rants of a geek</title>
+  <meta name="author" content="linduxed">
+
+  
+  <meta name="description" content="Awesome is awesome. That simple. The 3.x series introduced a tray which removed
+all hesitation and made Awesome the WM of choice for me. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://linduxed.com/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Rants of a geek" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Rants of a geek</a></h1>
+  
+    <h2>linduxed's ramblings</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:linduxed.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Getting Awesome 3.x in Ubuntu 9.04</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-25T17:19:06+02:00" pubdate data-updated="true">May 25<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Awesome is awesome. That simple. The 3.x series introduced a tray which removed
+all hesitation and made Awesome the WM of choice for me. Unfortunately for
+Ubuntu users (which for the time being includes me) the official repositories
+are quite outdated:</p>
+
+<!--more-->
+
+
+
+
+<blockquote><p>&#8230;</p><p>In contrast to pre-release versions, official releases of Ubuntu are subject to<br/>much wider use, and by a different demographic of user. During development,<br/>changes to the distribution primarily affect developers, early adopters and<br/>other advanced users, all of whom have elected to use pre-release software at<br/>their own risk.</p><p>Users of the official release, in contrast, expect a high degree of stability.<br/>They use their Ubuntu system for their day-to-day work, and problems they<br/>experience with it can be extremely disruptive. Many of them are less<br/>experienced with Ubuntu and with Linux, and expect a reliable system which does<br/>not require their intervention.</p><p>&#8230;</p><footer><strong>Ubuntu package policy</strong> <cite><a href='http://wiki.ubuntu.com/StableReleaseUpdates'>wiki.ubuntu.com/&hellip;</a></cite></footer></blockquote>
+
+
+<p>That in other words means that anyone suggesting the introduction of new
+versions of existing packages has to pass the hurdle of &ldquo;is this a stability
+release or a feature release?&rdquo;. This is why the 3.x series, though superior in
+most ways to 2.x, will wait until Karmic Koala before it will be incorporated
+into Ubuntu&rsquo;s repositories.</p>
+
+<p>With that said, there are two ways of getting Awesome 3.x installed onto
+Jaunty. The first one is using a PPA and the other one is compiling from
+source.</p>
+
+<h2>Using a PPA</h2>
+
+<p>This is the easiest method, because not only does it eliminate the search for
+dependencies but it is also a method that is tested to work with Jaunty (to the
+extent of the PPA maintainers ability of course).</p>
+
+<p>To install from the PPA you must first add it. The PPA we&rsquo;re going to use
+belongs to <a href="https://launchpad.net/~aguignard/+archive/ppa">Arnaud Guignard and lies here</a>. If you have never added a PPA
+then <a href="http://www.youtube.com/watch?v=UUZOQsNo_ws">this YouTube video</a> will
+explain how to do it quite thoroughly; written instructions can be found
+<a href="http://help.launchpad.net/Packaging/PPA#Adding%20a%20PPA%20to%20your%20Ubuntu%20repositories">here</a>.</p>
+
+<p>After adding the repository, simply type the following command:</p>
+
+<pre><code>sudo aptitude install awesome
+</code></pre>
+
+<p>This should get you at the time of writing the <code>3.2.1-1~ppa1</code> version of
+Awesome. All you need to do is log out and choose Awesome as the session to use
+in in your desktop manager (<code>gdm</code>, <code>kdm</code> or whatever you use).</p>
+
+<h2>Compiling from git</h2>
+
+<p>This method I personally don&rsquo;t recommend, simply because using the PPA is so
+much easier and it should work flawlessly. With that said, I suspect that most
+people who use Awesome in Ubuntu compile it to get the latest
+version, so it&rsquo;s by no means a bad way to do it.</p>
+
+<p>A thing to take note of is that this will most likely screw up your package
+manager, because we might be overwriting packages and at times installing
+packages that are newer than the ones in the repositories. If at some point you
+install some package that overwrite your manually installed files, tough, you
+should have used the PPA.</p>
+
+<p>With that out of the way, the instructions I used to install the latest
+checkout are located on the <a href="http://ubuntuforums.org/showthread.php?t=960841">Ubuntu forums</a>, it&rsquo;s basically a step by step guide.</p>
+
+<p>The only thing I&rsquo;d like to add is that there is a nice way of remedying at
+least some of the problems associated with compiling and doing <code>sudo make
+install</code>, and it&rsquo;s the marvelous utility called <code>checkinstall.</code> First you need
+to run the following command to obtain it:</p>
+
+<pre><code>sudo aptitude install checkinstall
+</code></pre>
+
+<p>After that, whenever the you are asked to do the classic <code>./configure &amp;&amp; make
+&amp;&amp; sudo make install</code>, substitute the <code>sudo make install</code> with <code>sudo
+checkinstall</code>.</p>
+
+<p>This will instead of dropping files outside of the package manager, build
+a <code>.deb</code> that can then be installed (thus eliminating some problems). This
+doesn&rsquo;t always work (for reasons I can&rsquo;t explain) but it is a wholesome way of
+installing when it does. A more detailed guide to <code>checkinstall</code> can be found
+<a href="http://help.ubuntu.com/community/CheckInstall">here</a>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">linduxed</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-25T17:19:06+02:00" pubdate data-updated="true">May 25<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tutorial/'>tutorial</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://linduxed.com/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04/" data-via="linduxed" data-counturl="http://linduxed.com/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g/" title="Previous Post: Sound in Ubuntu 9.04 on Acer Aspire 8930g">&laquo; Sound in Ubuntu 9.04 on Acer Aspire 8930g</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04/">Getting Awesome 3.x in Ubuntu 9.04</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g/">Sound in Ubuntu 9.04 on Acer Aspire 8930g</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2009/05/21/hello-world/">Hello World!</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - linduxed -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
