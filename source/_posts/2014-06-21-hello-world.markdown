@@ -3,7 +3,7 @@ layout: post
 title: "Hello World!"
 date: Thu, 21 May 2009 14:26:52 +0000
 comments: true
-categories: [personal]
+categories: personal
 ---
 This is my new digital home.
 
