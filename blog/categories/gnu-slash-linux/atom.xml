@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: GNU/Linux | Rants of a geek]]></title>
+  <link href="http://linduxed.com/blog/categories/gnu-slash-linux/atom.xml" rel="self"/>
+  <link href="http://linduxed.com/"/>
+  <updated>2014-06-21T19:21:20+02:00</updated>
+  <id>http://linduxed.com/</id>
+  <author>
+    <name><![CDATA[linduxed]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Late night OS adventures]]></title>
+    <link href="http://linduxed.com/blog/2009/05/26/late-night-os-adventures/"/>
+    <updated>2009-05-26T22:30:23+02:00</updated>
+    <id>http://linduxed.com/blog/2009/05/26/late-night-os-adventures</id>
+    <content type="html"><![CDATA[<p>So it was a late night, a day or so after the 23rd of April, Jaunty had just
+been released. I was very excited because I had been using Intrepid for
+a while, and I wasn&rsquo;t as satisfied with it as I was with Hardy; an upgrade felt
+like a nice thing to do. It turned out that Jaunty had some issues that I at the
+time felt relatively unmotivated to solve, most notably <a href="/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g/">no sound</a> and an
+<a href="/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04/">inability to install Awesome</a>.</p>
+
+<p>Perfect reason to start distrohopping.</p>
+
+<!--more-->
+
+
+<h2>3 x Linux vs. Eyelids</h2>
+
+<p>Debian was first up. I burned a stable Lenny ISO, rebooted, turned out i burned
+a dodgy CD, wouldn&rsquo;t boot.<br/>
+I instantly decided that I didn&rsquo;t care for Debian since it wouldn&rsquo;t boot,
+making it the most uncalled for discarding of a piece of software this year.</p>
+
+<p>Next up was Intrepid, mainly because it worked to a larger extent than Jaunty.
+Obviously, the tired linduxed decided after a quick installation that getting
+the sound to work in Intrepid would not be fun (despite knowing that it would
+need tweaking regardless of distro), so Intrepid was also discarded.</p>
+
+<p>Two systems in less than an hour, both cases making no sense whatsoever; that
+must be a record of some sort.</p>
+
+<p>Next up was Arch. I really like this system, but I should have known better
+than setting up an OS pretty much from scratch when I was so tired I had
+trouble locating my hands.</p>
+
+<p>I somehow managed to progress all the way up to the partitioning stage, which in retrospect I can&rsquo;t decide if it was a good or a bad thing.<br/>
+I came to the reasonable conclusion that having both a /home-partition and
+a /-partition might be superior to just having a /-partition. What was not as
+reasonable was to start formatting partitions and editing individual cylinder
+values while my brain tried to make it clear to me that the numbers and letters
+had transformed into hamburgers and frisbees.</p>
+
+<p>This basically lead to corrupting the entire partition table, which made me call it a day.</p>
+
+<h3>Stroke of luck</h3>
+
+<p>The next morning I could confirm that I had no systems to boot into and that my brain was still in the mood for illogical decisions:</p>
+
+<p>It was time to install Jaunty again!</p>
+
+<p>Why? Because this time everything was going to work, I said to myself.
+A generously flawed assumption, but it turns out I was right. Apparently Ubuntu
+seeks to comfort Windows converts by being just as unpredictable, all the
+issues I had in the previous install of Jaunty seemed to fix themselves, an
+interesting feat indeed.</p>
+
+<p>So the distrohopping ended happily, but what happened to Windows? A geek has to
+game right?</p>
+]]></content>
+  </entry>
+  
+</feed>
