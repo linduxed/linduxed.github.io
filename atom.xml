@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Rants of a geek]]></title>
+  <link href="http://linduxed.com/atom.xml" rel="self"/>
+  <link href="http://linduxed.com/"/>
+  <updated>2014-06-21T16:55:34+02:00</updated>
+  <id>http://linduxed.com/</id>
+  <author>
+    <name><![CDATA[linduxed]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+</feed>
