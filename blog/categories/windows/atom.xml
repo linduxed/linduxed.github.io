@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: windows | Rants of a geek]]></title>
+  <link href="http://linduxed.com/blog/categories/windows/atom.xml" rel="self"/>
+  <link href="http://linduxed.com/"/>
+  <updated>2014-06-21T20:03:19+02:00</updated>
+  <id>http://linduxed.com/</id>
+  <author>
+    <name><![CDATA[linduxed]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[No Vista - No gaming ; Hate Vista - Love gaming]]></title>
+    <link href="http://linduxed.com/blog/2009/05/29/no-vista-no-gaming-hate-vista-love-gaming/"/>
+    <updated>2009-05-29T04:02:16+02:00</updated>
+    <id>http://linduxed.com/blog/2009/05/29/no-vista-no-gaming-hate-vista-love-gaming</id>
+    <content type="html"><![CDATA[<p>In my last entry I described my nocturnal attempts at installing an OS. After
+a little closer reflection, I shouldn&rsquo;t have been so quick to blame the distros
+for dodgy discs and weird installs, sleep depravity and lack of will to fix
+issues (which were bound to arise) don&rsquo;t give you privileges to fling poo at
+good OSs.</p>
+
+<!--more-->
+
+
+<p>Now, I&rsquo;ve grown used to certain things when it comes to GNU/Linux, one of the
+most prominent being that certain hardware takes some work to get working. I&rsquo;ve
+got a rather new sound card, that causes problems. My wireless card was also
+quite problematic (as in wasn&rsquo;t compatible) until the 2.6.28 kernel.<br/>
+This is quite explainable, there&rsquo;s rarely official support so the more
+ambitious geeks around the world hero-code, so that we have anything at all.
+A remarkable job is done in this respect.</p>
+
+<p>This leads me to be thoroughly pissed when a certain OS gets treated with
+official drivers to every damn component in a computer and still doesn&rsquo;t work
+as intended.</p>
+
+<p>After the events described in the last entry, with some magic tools I recovered
+the most necessary files out of the Windows partition, and decided to reinstall
+the system. Not the most thrilling task I could have imagined but what&rsquo;s
+a gamer got to do?</p>
+
+<h2>The install, and some love for Vista</h2>
+
+<p>Before I go into the details of my setting up my game station, I&rsquo;d like to point out that Acer made me a real favour when I bought the laptop:</p>
+
+<p>The only Windows version that has full driver support for this computer turns out to be Vista.</p>
+
+<p>Truly, I couldn&rsquo;t be more thankful, because what the hell else would manage to
+force me into the &ldquo;next generation&rdquo; of Microsoft&rsquo;s flagship products? I&rsquo;m quite
+sure I wouldn&rsquo;t have done it voluntarily. So in my case, I was installing Vista
+Business 64.</p>
+
+<p>I could elaborate on my issues with Vista, but would I have done so the site
+would most likely close after one or two visitors; I have monthly bandwidth cap
+at 125 GB. I&rsquo;ll write a summary at some point however.</p>
+
+<p>The installation of the system itself was thankfully straightforward, but
+that&rsquo;s where the fun stopped. Ubuntu is in a way forced to have an absolutely
+stellar auto detection of hardware, to avoid having Windows converts shit their
+breeches at the prospect of actually doing anything with their new system.</p>
+
+<p>Microsoft on the other hand is in no way forced to do any drivers whatsoever,
+that is left to the hardware vendors. This is not something one can hold
+against them, with drivers for Windows having preposterous sizes these days,
+you wouldn&rsquo;t have space for anything else on a DVD, especially an OS as space
+&ldquo;efficient&rdquo; as Windows.<br/>
+Some might now argue they should at least be treated with proper default
+drivers with all the space the OS takes&hellip;</p>
+
+<p>&ldquo;At the expense of what?&rdquo; says linduxed in a sarcastic voice.<br/>
+&ldquo;A fresh install of Vista takes roughly 16 GB of disk space, at such a miniscule size it has to be chock-full of crucial code! How would you fit said drivers? You know that you only have the space of a DVD to install from, right?</p>
+
+<p>What would you cut?<br/>
+With such a delicate and cutting edge system you&rsquo;d have to make some big
+decisions! What would Vista be without the <code>do_nothing_loop()</code> methods? Or the
+<code>hang_system()</code> calls? Would you seriously dare to boot up your computer if you
+knew that Microsoft decided to cut the <code>do_some_stuff()</code> method?<br/>
+Proper default drivers are simply not feasible, and hearing some people
+suggesting that an OS should have applications included to actually be able to
+do something with the god damn thing is preposterous."</p>
+
+<h4>Returning to the installation&hellip;</h4>
+
+<p>So as soon as the system was installed I was greeted with a slow and stone
+age-resolution touting desktop. I came prepared however, and plugged in my
+USB-drive, which I had previously filled with drivers. It is worth to mention
+that these were the official drivers, downloaded from the Acer website.</p>
+
+<p>Having installed some Windows systems by now, I knew that some drivers are
+arrogant pricks, which absolutely demand that no other drivers are installed
+before reboot. If I don&rsquo;t listen to them, I&rsquo;ll end up with anything between the
+driver not installing at all, and not being able to shutdown properly.<br/>
+I counted four pricks, three annoying bastards, and the rest (close to ten)
+were of the nicer kind. This led to about five or six guaranteed reboots, and
+then came the unforeseen ones on top of that.</p>
+
+<p>The ones which were in a particularly fickle mood were the sound and graphics
+drivers. Both thought getting installed was such a thrill they demanded to go
+through the ride three times each, every time craving a reboot. I wasn&rsquo;t in the
+mood for more, and apparently the web cam interpreted the grinding of teeth as
+a sign to have mr. Sound and mr. Graphics to stop dicking around.</p>
+
+<h2>Concluding</h2>
+
+<p>I lost count of all the reboots, but in the end that doesn&rsquo;t matter, because
+after the installation of drivers I still had &ldquo;features&rdquo; to turn off (UAC,
+anyone?), applications to install and settings to set up. That is however not
+really a part of the installation itself in my opinion.</p>
+
+<p>I&rsquo;m past it now and have gotten my games to work, but I know that it&rsquo;s just
+a matter of time before I&rsquo;ll bump into this process again. When I move to
+Windows 7 (and I will, I doubt it can get worse than Vista), I suspect I&rsquo;ll
+have the same issues.</p>
+
+<p>I guess another rant will be needed at that time then.</p>
+]]></content>
+  </entry>
+  
+</feed>
