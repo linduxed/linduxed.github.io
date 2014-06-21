@@ -18,7 +18,7 @@ standups [Like, Totally](http://youtu.be/HNAh9_BPBFk) and [Monster](
 http://youtu.be/lpkiIaFv5As) (playlist). This inevitably made us wonder whether
 we would have to sit through an amalgamation of all the punchlines we knew by
 heart, even though this was a part of a new tour called [What it is](
-http://youtu.be/hieTxQ0oJPc) (link recently added).
+http://youtu.be/hieTxQ0oJPc) (**EDIT**: link added).
 
 All my hesitation was gone within the first few minutes, and I was quickly
 reminded why Black Books was the first TV-series that had me laughing into
