@@ -3,7 +3,7 @@ layout: post
 title: "Late night OS adventures"
 date: Tue, 26 May 2009 20:30:23 +0000
 comments: true
-categories: GNU/Linux
+categories: linux
 ---
 
 So it was a late night, a day or so after the 23rd of April, Jaunty had just
