@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>When the tools just don't work - Rants of a geek</title>
+  <meta name="author" content="linduxed">
+
+  
+  <meta name="description" content="Every once in a while you stumble on that area of software that Linux just
+doesn&rsquo;t have covered. You might now be thinking that I&rsquo;d like &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://linduxed.com/blog/2012/03/15/when-the-tools-just-dont-work">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Rants of a geek" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Rants of a geek</a></h1>
+  
+    <h2>linduxed's ramblings</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:linduxed.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">When the tools just don't work</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T12:38:30+01:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Every once in a while you stumble on that area of software that Linux just
+doesn&rsquo;t have covered. You might now be thinking that I&rsquo;d like to talk about
+audio and video editing. A fair guess, since you&rsquo;ll hear people talk about
+these two as areas where the other platforms have significantly more
+sophisticated software available. But this isn&rsquo;t what I&rsquo;m going to talk about.</p>
+
+<!--more-->
+
+
+<p>You see, I&rsquo;ve had a look at the video and audio editors out there for Linux, and
+while it&rsquo;s generally not as good as what you&rsquo;d have on OSX or Windows, there are
+projects that make honest efforts to compete (Rosegarden comes to mind). I think
+even the cynics can at least call the tools in these areas “rudimentary”.</p>
+
+<p>“Streaming your desktop” in Linux, however, is one area you can&rsquo;t even fucking
+call rudimentary. The appropriate description I&rsquo;ve come up with is “technically
+working with the help of wizardry”, and I&rsquo;m thinking about whether that&rsquo;s too
+generous.</p>
+
+<h2>No audience</h2>
+
+<p>I can&rsquo;t say I&rsquo;m particularly surprised by this situation, because apart from the
+occasional recorded screen cast for some brand new package, there isn&rsquo;t that
+much of a need, it seems. We don&rsquo;t have the games to stream, which I would
+assume is a large part of what drives the revenue of a page like Justin.tv.</p>
+
+<p>I assume most of the people who code in Linux aren&rsquo;t exactly eager to stream and
+narrate their work, which could have been that “other area” of content that
+would have driven the development of tools for streaming. I understand that the
+Linux community might have less scenarios under which one would want to stream
+one&rsquo;s desktop, but I&rsquo;m still surprised by how dire the software situation is.</p>
+
+<h2>The tools</h2>
+
+<p>From what I&rsquo;ve gathered, the most “mature” application available for handling
+the various aspects of streaming (sound, picture, overlays and so on) is
+WebcamStudio, which didn&rsquo;t exactly work. At the best of times it was giving me
+something that looked like the stream I wanted to pass on, but I never managed
+to actually get any streaming site to accept the data. This completely sidesteps
+the issue that is the buggy-as-fuck interface, that neither looks good nor works
+well.</p>
+
+<p>The most stable solution I&rsquo;ve found, that has actually let me see my desktop on
+the internet, is the combination of:</p>
+
+<ul>
+<li>Letting VLC capture your desktop with a wide array of flags to make sure it
+comes out right. Figuring out those was a ton of fun.</li>
+<li>Having a script called “jtvlc” catch the data and send it in through the
+Justin.tv API.</li>
+</ul>
+
+
+<p>It&rsquo;s way better than nothing, but this gives me absolutely no ability to
+customize the output, except choosing what part of my monitor set-up it should
+grab.</p>
+
+<h2>Conclusion</h2>
+
+<p>In a way, I hope I&rsquo;ve missed something; I hope there&rsquo;s an obscure package that
+simply grabs the part of the desktop you want, has a nice interface, and just
+works. If that magic package exists however, then I haven&rsquo;t found it.</p>
+
+<p>There are times when I really would have liked to share the view of one of my
+screens, with some embedded microphone commentary. When the ideas pop up, I&rsquo;d
+like to go ahead and just try them out, but in this case, I&rsquo;m completely
+hindered. It might be that the process of getting these things to work under the
+other systems is also a chore, but at least I&rsquo;ve seen plenty examples of there
+being an end result. That&rsquo;s something I&rsquo;ve yet to see here in Linux.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">linduxed</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T12:38:30+01:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://linduxed.com/blog/2012/03/15/when-the-tools-just-dont-work/" data-via="linduxed" data-counturl="http://linduxed.com/blog/2012/03/15/when-the-tools-just-dont-work/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/02/27/code-i-enjoy/" title="Previous Post: Code I enjoy">&laquo; Code I enjoy</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/when-the-tools-just-dont-work/">When the tools just don't work</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/27/code-i-enjoy/">Code I enjoy</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/26/att-sta-still-gaendes/">Att stå still gåendes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2010/08/17/just-a-toy/">Just a toy</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2010/05/25/laughs-from-nowhere/">Laughs from nowhere</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - linduxed -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
