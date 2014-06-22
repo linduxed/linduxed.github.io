@@ -4,7 +4,7 @@
   <title><![CDATA[Rants of a geek]]></title>
   <link href="http://linduxed.github.io/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-06-22T18:43:00+02:00</updated>
+  <updated>2014-06-22T18:46:41+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,45 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Old favourites]]></title>
+    <link href="http://linduxed.github.io/blog/2013/09/07/old-favourites/"/>
+    <updated>2013-09-07T15:36:57+02:00</updated>
+    <id>http://linduxed.github.io/blog/2013/09/07/old-favourites</id>
+    <content type="html"><![CDATA[<p>At times I forget why I loved a certain artist or composition. The same happens
+with books, video games and movies. Time has passed and having indulged in the
+work of art so many times made me forget what made it so special in the first
+place.</p>
+
+<!--more-->
+
+
+<p>About a year ago I veered away from my tried and true collection of
+instrumental music and found new joy in the world of dance music, ranging from
+electro-swing like Parov Stelar to house like Deadmau5. Ambient music soon
+followed, since I had been in contact with the genre before and video game
+music (as wide ranging as that is) also became quite prominent in my playlists.</p>
+
+<p>It was all a major departure; I had probably grown tired of listening to the
+same artists and tracks. I needed a change.</p>
+
+<p>The more I think about it however, the more I see similarities creep up between
+the old and the new. Even though I crossed genres, I still can&rsquo;t shake core
+tastes. No prominent vocals, generally some powerful riff or sample and
+a strong groove that carries the track. I know that&rsquo;s very general and probably
+doesn&rsquo;t mean much, but the point is that once I had settled down in these new
+genres, I realized that I hadn&rsquo;t been looking for something all that different.
+This made me revisit the things I had moved away from, and it turned out that
+my love for them had been rekindled.</p>
+
+<p>I think one really needs to take a break from the familiar from time to time to
+appreciate it fully. It&rsquo;s a cliché, yes, but apparently it needs to be
+experienced before it&rsquo;s understood.</p>
+
+<p>Just an observation, that&rsquo;s all.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Anime is still anime]]></title>
@@ -2433,189 +2472,6 @@ a <code>.deb</code> that can then be installed (thus eliminating some problems).
 doesn&rsquo;t always work (for reasons I can&rsquo;t explain) but it is a wholesome way of
 installing when it does. A more detailed guide to <code>checkinstall</code> can be found
 <a href="http://help.ubuntu.com/community/CheckInstall">here</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Sound in Ubuntu 9.04 on Acer Aspire 8930g]]></title>
-    <link href="http://linduxed.github.io/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g/"/>
-    <updated>2009-05-24T18:56:20+02:00</updated>
-    <id>http://linduxed.github.io/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g</id>
-    <content type="html"><![CDATA[<p>The Acer Aspire 8930g has got a sound card that has not only been unsupported
-in GNU/Linux for a long time, it has also (to this day) never been a case of
-having the card work out of the box in any distro.</p>
-
-<p>It&rsquo;s basically a &ldquo;Intel HD Audio Controller&rdquo; and uses the ALC889 codec. Support
-for this card was, according to the alsa-project.org mailing lists,
-incorporated in the 1.0.16 driver, receiving updates every version since.</p>
-
-<!--more-->
-
-
-<p>I&rsquo;ve experimented with various driver versions and so far I can only conclude
-the following:</p>
-
-<ul>
-<li>The <code>alsa-1.0.18</code> driver is the first one to show any signs of working, let
-alone properly.</li>
-<li>Of the ones I&rsquo;ve tried only <code>1.0.19</code> has managed to auto configure properly.</li>
-</ul>
-
-
-<p>Since ALC889 is universally seen as a problematic codec, don&rsquo;t expect anything.
-If any one of these methods work, rejoice, if they don&rsquo;t I can&rsquo;t say I&rsquo;m
-surprised.</p>
-
-<h2>Different methods of installing</h2>
-
-<p>The first thing you need to do is to make sure you have the ALC889 codec:</p>
-
-<pre><code>cat /proc/asound/card*/codec\#* | grep -i codec
-</code></pre>
-
-<p>If it&rsquo;s the correct codec it should return something like <code>Codec: Realtek ALC889</code>.
-From here there are three four methods to get sound, three of which I&rsquo;ve tried myself.
-After each one, the following <a href="http://www.lynnepublishing.com/surround/www_lynnemusic_com_surround_test.ac3">surround sound testing audio file</a>
-can be used to check the result.</p>
-
-<h3>First method: Editing the modprobe.d configuration</h3>
-
-<p>Make sure you have the latest stable alsa-base package, that is
-1.0.18.dfsg-1ubuntu8. This should be installed with Jaunty, but to check type
-the following:</p>
-
-<pre><code>aptitude show alsa-base
-</code></pre>
-
-<p>This should return (amongst other information) the correct version number. If
-not, run the following:</p>
-
-<pre><code>sudo aptitude safe-upgrade
-</code></pre>
-
-<p>This should get you the latest stable (provided you have the main repository
-enabled). With that fixed, you should edit /etc/modprobe.d/alsa-base:</p>
-
-<pre><code>sudo vim /etc/modprobe.d/alsa-base.conf
-</code></pre>
-
-<p>If you don&rsquo;t use Vim, do. In absolute emergency <code>nano</code> may be used.
-Add this to the end of the file:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>alias snd-card-0 snd-hda-intel
-</span><span class='line'>options snd-hda-intel model=auto</span></code></pre></td></tr></table></div></figure>
-
-
-<p>A reboot should now be sufficient, if this method works for you that is.
-Remember to go into <code>alsamixer</code> to unmute and pull up all the different
-sliders.</p>
-
-<p>As a footnote I might add that this gave me splendid sound on the left, right
-and center channels. This setup is most likely enough for most people, but my
-laptop is a 5.1 Dolby so I don&rsquo;t get the full experience. Currently, this is no
-problem for me, but I know some will find this suboptimal, if this is the case,
-move to the third method.</p>
-
-<h3>Second method: Using the ALSA Upgrade Script</h3>
-
-<p>This method helped me get sound when it didn&rsquo;t work in Intrepid, in Jaunty this
-didn&rsquo;t work for me.</p>
-
-<p>Basically this method comes down to using a script that downloads, compiles and
-installs the latest ALSA driver (at the point of writing, version <code>1.0.20</code>).<br/>
-The method has no prerequisites with regards to the installed driver, because
-of the fact that it compiles and installs the old fashioned way. This also
-means that the script will screw up your package manager when it comes to the
-ALSA packages. Versions, dependencies and all that stuff will be configured
-&ldquo;outside of the system&rdquo;.</p>
-
-<p>Basically, if it works then you won&rsquo;t want to upgrade anything through the
-package manager; if it doesn&rsquo;t work the script comes with an inbuilt feature
-that reverts to whatever the system looked like before installing with it. So
-if you don&rsquo;t get sound after installing with this method, uninstall.</p>
-
-<p>The script and much more thorough instructions can be found in the
-<a href="http://ubuntuforums.org/showthread.php?t=1046137">thread created by soundcheck</a>.</p>
-
-<h3>Third method: Compiling the official Realtek Driver</h3>
-
-<p>This method I have not tried in Jaunty, so I can&rsquo;t speak from my own
-experience. It has no prerequisites with regards to installed drivers and
-according some googling, this method should provide the full Dolby 5.1,
-including the Tuba subwoofer.<br/>
-It comes down to using the official Realtek drivers found
-<a href="http://www.realtek.com.tw/downloads/downloadsView.aspx?Langid=1&amp;PNid=24&amp;PFid=24&amp;Level=4&amp;Conn=3&amp;DownTypeID=3&amp;GetDown=false">here</a>
-(check the &ldquo;accept box&rdquo;, press next, and download the Linux driver on the
-bottom). When the driver is downloaded and extracted, there are according to
-<a href="http://bugs.launchpad.net/ubuntu/+bug/218165">this bugreport</a> two ways of
-installing.</p>
-
-<p>The first one is basically to open the Readme.txt file and follow the Ubuntu
-instructions step-by-step.</p>
-
-<p>The second one is to opt for what in the Readme.txt file is described as
-&ldquo;recommended for Redhat and RH-derivative distributions&rdquo;. <code>cd</code> into the extracted
-directory and type:</p>
-
-<pre><code>sudo ./install
-</code></pre>
-
-<p>After completing the process, reboot, and subsequently type:</p>
-
-<pre><code>sudo alsaconf
-</code></pre>
-
-<p>The only thing to do after this should be to adjust the settings in the
-<code>alsamixer</code>, where after sound should be enabled on all speakers. As stated
-above, I can&rsquo;t confirm this.</p>
-
-<h3>Fourth method: The hda-verb utility</h3>
-
-<p>This method I see as a last resort because it results in a low volume, mono
-sound, coming from only the right and left speaker. You will also have no
-access to the headphone jack, nor will the microphone work.</p>
-
-<p>I have no idea what the prerequisites are, but since you&rsquo;ve installed ALSA two
-to three times by now if you&rsquo;re at this stage, I&rsquo;d guess you have all that&rsquo;s
-needed on your system. Last time I tried this method I used Arch Linux so
-I can&rsquo;t confirm it will work on Jaunty.</p>
-
-<p>Download and extract <code>hda-verb-0.3.tar.gz</code>:</p>
-
-<pre><code>wget ftp://ftp.suse.com/pub/people/tiwai/misc/hda-verb-0.3.tar.gz
-tar xzvf hda-verb-0.3.tar.gz
-</code></pre>
-
-<p><code>cd</code> into the directory and run the following:</p>
-
-<pre><code>./hda-verb /dev/snd/hwC0D0 0x15 SET_EAPD_BTLENABLE 2
-</code></pre>
-
-<p>You might need <code>sudo</code> for that command to work. That should, after some
-<code>alsamixer</code> adjustments, result in the above mentioned sub-par sound.</p>
-
-<p>To make this occur on every boot you&rsquo;d need to copy the <code>hda-verb</code> application
-to <code>/usr/local/bin</code> and insert the following line on the bottom of
-<code>/etc/rc.local</code> (but before the <code>exit 0</code> line):</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/local/bin/hda-verb /dev/snd/hwC0D0 0x15 SET_EAPD_BTLENABLE 2</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This automation didn&rsquo;t work for me though, and at times the device <code>hwC0D0</code>
-disappeared, making the command ineffective, forcing me to reboot if I wanted
-sound.</p>
-
-<h2>Concluding</h2>
-
-<p>By now the ALC889 has been around for a while and solutions for this codec
-have become easier and easier, hopefully the guys at ALSA will soon have it
-auto configure all the speakers for everyone using this laptop. If none of
-these methods work for you I encourage you to google the problem, the Intel HD
-Audio cards are being pushed into more and more computers, so solutions should
-be aplenty.</p>
 ]]></content>
   </entry>
   
