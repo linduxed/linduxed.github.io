@@ -4,7 +4,7 @@
   <title><![CDATA[Rants of a geek]]></title>
   <link href="http://linduxed.github.io/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-06-22T17:30:33+02:00</updated>
+  <updated>2014-06-22T18:25:45+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,245 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Macros and the expression register in Vim]]></title>
+    <link href="http://linduxed.github.io/blog/2013/05/28/macros-and-the-expression-register-in-vim/"/>
+    <updated>2013-05-28T18:30:28+02:00</updated>
+    <id>http://linduxed.github.io/blog/2013/05/28/macros-and-the-expression-register-in-vim</id>
+    <content type="html"><![CDATA[<p>Macros and expressions are two tools that serve the purpose of saving you from
+either repeating a tedious process or the time switching back and forth between
+shells to run scripts to manipulate your data with. Both can be (and often are)
+used separately, but can be used in tandem to do some pretty cool stuff.</p>
+
+<p>So let&rsquo;s introduce them and see how they work.</p>
+
+<!--more-->
+
+
+<h2>Creating macros</h2>
+
+<p>Macros are series of commands that you can record by typing <code>q</code> and then some
+register name. This starts a recording of user input that can then be replayed.</p>
+
+<p>Let&rsquo;s do something simple to demonstrate:</p>
+
+<ol>
+<li><code>qq</code> starts recording into the <code>q</code> register.</li>
+<li><code>e</code> moves to the end of the word.</li>
+<li><code>a"</code> to add a quotation mark right after the word.</li>
+<li><code>&lt;esc&gt;</code> leave Insert-mode.</li>
+<li><code>b</code> move to the start of the word.</li>
+<li><code>i"</code> add another quotation mark.</li>
+<li><code>f"</code> jump to the second quotation mark for convenience.</li>
+<li><code>q</code> stop recording.</li>
+</ol>
+
+
+<p>Yes, you probably use <a href="https://github.com/tpope/vim-surround">vim-surround</a> for
+this kind of thing, but this macro will allow you to surround a word with
+quotation marks quickly by just pressing <code>@q</code>, and then replay the last macro
+with <code>@@</code>.</p>
+
+<h2>More interesting macros</h2>
+
+<p>While it is a simple task that you wouldn&rsquo;t want to repeat doing (which makes
+qualify for something you should put into a macro), I&rsquo;d expect myself to use
+macros for bigger tasks.</p>
+
+<p>Let&rsquo;s for instance take some CSS:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nf">#navigation</span> <span class="nt">li</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">list-style</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">height</span><span class="o">:</span> <span class="m">22px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">#navigation</span> <span class="nt">li</span> <span class="nt">a</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">color</span><span class="o">:</span> <span class="m">#ffffff</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">line-height</span><span class="o">:</span> <span class="m">22px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">font-size</span><span class="o">:</span> <span class="m">11px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">text-decoration</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding</span><span class="o">:</span> <span class="m">5px</span> <span class="m">15px</span> <span class="m">6px</span> <span class="m">15px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-right</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="m">#ffffff</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">#footer</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">font-size</span><span class="o">:</span> <span class="m">11px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">color</span><span class="o">:</span> <span class="m">#aeaeae</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">width</span><span class="o">:</span> <span class="m">670px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">margin-bottom</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This just some blocks of code from something I found on the internet. Let&rsquo;s
+sort each block alphabetically, then join the lines in them so we get one-line
+blocks.</p>
+
+<h3>Rules for macro creation</h3>
+
+<p>The first thing you have to do when creating more complex macros is identifying
+what the blocks of code your macro will manipulate have in common.</p>
+
+<p>If the lines differ a lot and have little to no structure, you might only be
+able to use the beginning or end of the line as a fix point. In the CSS example
+above we have braces, colons and semicolons to go with. It&rsquo;s all about finding
+those important things that your macro can hold onto, so that when you play the
+macro in another place, it&rsquo;ll still work the same due to you fixating the
+motions against a common patterns.</p>
+
+<p>This means that you&rsquo;ll have to give the creation of macros a bit more thought
+than you&rsquo;d expect. Some cases are simple, where you just start the macro off by
+going to the beginning of the line, but others (as we&rsquo;ll see) need more effort.</p>
+
+<h3>The procedure</h3>
+
+<p>First we decide where the editing will start. This is important because if we&rsquo;d
+like to be able to chain together multiple executions of the macro (you might
+have ten or more blocks need the same treatment), so you&rsquo;ll have to end the
+macro by finding the same position you started from, just in the next block
+you&rsquo;ll run the macro on.</p>
+
+<p>In this case this will be the beginning of the line with the right brace. I&rsquo;m
+phrasing it this way because braces are easy to search for.</p>
+
+<p>So position the cursor at the <code>#</code> in <code>#navigation li {</code> and let&rsquo;s go:</p>
+
+<ol>
+<li>We start the macro by pressing <code>qq</code>.</li>
+<li>Move one line down with <code>j</code>.</li>
+<li>Enable Visual-line-mode with <code>V</code>.</li>
+<li>We&rsquo;ll now search downwards to the left brace, since we know that is where
+the block ends, so <code>/}&lt;cr&gt;</code>.</li>
+<li>This is one line too far however, so we back up one line with <code>k</code>.</li>
+<li>Let&rsquo;s sort these lines with <code>:sort</code>.</li>
+<li>This puts the cursor up at the top of the previous visual selection, so we
+move one line up with <code>k</code> to the start of the block.</li>
+<li>Now we enter Visual-line-mode with <code>V</code> again and search for the left brace
+with <code>/}&lt;cr&gt;</code></li>
+<li>Join the lines with <code>J</code>.</li>
+<li>Search for the start of the next block by typing <code>/{&lt;cr&gt;</code>.</li>
+<li>Move to where we started, that is the beginning of the line with <code>0</code>.</li>
+</ol>
+
+
+<p>By doing steps 10 and 11 you can repeat the macro for any amount of consecutive
+blocks that you want to use the macro on. In this specific case we could have
+skipped starting at the beginning, the right brace would have been a fine
+starting position as well.<br/>
+The point is however that if you want to have a perfectly repeatable macro,
+then you have to start from the same place, work with the same structure of
+code and end in the same place.</p>
+
+<p>Figuring out how the code you manipulate is built is the key to making macros
+repeatable.</p>
+
+<h2>The expression register</h2>
+
+<p>This register serves the purpose of entering Vimscript expressions while not
+leaving Insert-mode. This can be handy if you want to incorporate some value
+stored in a variable into your macros.</p>
+
+<p>Let&rsquo;s see how it works first:</p>
+
+<p>You enter Insert-mode, hit <code>Ctrl-R</code> and then <code>=</code>. This gives you a small prompt
+starting with a <code>=</code>. Here you could for instance type <code>&amp;et</code> to evaluate the
+expanded tabs variable, having the expression either print <code>0</code> or <code>1</code>.</p>
+
+<p>There&rsquo;s not much more to the procedure itself, but the expression register
+depends on you being somewhat familiar with Vimscript, if you&rsquo;re to make
+interesting stuff happen. You can read a lot more over in <code>:help expression</code>.</p>
+
+<h3>Two examples</h3>
+
+<p>The most often demonstrated use case is basic calculation. Don&rsquo;t know what
+<code>123*456+789</code> equals? Do this then:</p>
+
+<ol>
+<li>Go into Insert-mode where you want the result to end up.</li>
+<li>Hit <code>Ctrl-r</code> then <code>=</code>.</li>
+<li>Write <code>123*456+789</code> then press Enter.</li>
+</ol>
+
+
+<p>That&rsquo;s it! Another example would be to call upon a script or command with an
+expression, so if you want to insert the current date you could do something
+like this (when the expression register is opened):</p>
+
+<pre><code>=system('date')
+</code></pre>
+
+<p>Yes, this could also be done with <code>:r!date</code> for instance, which highlights the
+fact that the expression register is more suited for Vimscript expressions (as
+the name implies), but it works.</p>
+
+<h2>Combining the two</h2>
+
+<p>Since variables can be printed with the expression register, a way to use this
+in macros would be to use a variable as a counter, print its value and then
+increment it for each step.</p>
+
+<p>Let&rsquo;s take this markdown text&hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="o">*</span> <span class="nt">Some</span>
+</span><span class='line'><span class="o">*</span> <span class="nt">Arbitrary</span>
+</span><span class='line'><span class="o">*</span> <span class="nt">Text</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip;and let&rsquo;s replace the asterisks with numbers:</p>
+
+<ol>
+<li>We place the cursor at the start of the first line.</li>
+<li>We set a counter variable with <code>:let c=1</code>.</li>
+<li>Start recording the macro with <code>qq</code>.</li>
+<li><code>cl</code> for changing the asterisk.</li>
+<li>Enter the expression register, type <code>c</code> and hit Enter.</li>
+<li>Add a period to make it look nicer and leave Insert-mode.</li>
+<li>Move down one line and then to the start of the line, so we start the next
+iteration from the same position.</li>
+<li>Increment the counter with <code>:let c+=1</code>.</li>
+<li>Close the macro with <code>q</code>.</li>
+</ol>
+
+
+<p>This can now be replayed with <code>@q</code> and then <code>@@</code> across the entire list. The
+main issue with this macro would be that it ends by moving down one line,
+assuming that all bullet points are one line long at most.</p>
+
+<p>A better solution would be to search for the next asterisk, which would
+indicate a bullet point. But what if there&rsquo;s an asterisk in the text? Well then
+we should search for a leading asterisk.</p>
+
+<p>As you can see you have to adjust the precision of your movement yourself to
+the use case, but that&rsquo;s something you&rsquo;ll get to explore on your own.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Vim plugins - Why, How and Which]]></title>

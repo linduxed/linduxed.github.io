@@ -78,15 +78,21 @@
     </url>
     <url>
         <loc>http://linduxed.github.io/blog/2012/05/10/not-ready-for-the-switch/</loc>
-        <lastmod>2014-06-22T12:33:05+02:00</lastmod>
+        <lastmod>2014-06-22T17:37:43+02:00</lastmod>
     </url>
     <url>
         <loc>http://linduxed.github.io/blog/2013/04/13/vim-plugins-why/</loc>
-        <lastmod>2014-06-22T17:30:32+02:00</lastmod>
+        <lastmod>2014-06-22T17:37:52+02:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://linduxed.github.io/blog/2013/05/28/macros-and-the-expression-register-in-vim/
+        </loc>
+        <lastmod>2014-06-22T18:25:44+02:00</lastmod>
     </url>
     <url>
         <loc>http://linduxed.github.io/blog/archives/</loc>
-        <lastmod>2014-06-22T17:30:32+02:00</lastmod>
+        <lastmod>2014-06-22T18:25:44+02:00</lastmod>
     </url>
     <url>
         <loc>http://linduxed.github.io/robots.txt</loc>
@@ -94,6 +100,6 @@
     </url>
     <url>
         <loc>http://linduxed.github.io/</loc>
-        <lastmod>2014-06-22T17:30:32+02:00</lastmod>
+        <lastmod>2014-06-22T18:25:44+02:00</lastmod>
     </url>
 </urlset>
