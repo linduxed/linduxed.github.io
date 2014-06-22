@@ -28,14 +28,32 @@ I still have no idea why, and since I&rsquo;ve &hellip;">
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Poller+One' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Germania+One' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fontdiner+Swanky' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Della+Respira' rel='stylesheet' type='text/css'>
 
   
 
 </head>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<logo>
 
-<body   >
+<img src="/logo.png" alt="Website Logo. Upload to /source/logo.png ; disable in /source/_includes/logo.html" height="32px" width="32px">
+</logo>
+
+
+
+<body >
   <header role="banner"><hgroup>
   <h1><a href="/">Rants of a geek</a></h1>
   
@@ -44,10 +62,13 @@ I still have no idea why, and since I&rsquo;ve &hellip;">
 </hgroup>
 
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
+  <nav role="navigation"><ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
 </ul>
+
+<br>
   
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
@@ -56,11 +77,12 @@ I still have no idea why, and since I&rsquo;ve &hellip;">
   </fieldset>
 </form>
   
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/about">About</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
+<!--
+<ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
 </ul>
+-->
 
 </nav>
   <div id="main">
@@ -190,35 +212,6 @@ Firefox.</p>
 
 
   <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">linduxed</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-10T14:12:25+02:00" pubdate data-updated="true">May 10<span>th</span>, 2012</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/tech/'>tech</a>
-  
-</span>
-
-
-    </p>
     
       <div class="sharing">
   
@@ -231,10 +224,29 @@ Firefox.</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/03/15/when-the-tools-just-dont-work/" title="Previous Post: When the tools just don't work">&laquo; When the tools just don't work</a>
+  
+
+<span class="byline author vcard">Text authored by <span class="fn">linduxed</span></span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/03/15/when-the-tools-just-dont-work/" 
+           title="Previous Post: When the tools just don't work">&laquo; When the tools just don't work</a>
       
       
-        <a class="basic-alignment right" href="/blog/2013/04/13/vim-plugins-why/" title="Next Post: Vim plugins - Why, How and Which">Vim plugins - Why, How and Which &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2013/04/13/vim-plugins-why/" 
+           title="Next Post: Vim plugins - Why, How and Which">Vim plugins - Why, How and Which &raquo;</a>
       
     </p>
   </footer>
@@ -242,44 +254,11 @@ Firefox.</p>
 
 </div>
 
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/01/21/currying-and-other-haskell-spices/">Currying and other Haskell spices</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/16/vim-search-and-replace-in-bulk/">Vim search and replace in bulk</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/12/adult-gaming/">Adult gaming</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/09/planescape-torment-could-have-been-more/">Planescape: Torment could have been more</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/08/screencasts-in-linux/">Screencasts in Linux</a>
-      </li>
-    
-  </ul>
-</section>
-
-  
-</aside>
-
-
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - linduxed -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  Website copyright &copy; 2014 - linduxed |
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/TheChymera/Koenigspress">Königspress</a></span>.
 </p>
 
 </footer>
