@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Vim plugins - Why"
+title: "Vim plugins - Why, How and Which"
 date: Sat, 13 Apr 2013 21:12:33 +0000
 comments: true
 categories: [gnu/linux, tech]
