@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tech | Rants of a geek]]></title>
   <link href="http://linduxed.com/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://linduxed.com/"/>
-  <updated>2014-06-22T01:58:36+02:00</updated>
+  <updated>2014-06-22T12:33:06+02:00</updated>
   <id>http://linduxed.com/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Not ready for the switch]]></title>
+    <link href="http://linduxed.com/blog/2012/05/10/not-ready-for-the-switch/"/>
+    <updated>2012-05-10T14:12:25+02:00</updated>
+    <id>http://linduxed.com/blog/2012/05/10/not-ready-for-the-switch</id>
+    <content type="html"><![CDATA[<p>Yesterday, for some unknown reason, <a href="http://5digits.org/pentadactyl/">Pentadactyl</a> decided that it didn&rsquo;t want to work any more.
+I still have no idea why, and since I&rsquo;ve been suspending my computer for quite
+a few days now, it might actually have to do with me upgrading Firefox from 11
+to 12 quite recently. The problem was actually pretty easily solved by
+downloading the latest nightly and just fire that up, but before I did that, the
+sudden loss of Vim-style navigation inspired me to pick up an old project of
+mine:</p>
+
+<p>Moving from Firefox to uzbl.</p>
+
+<!--more-->
+
+
+<h2>It sounds so beautiful</h2>
+
+<p>For those who don&rsquo;t know what <a href="http://www.uzbl.org/">uzbl</a> is, it&rsquo;s basically
+a browser that adheres to the UNIX philosophy of &ldquo;doing one thing and doing it
+well&rdquo;. What that means is that the browser is split up into small pieces; you
+have <code>uzbl-core</code> which is not much more than Webkit with some interfaces on top
+of it, and the actual thing that resembles a browser is either <code>uzbl-browser</code> or
+<code>uzbl-tabbed</code>.<br/>
+You know you&rsquo;re in for a ride if the developers initially didn&rsquo;t have
+<code>uzbl-tabbed</code> at all since &ldquo;window managers should be handling the different
+instances of the browser, not the browser itself&rdquo;. All the basic functionality
+that one takes for granted in other browsers that aren&rsquo;t strictly browsing are
+extras here; bookmarks, downloading, completion and other functionality that you
+come to expect are scripts that are loaded by the main configuration file.</p>
+
+<h2>But the beauty comes at a price</h2>
+
+<p>If the application is nice then I&rsquo;m willing to put the time into configuring it.
+Whether it&rsquo;s my ZSH terminal, Vim, Firefox or something else, I&rsquo;ll put in the
+work to get it <em>just right</em> if I know that I can get that magnificent end result
+that I envision. uzbl sounds fantastic because I like the notion of being able
+to configure a system from the ground up, to see what happens and to know what
+does what.</p>
+
+<p>There&rsquo;s just one big problem however:</p>
+
+<p>The work necessary to get uzbl to the state my Firefox is in with the numerous
+extensions and custom configurations would take <em>ages</em>, if at all possible.
+I decided that I can try to live without NoScript, BetterPrivacy, Firebug and
+some other nice extensions, as long as I get what I consider to be core
+functionality to work smoothly. Even this (what I would consider modest)
+aspiration is a challenge to say the least.</p>
+
+<p>The default configuration gives you Vim-like control, with hjkl-movement and
+some other things that you might recognize if you&rsquo;re coming from
+Pentadactyl/Vimperator, but the similarities end fairly quickly. Once the basic
+keys were reconfigured to my liking, one of the first things I wanted to tweak
+was that since I use <code>uzbl_tabbed</code>, I&rsquo;ll want to reconfigure the <code>NEW_WINDOW</code>
+action to load links in new tabs. The fact that only the action <code>NEW_TAB</code> worked
+and not the other two potentially nice ones (<code>NEW_BG_TAB</code> and <code>NEW_BG_TAB_NEXT</code>)
+was a shame, doubly so when there&rsquo;s no information for how get it to work.</p>
+
+<h2>You&rsquo;re on your own</h2>
+
+<p>This was the first encounter (out of many, I might add) with what eventually led
+me to give up on the browser. There&rsquo;s no comprehensive source of information
+about uzbl… anywhere.</p>
+
+<p>I use Archlinux on my main computer but I know that I might not have been if it
+wasn&rsquo;t for the fantastic Wiki. I don&rsquo;t know if that huge source of information
+has spoiled me, but I feel like I&rsquo;m done with the days of guessing myself forth
+when configuring software. I don&rsquo;t enjoy being in the situation of “Well I&rsquo;d
+really like to do foobar, so I guess I&rsquo;ll scour tens of config files to see if
+someone has done something remotely similar from which I can extrapolate some
+kind of solution”.</p>
+
+<p><em>I&rsquo;m done with that shit.</em></p>
+
+<p>The Arch Wiki proves that even if you put docstrings for every line in your
+configuration, a Wiki page with some quick and helpful tweaks that every new
+user would make, is a thousand times better. As soon as I got any idea on how
+I&rsquo;d like to tweak the interface of uzbl, it was followed by the realization that
+there&rsquo;s neither a quick nor an obvious way to do it.</p>
+
+<p>The <a href="http://www.uzbl.org/wiki/">official Wiki</a> is so barren that it seems to be
+made by and exclusively for the current/future developers. Google isn&rsquo;t much
+more helpful, the usual searches for HOWTOs or tutorials yield not much more
+information than what one would derive from the sample configs that one can find
+in the Wiki.</p>
+
+<h2>See you some other time</h2>
+
+<p>The impression I get is that if you&rsquo;re not ready to figure it out, then you
+shouldn&rsquo;t even start. I gave it quite a few hours and at a certain point decided
+that fixing Pentadactyl would be far more beneficial and far less time
+consuming.</p>
+
+<p>Some day I&rsquo;ll probably give it another shot, but by that time I&rsquo;ll probably come
+prepared with far more patience and without the expectation to actually replace
+Firefox.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[When the tools just don't work]]></title>
