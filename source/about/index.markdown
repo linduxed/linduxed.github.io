@@ -1,10 +1,8 @@
 ---
 layout: page
 title: "About"
-date: 2014-06-22 21:41
 comments: false
 sharing: false
-footer: true
 ---
 My name is **linduxed**. I code and talk a lot.
 
