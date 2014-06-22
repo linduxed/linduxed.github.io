@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: reviews | Rants of a geek]]></title>
-  <link href="http://linduxed.com/blog/categories/reviews/atom.xml" rel="self"/>
-  <link href="http://linduxed.com/"/>
-  <updated>2014-06-22T12:33:06+02:00</updated>
-  <id>http://linduxed.com/</id>
+  <link href="http://linduxed.github.io/blog/categories/reviews/atom.xml" rel="self"/>
+  <link href="http://linduxed.github.io/"/>
+  <updated>2014-06-22T17:26:59+02:00</updated>
+  <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Unreal Tournament 3 + Titan Pack]]></title>
-    <link href="http://linduxed.com/blog/2009/06/03/unreal-tournament-3-plus-titan-pack/"/>
+    <link href="http://linduxed.github.io/blog/2009/06/03/unreal-tournament-3-plus-titan-pack/"/>
     <updated>2009-06-03T17:41:28+02:00</updated>
-    <id>http://linduxed.com/blog/2009/06/03/unreal-tournament-3-plus-titan-pack</id>
+    <id>http://linduxed.github.io/blog/2009/06/03/unreal-tournament-3-plus-titan-pack</id>
     <content type="html"><![CDATA[<p>When Unreal Tournament 3 was officially announced, a wave of mixed feelings
 went through the Unreal-community.</p>
 

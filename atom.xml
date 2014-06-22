@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Rants of a geek]]></title>
-  <link href="http://linduxed.com/atom.xml" rel="self"/>
-  <link href="http://linduxed.com/"/>
-  <updated>2014-06-22T12:33:06+02:00</updated>
-  <id>http://linduxed.com/</id>
+  <link href="http://linduxed.github.io/atom.xml" rel="self"/>
+  <link href="http://linduxed.github.io/"/>
+  <updated>2014-06-22T17:26:59+02:00</updated>
+  <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
     
@@ -14,10 +14,263 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Vim plugins - Why]]></title>
+    <link href="http://linduxed.github.io/blog/2013/04/13/vim-plugins-why/"/>
+    <updated>2013-04-13T23:12:33+02:00</updated>
+    <id>http://linduxed.github.io/blog/2013/04/13/vim-plugins-why</id>
+    <content type="html"><![CDATA[<p>A lot of times when I meet &ldquo;Vim neophytes&rdquo; they mention that Vim is a great
+editor, but they miss certain features that they find in their previous
+editor/IDE of choice. Often this will be a case of them not having learnt the
+Vim way of doing the same task, but occasionally you&rsquo;ll have to tell them that
+&ldquo;Vim doesn&rsquo;t do that&rdquo;.<br/>
+Indeed, these days if you don&rsquo;t want to hop between different applications (all
+of them having the primary purpose of editing text of some kind) you&rsquo;ll want
+features that go beyond &ldquo;editing text&rdquo;.</p>
+
+<h4>These days an editor can&rsquo;t just be an editor.</h4>
+
+<p>I&rsquo;ve met programmers who say that they&rsquo;re fine with using Eclipse for Java, Vim
+for Ruby and then nano for minor edits in configuration files. Any workflow like
+this makes no sense to me, since I wouldn&rsquo;t want to edit text in anything that
+isn&rsquo;t Vim. Most people don&rsquo;t see how it could be any different&hellip;</p>
+
+<p>&hellip;until you show them the wealth of plugins available.</p>
+
+<h2>How to get them installed</h2>
+
+<p>The classic way of installing plugins is to get the latest version from
+<a href="http://www.vim.org/scripts/index.php">vim.org&rsquo;s scripts</a> page in the form of an
+archive and just extract the contents into <code>~/.vim/</code>.</p>
+
+<p>Now that you know about how it was done once upon a time, please refrain from
+ever using this method (unless you want a spectacular mess inside your
+Vim-directory).</p>
+
+<p>These days people have plugins in separate directories, all of them stored in
+some central plugin directory (most often <code>~/vim/bundle</code>). These plugin
+directories are in turn loaded by some &ldquo;plugin handler&rdquo;, of which there are
+many.</p>
+
+<p>A lengthy list of handlers <a href="http://vim-scripts.org/vim/tools.html">can be found here</a>. It doesn&rsquo;t matter that much which one
+you choose, but it might be a good idea to go with one of the more popular ones,
+which are Pathogen, Vundle and VAM (vim-addon-manager).</p>
+
+<h2>My setup</h2>
+
+<p>I prefer to do the handling and updating of plugins outside of Vim, so I&rsquo;ve got
+the following setup:</p>
+
+<p>I&rsquo;ve got a &ldquo;dotfiles&rdquo; git-repository to which I&rsquo;ve added my Vim-plugins as
+submodules. This allows me to update all my plugins (along with any other
+git-repos I&rsquo;ve added as dotfiles) with one command (alias it to something
+shorter):</p>
+
+<pre><code>git submodule foreach git pull origin master
+</code></pre>
+
+<p>Committing these updated plugins with <code>git commit -a</code> and pushing the dotfiles
+repo will then allow me to clone the repo anywhere and get all my plugins at the
+same time (just make sure to clone with the <code>--recursive</code> flag).</p>
+
+<p>Standing in <code>~</code>, adding the plugins would be done with a command like this:</p>
+
+<pre><code>git submodule add git://github.com/linduxed/vim-linduxed-theme.git .vim/bundle/vim-linduxed-theme
+</code></pre>
+
+<p>I then use Pathogen to load all the plugins (read its FAQ about adding it as
+a submodule, if that interests you).</p>
+
+<p>I should also mention that while not necessary, structuring up your <code>~/.vimrc</code>
+somewhat could be of great help, since it will increase in size after you start
+adding plugins. <code>:set foldmethod=marker</code> and <a href="https://github.com/linduxed/dotfiles/blob/master/.vimrc">adding some markers</a> helps a lot.</p>
+
+<p>If you don&rsquo;t already have a <code>.vimrc</code>, this is a <a href="https://github.com/tpope/vim-sensible">good starting point</a>.</p>
+
+<h2>Which plugins do I get?</h2>
+
+<p>There are quite a few plugins out there, so I&rsquo;ll just get you started with those
+that I find most significantly improve my Vim experience. Click on the plugin
+names to be taken to their respective repositories.</p>
+
+<p>If you&rsquo;re hungry for more after going through this list, check out
+<a href="https://github.com/linduxed/dotfiles/tree/master/.vim/bundle">the other plugins I&rsquo;ve got in my setup</a> and go to
+<a href="http://vim-scripts.org/">Vim Scripts</a> or <a href="http://www.vim.org/scripts/index.php">the official script page</a>.</p>
+
+<h3>File and buffer navigation</h3>
+
+<h4><a href="https://github.com/kien/ctrlp.vim/">CTRLP</a></h4>
+
+<p>There are a few fuzzy-search plugins out there, the most well known ones being
+<a href="https://github.com/wincent/Command-T">Command-T</a>, <a href="https://bitbucket.org/ns9tks/vim-fuzzyfinder/">FuzzyFinder</a> and CTRLP. While they&rsquo;re all
+pretty similar when it comes to finding files, I like CTRLP a bit more because
+it lets you fuzzy find among buffers and most-recently-used files as well.</p>
+
+<p>As long as you know the name of the file you&rsquo;re looking for, this type of plugin
+takes care of most file opening operations, due to it being so quick.</p>
+
+<p>In case you haven&rsquo;t seen fuzzy-finders before, here&rsquo;s a quick demonstration. This is what it looks like when I look for <code>game/ai/ai_dropnodes.c</code> in the <a href="http://www.warsow.net/">Warsow</a> source code:</p>
+
+<p><span class='caption-wrapper'><img class='caption' src='http://linduxed.github.io/images/blog/ctrlp.gif' width='' height='' title='CTRLP in action. Looking for `ai_dropnodes.c`.'><span class='caption-text'>CTRLP in action. Looking for <code>ai_dropnodes.c</code>.</span></span></p>
+
+<h4><a href="https://github.com/sandeepcr529/Buffet.vim">buffet</a></h4>
+
+<p>There&rsquo;s a lot of overlap between CTRLP&rsquo;s buffer switching functionality and the
+functionality of buffet, but if you want a tool that does nothing but switch
+between buffers swiftly, this plugin is probably it.</p>
+
+<h4><a href="https://github.com/scrooloose/nerdtree.git">nerdtree</a></h4>
+
+<p>While I&rsquo;m using it less and less due to CTRLP, nerdtree is still the easiest way
+to explore your filesystem without exiting Vim.</p>
+
+<h3>Code writing helpers</h3>
+
+<h4><a href="https://github.com/Lokaltog/vim-easymotion.git">vim-easymotion</a></h4>
+
+<p>The big one. This plugin changed the way I move around in code completely. While
+Vim gives you a great set of tools to move around in code (one of the things
+that take the longest to master), this plugin takes it to another level. It&rsquo;s
+probably the closest thing to mouse cursor accuracy you can get, while not
+wasting time to fetch the mouse itself.</p>
+
+<p>Words don&rsquo;t do this justice, so here&rsquo;s a video:</p>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/Dmv6-dguS3g" width="605" height="360" frameborder="0" allowfullscreen></iframe></div>
+
+
+<h4><a href="https://github.com/tpope/vim-surround">vim-surround</a></h4>
+
+<p>Makes the task of surrounding text with quotes, parentheses, brackets, etc. much
+easier. Also provides quick removal and changing of surrounding characters.</p>
+
+<h4><a href="https://github.com/garbas/vim-snipmate.git">vim-snipmate</a></h4>
+
+<p>If you haven&rsquo;t used an editor with snippets before, it&rsquo;s basically a set of
+templates, small pieces of code which are often used in which you fill out the
+relevant fields.</p>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/xV2IsE5OHd4" width="605" height="360" frameborder="0" allowfullscreen></iframe></div>
+
+
+<p>I should mention that at the time of writing the linked project has its
+development slowed down, with another project called <a href="https://github.com/SirVer/ultisnips">UltiSnips</a> getting a lot of traction (along with
+a <a href="https://github.com/MarcWeber/ultisnips/">fork</a> made by an ex-snipmate
+developer).</p>
+
+<p>The situation is a bit complicated, but at the moment snipmate works fine for me
+so I don&rsquo;t see a reason to switch.</p>
+
+<h4><a href="https://github.com/scrooloose/nerdcommenter.git">nerdcommenter</a></h4>
+
+<p>Indispensable plugin that makes the creation and handling of comments in code
+a breeze.</p>
+
+<h4><a href="https://github.com/jiangmiao/auto-pairs">auto-pairs</a></h4>
+
+<p>Inserts a closing parenthesis, bracket, curly brace or quote when you insert an
+opening one. Also knows what to do with braces if you press enter inside them
+(indentation and new empty line between them) along with some other nice things.</p>
+
+<p>There&rsquo;s also <a href="https://github.com/Townk/vim-autoclose">AutoClose</a> which does
+pretty much the same thing.</p>
+
+<h4><a href="https://github.com/godlygeek/tabular.git">tabular</a></h4>
+
+<p>For the people who like their code pretty (I obsess over that kind of stuff)
+this plugin aligns code.</p>
+
+<p><span class='caption-wrapper'><img class='caption' src='http://linduxed.github.io/images/blog/tabular.gif' width='' height='' title='Tabular lining stuff up.'><span class='caption-text'>Tabular lining stuff up.</span></span></p>
+
+<h3>Miscellaneous</h3>
+
+<h4><a href="https://github.com/linduxed/vim-linduxed-theme.git">vim-linduxed-theme</a></h4>
+
+<p>This is here for two reasons:</p>
+
+<ol>
+<li>Plugging your own stuff is always nice.</li>
+<li>People should get any theme.</li>
+</ol>
+
+
+<p>Seriously, the stock themes aren&rsquo;t that pretty and the ones you can find on the
+internet are both varied and beautiful (not to mention that some have more
+detailed syntax highlighting).</p>
+
+<p>Here&rsquo;s a list of repos to look through (there are many others):</p>
+
+<ul>
+<li><a href="https://github.com/tpope/vim-vividchalk">Vividchalk</a></li>
+<li><a href="https://github.com/daylerees/colour-schemes">Dayle Rees&#8217; color scheme collection</a></li>
+<li><a href="https://github.com/altercation/solarized">Solarized</a></li>
+<li><a href="https://github.com/chriskempson/tomorrow-theme">Tomorrow</a></li>
+</ul>
+
+
+<h4><a href="https://github.com/sjl/gundo.vim.git">gundo.vim</a></h4>
+
+<p>Many people aren&rsquo;t even aware of the fact that Vim has a branching undo history,
+but this plugin makes it accessible. It upgrades the undo-tree from &ldquo;never use
+it&rdquo; to &ldquo;use it all the time&rdquo;.</p>
+
+<h4><a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a></h4>
+
+<blockquote><p>I&#8217;m not going to lie to you; fugitive.vim may very well be the best Git wrapper of all time.</p><footer><strong>Tim Pope</strong></footer></blockquote>
+
+
+<p>I&rsquo;ll have to agree. The extensive functionality is covered in detailed by Drew
+Neil in his Vimcasts videos, starting at <a href="http://vimcasts.org/episodes/fugitive-vim---a-complement-to-command-line-git/">episode #31</a>.</p>
+
+<p>If I was to pick just one of the many great features this plugin provides, then
+it&rsquo;s the ability to open up the index version of the files and edit that while
+having the version from the working directory open. This is like a superior
+version of <code>git add --patch</code>, which is reason enough to get this.</p>
+
+<h4><a href="https://github.com/scrooloose/syntastic">syntastic</a></h4>
+
+<p>This plugin runs your code through a linter or syntax checker upon every save
+and loads the warnings/errors into the location list and displays markers in the
+gutter to indicate on what rows the warnings/errors are.</p>
+
+<p>Incredibly helpful, you wouldn&rsquo;t know how much until you&rsquo;ve tried it. Syntastic
+has code ready for the major linters/checkers/compilers for most languages.</p>
+
+<p>Here&rsquo;s me fixing some warnings that pylint gives about &ldquo;no space after comma&rdquo;
+(pylint warns about non-compliance with <a href="http://www.python.org/dev/peps/pep-0008/">PEP8</a>):</p>
+
+<p><span class='caption-wrapper'><img class='caption' src='http://linduxed.github.io/images/blog/syntastic.gif' width='' height='' title='Syntastic giving warnings with the help of pylint.'><span class='caption-text'>Syntastic giving warnings with the help of pylint.</span></span></p>
+
+<h4><a href="https://github.com/tpope/vim-unimpaired">vim-unimpaired</a></h4>
+
+<p>Gives you a set of very useful bindings.</p>
+
+<h2>Only the beginning</h2>
+
+<p>The big category of plugins that I&rsquo;ve omitted is language/framework specific
+plugins. I&rsquo;ve got a lot of those, but each specific one might not be useful to
+everyone. With that said, there are some language specific plugins that are
+really powerful and should most definitely be used if they align with what
+you&rsquo;re coding in (<a href="https://github.com/tpope/vim-rails"><code>rails.vim</code> by Tim Pope</a>
+is, from what I&rsquo;ve heard, considered to be a major source of Vim converts from
+TextMate).</p>
+
+<p>Once you start customizing your Vim, you&rsquo;ll notice that there are many areas
+which you can improve with a plugin here and there. Just remember to stop and
+consider if the functionality you&rsquo;re looking for isn&rsquo;t already available in
+stock Vim.</p>
+
+<p>As mentioned before, if you need some inspiration you can check out
+<a href="https://github.com/linduxed/dotfiles/tree/master/.vim/bundle">the plugins I use</a> and if you&rsquo;ve got
+any problems, just fire up your IRC client of choice and head over to
+<code>#vim@freenode.org</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Not ready for the switch]]></title>
-    <link href="http://linduxed.com/blog/2012/05/10/not-ready-for-the-switch/"/>
+    <link href="http://linduxed.github.io/blog/2012/05/10/not-ready-for-the-switch/"/>
     <updated>2012-05-10T14:12:25+02:00</updated>
-    <id>http://linduxed.com/blog/2012/05/10/not-ready-for-the-switch</id>
+    <id>http://linduxed.github.io/blog/2012/05/10/not-ready-for-the-switch</id>
     <content type="html"><![CDATA[<p>Yesterday, for some unknown reason, <a href="http://5digits.org/pentadactyl/">Pentadactyl</a> decided that it didn&rsquo;t want to work any more.
 I still have no idea why, and since I&rsquo;ve been suspending my computer for quite
 a few days now, it might actually have to do with me upgrading Firefox from 11
@@ -116,9 +369,9 @@ Firefox.</p>
   
   <entry>
     <title type="html"><![CDATA[When the tools just don't work]]></title>
-    <link href="http://linduxed.com/blog/2012/03/15/when-the-tools-just-dont-work/"/>
+    <link href="http://linduxed.github.io/blog/2012/03/15/when-the-tools-just-dont-work/"/>
     <updated>2012-03-15T12:38:30+01:00</updated>
-    <id>http://linduxed.com/blog/2012/03/15/when-the-tools-just-dont-work</id>
+    <id>http://linduxed.github.io/blog/2012/03/15/when-the-tools-just-dont-work</id>
     <content type="html"><![CDATA[<p>Every once in a while you stumble on that area of software that Linux just
 doesn&rsquo;t have covered. You might now be thinking that I&rsquo;d like to talk about
 audio and video editing. A fair guess, since you&rsquo;ll hear people talk about
@@ -193,9 +446,9 @@ being an end result. That&rsquo;s something I&rsquo;ve yet to see here in Linux.
   
   <entry>
     <title type="html"><![CDATA[Code I enjoy]]></title>
-    <link href="http://linduxed.com/blog/2012/02/27/code-i-enjoy/"/>
+    <link href="http://linduxed.github.io/blog/2012/02/27/code-i-enjoy/"/>
     <updated>2012-02-27T18:59:41+01:00</updated>
-    <id>http://linduxed.com/blog/2012/02/27/code-i-enjoy</id>
+    <id>http://linduxed.github.io/blog/2012/02/27/code-i-enjoy</id>
     <content type="html"><![CDATA[<p>Being a CS student means that I will be forced to code in a variety of
 languages. A lot of our code will be written in Java or C++, but we&rsquo;ll
 necessarily get in touch with many other languages, spanning over multiple
@@ -288,9 +541,9 @@ want to code, but how you want to do it.</p>
   
   <entry>
     <title type="html"><![CDATA[Att stå still gåendes]]></title>
-    <link href="http://linduxed.com/blog/2012/01/26/att-sta-still-gaendes/"/>
+    <link href="http://linduxed.github.io/blog/2012/01/26/att-sta-still-gaendes/"/>
     <updated>2012-01-26T00:36:52+01:00</updated>
-    <id>http://linduxed.com/blog/2012/01/26/att-sta-still-gaendes</id>
+    <id>http://linduxed.github.io/blog/2012/01/26/att-sta-still-gaendes</id>
     <content type="html"><![CDATA[<p>En ny vecka gryr och jag står med hopp.</p>
 
 <!--more-->
@@ -354,9 +607,9 @@ Kommer jag att ändras under årets lopp?</p>
   
   <entry>
     <title type="html"><![CDATA[Just a toy]]></title>
-    <link href="http://linduxed.com/blog/2010/08/17/just-a-toy/"/>
+    <link href="http://linduxed.github.io/blog/2010/08/17/just-a-toy/"/>
     <updated>2010-08-17T17:14:11+02:00</updated>
-    <id>http://linduxed.com/blog/2010/08/17/just-a-toy</id>
+    <id>http://linduxed.github.io/blog/2010/08/17/just-a-toy</id>
     <content type="html"><![CDATA[<p>Yesterday I had an experience that was moving. It felt special, yet to the
 casual observer it would have been anything but special.</p>
 
@@ -412,9 +665,9 @@ that it was just a toy. I left it at that.</p>
   
   <entry>
     <title type="html"><![CDATA[Laughs from nowhere]]></title>
-    <link href="http://linduxed.com/blog/2010/05/25/laughs-from-nowhere/"/>
+    <link href="http://linduxed.github.io/blog/2010/05/25/laughs-from-nowhere/"/>
     <updated>2010-05-25T12:18:00+02:00</updated>
-    <id>http://linduxed.com/blog/2010/05/25/laughs-from-nowhere</id>
+    <id>http://linduxed.github.io/blog/2010/05/25/laughs-from-nowhere</id>
     <content type="html"><![CDATA[<p>Humour is a force that binds and divides.</p>
 
 <p>It is as hard to define as the force of love and yet as simple. When you burst
@@ -477,9 +730,9 @@ this I just can&rsquo;t grasp.</p>
   
   <entry>
     <title type="html"><![CDATA[Unreal Tournament vs. Quake]]></title>
-    <link href="http://linduxed.com/blog/2010/01/12/unreal-tournament-vs-quake/"/>
+    <link href="http://linduxed.github.io/blog/2010/01/12/unreal-tournament-vs-quake/"/>
     <updated>2010-01-12T18:54:49+01:00</updated>
-    <id>http://linduxed.com/blog/2010/01/12/unreal-tournament-vs-quake</id>
+    <id>http://linduxed.github.io/blog/2010/01/12/unreal-tournament-vs-quake</id>
     <content type="html"><![CDATA[<p>Within the genre of first person shooters there is a sub-genre that are often
 called arena shooters.</p>
 
@@ -519,7 +772,7 @@ but since the the purpose of the article is comparing what I believe to be the
 foremost of both series, UT2004 will be seen as the representative game. While
 I don&rsquo;t feel it is fair to disqualify the other two without a proper
 explanation, I&rsquo;ll leave that to a different article (some of it has been
-covered in my <a href="http://linduxed.com/blog/2009/06/03/unreal-tournament-3-plus-titan-pack/">UT3 review</a>).</p>
+covered in my <a href="http://linduxed.github.io/blog/2009/06/03/unreal-tournament-3-plus-titan-pack/">UT3 review</a>).</p>
 
 <h2>Basics compared</h2>
 
@@ -657,9 +910,9 @@ to be one you feel you&rsquo;ll never uninstall.</p>
   
   <entry>
     <title type="html"><![CDATA[The black sheep of social media]]></title>
-    <link href="http://linduxed.com/blog/2009/09/28/the-black-sheep-of-social-media/"/>
+    <link href="http://linduxed.github.io/blog/2009/09/28/the-black-sheep-of-social-media/"/>
     <updated>2009-09-28T00:16:15+02:00</updated>
-    <id>http://linduxed.com/blog/2009/09/28/the-black-sheep-of-social-media</id>
+    <id>http://linduxed.github.io/blog/2009/09/28/the-black-sheep-of-social-media</id>
     <content type="html"><![CDATA[<p>Last week the company had a group activity where the following question had to
 be answered:</p>
 
@@ -733,9 +986,9 @@ friend?</p>
   
   <entry>
     <title type="html"><![CDATA[At the snap of your fingers]]></title>
-    <link href="http://linduxed.com/blog/2009/06/20/at-the-snap-of-your-fingers/"/>
+    <link href="http://linduxed.github.io/blog/2009/06/20/at-the-snap-of-your-fingers/"/>
     <updated>2009-06-20T18:23:15+02:00</updated>
-    <id>http://linduxed.com/blog/2009/06/20/at-the-snap-of-your-fingers</id>
+    <id>http://linduxed.github.io/blog/2009/06/20/at-the-snap-of-your-fingers</id>
     <content type="html"><![CDATA[<p>I&rsquo;m by now profoundly tired of the misconception that has been floating around
 in our modern digitalized society for too long of a time. It thrives within the
 older generations, but is in no way limited to them. It goes like this:</p>
@@ -827,9 +1080,9 @@ adjust to that.</p>
   
   <entry>
     <title type="html"><![CDATA[Configuring your Awesome 3.x install]]></title>
-    <link href="http://linduxed.com/blog/2009/06/15/configuring-your-awesome-3-dot-x-install/"/>
+    <link href="http://linduxed.github.io/blog/2009/06/15/configuring-your-awesome-3-dot-x-install/"/>
     <updated>2009-06-15T02:59:35+02:00</updated>
-    <id>http://linduxed.com/blog/2009/06/15/configuring-your-awesome-3-dot-x-install</id>
+    <id>http://linduxed.github.io/blog/2009/06/15/configuring-your-awesome-3-dot-x-install</id>
     <content type="html"><![CDATA[<p>After posting my guide on installing Awesome 3.x I got the inevitable question
 of how to actually configure it. This WM is not for the faint of heart.<br/>
 On the other hand it does offer a lot of customization, should you know the lua
@@ -1113,9 +1366,9 @@ I&rsquo;d be glad to post them here.</p>
   
   <entry>
     <title type="html"><![CDATA[Pirate Party gets into EU-parliament]]></title>
-    <link href="http://linduxed.com/blog/2009/06/09/pirate-party-gets-into-eu-parliament/"/>
+    <link href="http://linduxed.github.io/blog/2009/06/09/pirate-party-gets-into-eu-parliament/"/>
     <updated>2009-06-09T18:35:27+02:00</updated>
-    <id>http://linduxed.com/blog/2009/06/09/pirate-party-gets-into-eu-parliament</id>
+    <id>http://linduxed.github.io/blog/2009/06/09/pirate-party-gets-into-eu-parliament</id>
     <content type="html"><![CDATA[<p>I&rsquo;ve for some time now looked at extreme sides in conflicts/discussions as
 a kind of a necessity. It&rsquo;s not that you will always agree with them, but they
 will inevitably broaden the scope of the argument.<br/>
@@ -1228,9 +1481,9 @@ scope.</p>
   
   <entry>
     <title type="html"><![CDATA[Unreal Tournament 3 + Titan Pack]]></title>
-    <link href="http://linduxed.com/blog/2009/06/03/unreal-tournament-3-plus-titan-pack/"/>
+    <link href="http://linduxed.github.io/blog/2009/06/03/unreal-tournament-3-plus-titan-pack/"/>
     <updated>2009-06-03T17:41:28+02:00</updated>
-    <id>http://linduxed.com/blog/2009/06/03/unreal-tournament-3-plus-titan-pack</id>
+    <id>http://linduxed.github.io/blog/2009/06/03/unreal-tournament-3-plus-titan-pack</id>
     <content type="html"><![CDATA[<p>When Unreal Tournament 3 was officially announced, a wave of mixed feelings
 went through the Unreal-community.</p>
 
@@ -1441,9 +1694,9 @@ outstanding to be good.</p>
   
   <entry>
     <title type="html"><![CDATA[Why American humour doesn't humour me]]></title>
-    <link href="http://linduxed.com/blog/2009/06/02/why-american-humour-doesnt-humour-me/"/>
+    <link href="http://linduxed.github.io/blog/2009/06/02/why-american-humour-doesnt-humour-me/"/>
     <updated>2009-06-02T22:11:24+02:00</updated>
-    <id>http://linduxed.com/blog/2009/06/02/why-american-humour-doesnt-humour-me</id>
+    <id>http://linduxed.github.io/blog/2009/06/02/why-american-humour-doesnt-humour-me</id>
     <content type="html"><![CDATA[<p>I went to see Dylan Moran yesterday.<br/>
 I was quite hesitant at first to order the ticket, having two exams the same
 week. In retrospect however, I would never be able to forgive myself for not
@@ -1494,9 +1747,9 @@ fun is to be had. Take it as both a warning and an invitation.</p>
   
   <entry>
     <title type="html"><![CDATA[No Vista - No gaming ; Hate Vista - Love gaming]]></title>
-    <link href="http://linduxed.com/blog/2009/05/29/no-vista-no-gaming-hate-vista-love-gaming/"/>
+    <link href="http://linduxed.github.io/blog/2009/05/29/no-vista-no-gaming-hate-vista-love-gaming/"/>
     <updated>2009-05-29T04:02:16+02:00</updated>
-    <id>http://linduxed.com/blog/2009/05/29/no-vista-no-gaming-hate-vista-love-gaming</id>
+    <id>http://linduxed.github.io/blog/2009/05/29/no-vista-no-gaming-hate-vista-love-gaming</id>
     <content type="html"><![CDATA[<p>In my last entry I described my nocturnal attempts at installing an OS. After
 a little closer reflection, I shouldn&rsquo;t have been so quick to blame the distros
 for dodgy discs and weird installs, sleep depravity and lack of will to fix
@@ -1602,15 +1855,15 @@ have the same issues.</p>
   
   <entry>
     <title type="html"><![CDATA[Late night OS adventures]]></title>
-    <link href="http://linduxed.com/blog/2009/05/26/late-night-os-adventures/"/>
+    <link href="http://linduxed.github.io/blog/2009/05/26/late-night-os-adventures/"/>
     <updated>2009-05-26T22:30:23+02:00</updated>
-    <id>http://linduxed.com/blog/2009/05/26/late-night-os-adventures</id>
+    <id>http://linduxed.github.io/blog/2009/05/26/late-night-os-adventures</id>
     <content type="html"><![CDATA[<p>So it was a late night, a day or so after the 23rd of April, Jaunty had just
 been released. I was very excited because I had been using Intrepid for
 a while, and I wasn&rsquo;t as satisfied with it as I was with Hardy; an upgrade felt
 like a nice thing to do. It turned out that Jaunty had some issues that I at the
-time felt relatively unmotivated to solve, most notably <a href="http://linduxed.com/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g/">no sound</a> and an
-<a href="http://linduxed.com/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04/">inability to install Awesome</a>.</p>
+time felt relatively unmotivated to solve, most notably <a href="http://linduxed.github.io/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g/">no sound</a> and an
+<a href="http://linduxed.github.io/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04/">inability to install Awesome</a>.</p>
 
 <p>Perfect reason to start distrohopping.</p>
 
@@ -1664,9 +1917,9 @@ game right?</p>
   
   <entry>
     <title type="html"><![CDATA[Getting Awesome 3.x in Ubuntu 9.04]]></title>
-    <link href="http://linduxed.com/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04/"/>
+    <link href="http://linduxed.github.io/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04/"/>
     <updated>2009-05-25T17:19:06+02:00</updated>
-    <id>http://linduxed.com/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04</id>
+    <id>http://linduxed.github.io/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04</id>
     <content type="html"><![CDATA[<p>Awesome is awesome. That simple. The 3.x series introduced a tray which removed
 all hesitation and made Awesome the WM of choice for me. Unfortunately for
 Ubuntu users (which for the time being includes me) the official repositories
@@ -1749,9 +2002,9 @@ installing when it does. A more detailed guide to <code>checkinstall</code> can 
   
   <entry>
     <title type="html"><![CDATA[Sound in Ubuntu 9.04 on Acer Aspire 8930g]]></title>
-    <link href="http://linduxed.com/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g/"/>
+    <link href="http://linduxed.github.io/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g/"/>
     <updated>2009-05-24T18:56:20+02:00</updated>
-    <id>http://linduxed.com/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g</id>
+    <id>http://linduxed.github.io/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g</id>
     <content type="html"><![CDATA[<p>The Acer Aspire 8930g has got a sound card that has not only been unsupported
 in GNU/Linux for a long time, it has also (to this day) never been a case of
 having the card work out of the box in any distro.</p>
@@ -1932,9 +2185,9 @@ be aplenty.</p>
   
   <entry>
     <title type="html"><![CDATA[Hello World!]]></title>
-    <link href="http://linduxed.com/blog/2009/05/21/hello-world/"/>
+    <link href="http://linduxed.github.io/blog/2009/05/21/hello-world/"/>
     <updated>2009-05-21T16:26:52+02:00</updated>
-    <id>http://linduxed.com/blog/2009/05/21/hello-world</id>
+    <id>http://linduxed.github.io/blog/2009/05/21/hello-world</id>
     <content type="html"><![CDATA[<p>This is my new digital home.</p>
 
 <!--more-->

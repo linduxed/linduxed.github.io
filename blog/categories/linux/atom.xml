@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: linux | Rants of a geek]]></title>
-  <link href="http://linduxed.com/blog/categories/linux/atom.xml" rel="self"/>
-  <link href="http://linduxed.com/"/>
-  <updated>2014-06-22T12:33:06+02:00</updated>
-  <id>http://linduxed.com/</id>
+  <link href="http://linduxed.github.io/blog/categories/linux/atom.xml" rel="self"/>
+  <link href="http://linduxed.github.io/"/>
+  <updated>2014-06-22T17:26:59+02:00</updated>
+  <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[When the tools just don't work]]></title>
-    <link href="http://linduxed.com/blog/2012/03/15/when-the-tools-just-dont-work/"/>
+    <link href="http://linduxed.github.io/blog/2012/03/15/when-the-tools-just-dont-work/"/>
     <updated>2012-03-15T12:38:30+01:00</updated>
-    <id>http://linduxed.com/blog/2012/03/15/when-the-tools-just-dont-work</id>
+    <id>http://linduxed.github.io/blog/2012/03/15/when-the-tools-just-dont-work</id>
     <content type="html"><![CDATA[<p>Every once in a while you stumble on that area of software that Linux just
 doesn&rsquo;t have covered. You might now be thinking that I&rsquo;d like to talk about
 audio and video editing. A fair guess, since you&rsquo;ll hear people talk about
@@ -92,9 +92,9 @@ being an end result. That&rsquo;s something I&rsquo;ve yet to see here in Linux.
   
   <entry>
     <title type="html"><![CDATA[Late night OS adventures]]></title>
-    <link href="http://linduxed.com/blog/2009/05/26/late-night-os-adventures/"/>
+    <link href="http://linduxed.github.io/blog/2009/05/26/late-night-os-adventures/"/>
     <updated>2009-05-26T22:30:23+02:00</updated>
-    <id>http://linduxed.com/blog/2009/05/26/late-night-os-adventures</id>
+    <id>http://linduxed.github.io/blog/2009/05/26/late-night-os-adventures</id>
     <content type="html"><![CDATA[<p>So it was a late night, a day or so after the 23rd of April, Jaunty had just
 been released. I was very excited because I had been using Intrepid for
 a while, and I wasn&rsquo;t as satisfied with it as I was with Hardy; an upgrade felt

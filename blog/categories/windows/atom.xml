@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: windows | Rants of a geek]]></title>
-  <link href="http://linduxed.com/blog/categories/windows/atom.xml" rel="self"/>
-  <link href="http://linduxed.com/"/>
-  <updated>2014-06-22T12:33:06+02:00</updated>
-  <id>http://linduxed.com/</id>
+  <link href="http://linduxed.github.io/blog/categories/windows/atom.xml" rel="self"/>
+  <link href="http://linduxed.github.io/"/>
+  <updated>2014-06-22T17:26:59+02:00</updated>
+  <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[No Vista - No gaming ; Hate Vista - Love gaming]]></title>
-    <link href="http://linduxed.com/blog/2009/05/29/no-vista-no-gaming-hate-vista-love-gaming/"/>
+    <link href="http://linduxed.github.io/blog/2009/05/29/no-vista-no-gaming-hate-vista-love-gaming/"/>
     <updated>2009-05-29T04:02:16+02:00</updated>
-    <id>http://linduxed.com/blog/2009/05/29/no-vista-no-gaming-hate-vista-love-gaming</id>
+    <id>http://linduxed.github.io/blog/2009/05/29/no-vista-no-gaming-hate-vista-love-gaming</id>
     <content type="html"><![CDATA[<p>In my last entry I described my nocturnal attempts at installing an OS. After
 a little closer reflection, I shouldn&rsquo;t have been so quick to blame the distros
 for dodgy discs and weird installs, sleep depravity and lack of will to fix

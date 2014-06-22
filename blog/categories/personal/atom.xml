@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: personal | Rants of a geek]]></title>
-  <link href="http://linduxed.com/blog/categories/personal/atom.xml" rel="self"/>
-  <link href="http://linduxed.com/"/>
-  <updated>2014-06-22T12:33:06+02:00</updated>
-  <id>http://linduxed.com/</id>
+  <link href="http://linduxed.github.io/blog/categories/personal/atom.xml" rel="self"/>
+  <link href="http://linduxed.github.io/"/>
+  <updated>2014-06-22T17:26:59+02:00</updated>
+  <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Att stå still gåendes]]></title>
-    <link href="http://linduxed.com/blog/2012/01/26/att-sta-still-gaendes/"/>
+    <link href="http://linduxed.github.io/blog/2012/01/26/att-sta-still-gaendes/"/>
     <updated>2012-01-26T00:36:52+01:00</updated>
-    <id>http://linduxed.com/blog/2012/01/26/att-sta-still-gaendes</id>
+    <id>http://linduxed.github.io/blog/2012/01/26/att-sta-still-gaendes</id>
     <content type="html"><![CDATA[<p>En ny vecka gryr och jag står med hopp.</p>
 
 <!--more-->
@@ -81,9 +81,9 @@ Kommer jag att ändras under årets lopp?</p>
   
   <entry>
     <title type="html"><![CDATA[Just a toy]]></title>
-    <link href="http://linduxed.com/blog/2010/08/17/just-a-toy/"/>
+    <link href="http://linduxed.github.io/blog/2010/08/17/just-a-toy/"/>
     <updated>2010-08-17T17:14:11+02:00</updated>
-    <id>http://linduxed.com/blog/2010/08/17/just-a-toy</id>
+    <id>http://linduxed.github.io/blog/2010/08/17/just-a-toy</id>
     <content type="html"><![CDATA[<p>Yesterday I had an experience that was moving. It felt special, yet to the
 casual observer it would have been anything but special.</p>
 
@@ -139,9 +139,9 @@ that it was just a toy. I left it at that.</p>
   
   <entry>
     <title type="html"><![CDATA[Laughs from nowhere]]></title>
-    <link href="http://linduxed.com/blog/2010/05/25/laughs-from-nowhere/"/>
+    <link href="http://linduxed.github.io/blog/2010/05/25/laughs-from-nowhere/"/>
     <updated>2010-05-25T12:18:00+02:00</updated>
-    <id>http://linduxed.com/blog/2010/05/25/laughs-from-nowhere</id>
+    <id>http://linduxed.github.io/blog/2010/05/25/laughs-from-nowhere</id>
     <content type="html"><![CDATA[<p>Humour is a force that binds and divides.</p>
 
 <p>It is as hard to define as the force of love and yet as simple. When you burst
@@ -204,9 +204,9 @@ this I just can&rsquo;t grasp.</p>
   
   <entry>
     <title type="html"><![CDATA[Why American humour doesn't humour me]]></title>
-    <link href="http://linduxed.com/blog/2009/06/02/why-american-humour-doesnt-humour-me/"/>
+    <link href="http://linduxed.github.io/blog/2009/06/02/why-american-humour-doesnt-humour-me/"/>
     <updated>2009-06-02T22:11:24+02:00</updated>
-    <id>http://linduxed.com/blog/2009/06/02/why-american-humour-doesnt-humour-me</id>
+    <id>http://linduxed.github.io/blog/2009/06/02/why-american-humour-doesnt-humour-me</id>
     <content type="html"><![CDATA[<p>I went to see Dylan Moran yesterday.<br/>
 I was quite hesitant at first to order the ticket, having two exams the same
 week. In retrospect however, I would never be able to forgive myself for not
@@ -257,9 +257,9 @@ fun is to be had. Take it as both a warning and an invitation.</p>
   
   <entry>
     <title type="html"><![CDATA[Hello World!]]></title>
-    <link href="http://linduxed.com/blog/2009/05/21/hello-world/"/>
+    <link href="http://linduxed.github.io/blog/2009/05/21/hello-world/"/>
     <updated>2009-05-21T16:26:52+02:00</updated>
-    <id>http://linduxed.com/blog/2009/05/21/hello-world</id>
+    <id>http://linduxed.github.io/blog/2009/05/21/hello-world</id>
     <content type="html"><![CDATA[<p>This is my new digital home.</p>
 
 <!--more-->
