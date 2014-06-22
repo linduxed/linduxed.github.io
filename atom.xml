@@ -4,7 +4,7 @@
   <title><![CDATA[Rants of a geek]]></title>
   <link href="http://linduxed.github.io/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-06-22T17:26:59+02:00</updated>
+  <updated>2014-06-22T17:29:32+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -28,6 +28,9 @@ of them having the primary purpose of editing text of some kind) you&rsquo;ll wa
 features that go beyond &ldquo;editing text&rdquo;.</p>
 
 <h4>These days an editor can&rsquo;t just be an editor.</h4>
+
+<!--more-->
+
 
 <p>I&rsquo;ve met programmers who say that they&rsquo;re fine with using Eclipse for Java, Vim
 for Ruby and then nano for minor edits in configuration files. Any workflow like
