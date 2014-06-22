@@ -16,6 +16,8 @@ features that go beyond "editing text".
 
 #### These days an editor can't just be an editor.
 
+<!--more-->
+
 I've met programmers who say that they're fine with using Eclipse for Java, Vim
 for Ruby and then nano for minor edits in configuration files. Any workflow like
 this makes no sense to me, since I wouldn't want to edit text in anything that
