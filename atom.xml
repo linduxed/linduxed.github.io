@@ -4,7 +4,7 @@
   <title><![CDATA[Rants of a geek]]></title>
   <link href="http://linduxed.github.io/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-06-22T18:46:41+02:00</updated>
+  <updated>2014-06-22T20:08:36+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,790 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Currying and other Haskell spices]]></title>
+    <link href="http://linduxed.github.io/blog/2014/01/21/currying-and-other-haskell-spices/"/>
+    <updated>2014-01-21T23:24:04+01:00</updated>
+    <id>http://linduxed.github.io/blog/2014/01/21/currying-and-other-haskell-spices</id>
+    <content type="html"><![CDATA[<p>Most people who start looking at Haskell come from a background of one of the
+more established languages. Be it Java, Ruby, Python or something else; most
+often in those method signatures very clearly define the way in which the
+methods can be called.</p>
+
+<p>Not only does Haskell do things a bit differently, the differences allow for
+increased flexibility when it comes to usage of functions in general.</p>
+
+<!--more-->
+
+
+<h2>A simple intro</h2>
+
+<p>The <code>(+)</code> function takes two arguments and returns the sum of those two
+arguments (provided it&rsquo;s actually possible to sum the two). You can both invoke
+it the &ldquo;infix&rdquo; way:</p>
+
+<pre><code>Prelude&gt; 2 + 3
+5
+</code></pre>
+
+<p>&hellip;or by using the usual function application syntax (function first, arguments
+later):</p>
+
+<pre><code>Prelude&gt; (+) 2 3
+5
+</code></pre>
+
+<p>In the case of <code>+</code> we need to surround it with parentheses for it not to be
+treated as an infix function.</p>
+
+<p>Let&rsquo;s look at the type of <code>+</code>:</p>
+
+<pre><code>Prelude&gt; :type (+)
+(+) :: Num a =&gt; a -&gt; a -&gt; a
+</code></pre>
+
+<p>The <code>Num a</code> part indicates that the type variable a must implement the
+typeclass <code>Num</code>. That&rsquo;s a fancy way of saying that our arguments (represented
+by the <code>a</code>&rsquo;s) must work like numbers. The fact that they&rsquo;re all <code>a</code>&rsquo;s also
+means that the arguments and the return value must all have the same type. For
+people coming from languages like Java, think of <code>Num</code> as an interface that
+each <code>a</code> must implement.</p>
+
+<p>When you see that type declaration you might be thinking thinking &ldquo;Why does it
+use the same arrow <code>(-&gt;)</code> for both arguments and return values?&rdquo;</p>
+
+<p>The reason for this is that functions in Haskell actually take only one
+argument and either return a result or a new function. For our <code>+</code> function,
+this could be shown as follows:</p>
+
+<pre><code>Prelude&gt; :type (+) 2
+(+) 2 :: Num a =&gt; a -&gt; a
+</code></pre>
+
+<p>Note that this new function takes one <code>a</code> and returns an <code>a</code> (once again, as
+long as they&rsquo;re <code>Num</code>). It&rsquo;s the same syntax as before, but this time since
+we&rsquo;re at the end of the line, we don&rsquo;t get a function but a result back.</p>
+
+<p>These functions which return &ldquo;intermediate&rdquo; functions due to having more than
+one argument are called <em>curried functions</em>. The interesting thing about this
+is (as you might have figured out from the <code>(+) 2</code> example) that we can create
+so called partially applied functions with great ease.</p>
+
+<p>We could use that previous example to create a handy <code>plusTen</code> function:</p>
+
+<pre><code>Prelude&gt; let plusTen = (+) 10
+Prelude&gt; :type plusTen
+plusTen :: Integer -&gt; Integer
+Prelude&gt; plusTen 10
+20
+Prelude&gt; plusTen 1
+11
+</code></pre>
+
+<p>As said, this is a very simple example, but I think we can see some potential
+here!</p>
+
+<h2>Partial application in bulk</h2>
+
+<p>So in the example with <code>(+)</code> we created the more rigid <code>plusTen</code> function as an
+alternative to being able to add any number to any other number. As you might
+have guessed, this comes in handy when you have a useful general function, from
+which you can spawn various utility functions, just by setting one or two
+arguments to fixed values.</p>
+
+<p>The fact that Haskell considers these partially applied functions as valid
+constructs that we can pass around means that you could incorporate them into
+more complex structures.</p>
+
+<h3>Selling apples</h3>
+
+<p>Let&rsquo;s imagine that we&rsquo;ve got an apple salesman, standing in the middle of
+a town square and he needs to attract the attention of people around him. He&rsquo;s
+got red and green apples, and he can either be really loud and obnoxious or
+just quietly announce what he has to sell.</p>
+
+<p>Here&rsquo;s some code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">module</span> <span class="nn">Apples</span> <span class="kr">where</span>
+</span><span class='line'>
+</span><span class='line'><span class="kr">data</span> <span class="kt">Apple</span> <span class="ow">=</span> <span class="kt">Green</span> <span class="o">|</span> <span class="kt">Red</span>
+</span><span class='line'><span class="kr">data</span> <span class="kt">Loudness</span> <span class="ow">=</span> <span class="kt">Loud</span> <span class="o">|</span> <span class="kt">Quiet</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">shouting</span> <span class="ow">::</span> <span class="kt">Apple</span> <span class="ow">-&gt;</span> <span class="kt">Loudness</span> <span class="ow">-&gt;</span> <span class="kt">String</span>
+</span><span class='line'><span class="nf">shouting</span> <span class="kt">Green</span> <span class="kt">Quiet</span> <span class="ow">=</span> <span class="s">&quot;Emerald green apples; get your Granny Smiths here!&quot;</span>
+</span><span class='line'><span class="nf">shouting</span> <span class="kt">Green</span> <span class="kt">Loud</span>  <span class="ow">=</span> <span class="s">&quot;GREEN APPLES, YOU NEED ONE!&quot;</span>
+</span><span class='line'><span class="nf">shouting</span> <span class="kt">Red</span>   <span class="kt">Quiet</span> <span class="ow">=</span> <span class="s">&quot;Ruby red apples; get your Red Delicious here!&quot;</span>
+</span><span class='line'><span class="nf">shouting</span> <span class="kt">Red</span>   <span class="kt">Loud</span>  <span class="ow">=</span> <span class="s">&quot;RED APPLES DAMMIT, BUY EM&#39;!&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&rsquo;re using pattern matching in this case to handle the various
+<code>Apple</code>&ndash;<code>Loudness</code> combinations, but it could have been implemented any other
+way.</p>
+
+<p>We can try to load this module and make the salesman peddle his apples:</p>
+
+<pre><code>Prelude&gt; :load apples.hs
+[1 of 1] Compiling Apples           ( apples.hs, interpreted  )
+Ok, modules loaded: Apples.
+*Apples&gt; shouting Green Loud
+"GREEN APPLES, YOU NEED ONE!"
+*Apples&gt; shouting Red Quiet
+"Ruby red apples; get your Red Delicious here!"
+</code></pre>
+
+<p>OK, so that works, but it would get tedious quick. I mean, we&rsquo;ve got a basket
+full of apples to sell:</p>
+
+<pre><code>*Apples&gt; let basket = [Red, Red, Green, Red, Green, Red]
+*Apples&gt; :t basket
+basket :: [Apple]
+</code></pre>
+
+<p>So what if we just generated a lot of functions which already have their Apple set?</p>
+
+<h3>Other spices</h3>
+
+<p>The <code>zipWith</code> function takes two lists, takes the head of both of the lists and
+apply a given function to both of the values. The result is put into a new
+array, then this is repeated until one of the first two lists have run out of
+elements. An example:</p>
+
+<pre><code>*Apples&gt; zipWith (+) [1,1,1,1] [1,2,3,4]
+[2,3,4,5]
+</code></pre>
+
+<p>There&rsquo;s another function which is generally used as an infix operator that&rsquo;s
+called <code>$</code>. It serves the purpose of eliminating parentheses. Look at the
+following example and see that the two calls are equivalent:</p>
+
+<pre><code>*Apples&gt; head $ reverse $ "Hello!"
+'!'
+*Apples&gt; head ( reverse ( "Hello!" ) )
+'!'
+</code></pre>
+
+<p>We&rsquo;ll bring in a final function to help us, <code>repeat</code>. It creates an infinite
+list of whatever you give it. Since Haskell is lazily evaluated, as long as you
+only take a fixed number of elements from this list, having an infinite list is
+totally fine:</p>
+
+<pre><code>*Apples&gt; take 4 $ repeat 1
+[1,1,1,1]
+</code></pre>
+
+<h3>Putting it all together</h3>
+
+<p>Let&rsquo;s combine them all and generate some &ldquo;Apple-fixed&rdquo; functions!</p>
+
+<pre><code>*Apples&gt; let basketShouting = zipWith ($) (repeat shouting) basket
+*Apples&gt; :t basketShouting
+basketShouting :: [Loudness -&gt; String]
+</code></pre>
+
+<p>Lots of stuff going on here so let&rsquo;s take it piece by piece.</p>
+
+<p>We take the function <code>($)</code> and give its first argument from the first list.
+This list is an infinite list that looks like this:</p>
+
+<pre><code>[shouting, shouting, shouting...]
+</code></pre>
+
+<p>As the second argument for the <code>$</code> function we take the first element from the
+second list. The second list looks like this:</p>
+
+<pre><code>[Red, Red, Green, Red, Green]
+</code></pre>
+
+<p>Do this until one list runs out of elements (hint: it&rsquo;s not the infinite one),
+and our resulting list will look something like this:</p>
+
+<pre><code>[shouting Red, shouting Red, shouting Green, shouting Red, shouting Green]
+</code></pre>
+
+<p>You see, we used <code>$</code> to &ldquo;bind&rdquo; the function and the argument together. Since
+function argument is the same thing as function $ argument we can use that
+operator to tie things together as nicely as we&rsquo;ve done here.</p>
+
+<p>I should mention that the more experienced readers might be saying &ldquo;Hey, why
+not just use a <code>map</code> instead of <code>zipWith</code>?&rdquo;</p>
+
+<p>Good point, but where&rsquo;s the fun in that? :-P</p>
+
+<p>To continue: with this collection of partially applied functions, it&rsquo;s as if
+the peddler is holding the apples, just having to decide whether he wants to be
+<code>Loud</code> or <code>Quiet</code>. He could for instance decide that he wants to start <code>Quiet</code>
+with the first apple:</p>
+
+<pre><code>*Apples&gt; (head basketShouting) Quiet
+"Ruby red apples; get your Red Delicious here!"
+</code></pre>
+
+<p>Then he might want to <code>Loud</code>ly sell his third apple:</p>
+
+<pre><code>*Apples&gt; (basketShouting !! 2) Loud
+"GREEN APPLES, YOU NEED ONE!"
+</code></pre>
+
+<p>The <code>!!</code> function takes a list index (starting with zero).</p>
+
+<p>Finally we could go ahead and have the guy sell all of the apples:</p>
+
+<pre><code>*Apples&gt; zipWith ($) basketShouting (repeat Loud)
+["RED APPLES DAMMIT, BUY EM'!","RED APPLES DAMMIT, BUY EM'!","GREEN APPLES, YOU NEED ONE!","RED APPLES DAMMIT, BUY EM'!","GREEN APPLES, YOU NEED ONE!"]
+</code></pre>
+
+<p>Let&rsquo;s turn this into a newline separated string and have it look like some real
+output:</p>
+
+<pre><code>*Apples&gt; putStrLn $ unlines $ zipWith ($) basketShouting (repeat Loud)
+RED APPLES DAMMIT, BUY EM'!
+RED APPLES DAMMIT, BUY EM'!
+GREEN APPLES, YOU NEED ONE!
+RED APPLES DAMMIT, BUY EM'!
+GREEN APPLES, YOU NEED ONE!
+</code></pre>
+
+<p>And there we have it! Loud and clear.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Vim search and replace in bulk]]></title>
+    <link href="http://linduxed.github.io/blog/2013/09/16/vim-search-and-replace-in-bulk/"/>
+    <updated>2013-09-16T13:57:07+02:00</updated>
+    <id>http://linduxed.github.io/blog/2013/09/16/vim-search-and-replace-in-bulk</id>
+    <content type="html"><![CDATA[<p>Every once in a while you&rsquo;ll have some word or phrase that is present in
+multiple files across your project. Finding all of instances can be done with
+tools like <code>grep</code> outside of Vim. You could probably also use <code>sed</code>, <code>awk</code> or
+some other tool to perform a substitution inside these files.</p>
+
+<p>While there&rsquo;s nothing wrong with this approach, what if you wanted to do this
+kind of multi-file search and replace inside Vim?</p>
+
+<!--more-->
+
+
+<p>The following methods are by no means the only ways of doing things, it&rsquo;s just
+how I tend to solve this problem.</p>
+
+<h2>Finding stuff</h2>
+
+<p>When in a terminal, if you wanted to find all instances of <code>FoobarQuux</code> in
+a project, you&rsquo;d probably run one of these commands:</p>
+
+<pre><code>grep "FoobarQuux" $(git ls-files)
+git grep "FoobarQuux"
+ack "FoobarQuux"
+ag "FoobarQuux"
+</code></pre>
+
+<p>Let&rsquo;s look at alternatives.</p>
+
+<h3>vimgrep</h3>
+
+<p>The built-in equivalent that Vim has is <code>vimgrep.</code> A search similar to the ones
+above would be this:</p>
+
+<pre><code>:vimgrep /FoobarQuux/ `git ls-files`
+</code></pre>
+
+<p>You&rsquo;ll notice a couple of things here.</p>
+
+<p>First of all, the command uses slashes to encapsulate the regex and grave accents for eval. I&rsquo;m pretty sure the <code>$()</code> syntax doesn&rsquo;t work here.</p>
+
+<p>Secondly, the results aren&rsquo;t highlighted in the way that a regular search
+performed with <code>/</code> would be. Instead, the Quickfix-list is populated with the
+results and you can go through them with <code>:cnext</code> and <code>:cprevious</code> (quicker
+bindings for that with <a href="https://github.com/tpope/vim-unimpaired">tpope&rsquo;s unimpaired</a>).</p>
+
+<p>Lastly, and most importantly, you&rsquo;ll notice that vimgrep is <em>remarkably</em> slow.
+I don&rsquo;t know why that is and I don&rsquo;t particularly care since there are
+alternatives.</p>
+
+<h3>ack.vim</h3>
+
+<p>We can speed things up by using the <code>ack.vim</code> plugin, which you can find
+<a href="https://github.com/mileszs/ack.vim">over on Github</a>. I&rsquo;m going to assume that
+you&rsquo;ve already got a preferred method of installing plugins, but in case you&rsquo;re
+new to them, here&rsquo;s a <a href="http://stackoverflow.com/questions/4905554/managing-vim-plugins">helpful Stack Overflow question</a>.</p>
+
+<p>You&rsquo;ll have to install the ack package for whatever OS you use, then you&rsquo;ll be
+able to run commands like this in Vim:</p>
+
+<pre><code>:Ack "FoobarQuux"
+</code></pre>
+
+<p>This is just like running <code>ack FoobarQuux</code> from the command line, but the
+results get loaded into a Quickfix-list. This time however, there&rsquo;s
+a noticeable increase in performance.</p>
+
+<h3>the_silver_searcher</h3>
+
+<p>Mr. ggreer once said &ldquo;But who has the time?&rdquo;, and lo and behold,
+<em>the_silver_searcher</em> was created. If you&rsquo;re not familiar with
+<a href="https://github.com/ggreer/the_silver_searcher">the_silver_searcher</a>, it&rsquo;s
+basically <code>ack</code> but even quicker. What&rsquo;s even nicer is that you don&rsquo;t need
+another plugin for using it (although <a href="https://github.com/rking/ag.vim">you can get one</a>), you just change the command which <code>ack.vim</code>
+runs. Add this to your <code>.vimrc</code> and you&rsquo;re good to go:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">if</span> executable<span class="p">(</span><span class="s2">&quot;ag&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">let</span> <span class="k">g</span>:ackprg <span class="p">=</span> <span class="s1">&#39;ag --nogroup --nocolor --column&#39;</span>
+</span><span class='line'><span class="k">endif</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I like to use this solution because I&rsquo;ve found that on distros like Debian,
+<code>ack</code> is readily available in the repositories while <code>ag</code> isn&rsquo;t, so it&rsquo;s a bit
+more portable.</p>
+
+<h2>Replacing the stuff you&rsquo;ve found</h2>
+
+<p>So now your Quickfix-list list is filled with lines that contain some word or
+phrase you want to change. Here&rsquo;s an interesting fact for you then:</p>
+
+<p>Vim has <code>bufdo</code> for running a certain command in all open buffers. It also has
+<code>windo</code> for all open windows, <code>tabdo</code> for all tabs and <code>argdo</code> for all files in
+the <a href="http://vimcasts.org/episodes/meet-the-arglist/">arglist</a>. All these
+things, but no <code>quickfixdo</code>.</p>
+
+<p>If <code>bufdo</code> doesn&rsquo;t overlap with the files you wish to perform replacements on
+(it sometimes does), you can use <a href="https://github.com/nelstrom/vim-qargs">the following plugin</a> to populate the arglist with the
+contents of the Quickfix-list. The creator of the plugin
+<a href="http://stackoverflow.com/a/5686810/1106810">gives an example</a>:</p>
+
+<pre><code>:Ack FoobarQuux
+:Qargs
+:argdo %s/FoobarQuux/Cranberries/gc
+:argdo update
+</code></pre>
+
+<p>That works, and lets us see every change due to the confirm flag at the end of
+the third line.</p>
+
+<p>But what if there was one command for doing it all?</p>
+
+<h3>greplace &ndash; global search and replace</h3>
+
+<p><a href="https://github.com/skwp/greplace.vim">This plugin</a> is pretty old and there
+might be newer alternatives, but it does what it should and that&rsquo;s all I need.</p>
+
+<p>From the help page:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'>The following commands are provided by this plugin:
+</span><span class='line'>
+</span><span class='line'><span class="p">:</span>Gsearch         Search <span class="k">for</span> <span class="k">a</span> given pattern <span class="k">in</span> the specified
+</span><span class='line'>                 group of <span class="k">files</span> and <span class="nb">display</span> the matches <span class="k">in</span>
+</span><span class='line'>                 the replace buffer.
+</span><span class='line'><span class="p">:</span>Gbuffersearch   Search <span class="k">for</span> <span class="k">a</span> given pattern <span class="k">in</span> <span class="k">all</span> the <span class="k">buffers</span>
+</span><span class='line'>                 <span class="k">in</span> the Vim buffer <span class="nb">list</span>.
+</span><span class='line'><span class="p">:</span>Gargsearch      Search <span class="k">for</span> <span class="k">a</span> given pattern <span class="k">in</span> <span class="k">all</span> the <span class="k">files</span> <span class="k">in</span>
+</span><span class='line'>                 the Vim <span class="k">argument</span> <span class="nb">list</span>.
+</span><span class='line'><span class="p">:</span>Gqfopen         Use the results from the quickfix <span class="nb">list</span>.
+</span><span class='line'><span class="p">:</span>Greplace        Incorporate the modifications from the
+</span><span class='line'>                 replace buffer into the corresponding <span class="k">files</span>.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So if you were to do <code>:Gsearch</code> you&rsquo;d get to input the regex, then input what files you wish to apply this to and then you&rsquo;ll get an <em>editable</em> with every found line!</p>
+
+<p>When you&rsquo;re done editing the found line, you run <code>:Greplace</code> and then you&rsquo;ll get to approve each change in the actual file.</p>
+
+<p>Regardless of how often this scenario pops up for you, you ought to try it to
+see how nice this plugin is. I might also add that when you&rsquo;re in that editing
+buffer, you could probably improve your experience even more by using the
+<code>:Subvert</code> command from <a href="https://github.com/tpope/vim-abolish">tpope&rsquo;s abolish plugin</a>, functionality which is explained
+<a href="http://vimcasts.org/episodes/supercharged-substitution-with-subvert/">in this Vimcast</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adult gaming]]></title>
+    <link href="http://linduxed.github.io/blog/2013/09/12/adult-gaming/"/>
+    <updated>2013-09-12T13:00:00+02:00</updated>
+    <id>http://linduxed.github.io/blog/2013/09/12/adult-gaming</id>
+    <content type="html"><![CDATA[<p>Based on an rather small amount of unscientifically acquired data, a handful of
+anecdotes and a healthy dose of prejudice, I&rsquo;m going to make the following
+statement:</p>
+
+<h4>Large parts of the previous generations are incompatible with video games.</h4>
+
+<p>This isn&rsquo;t a new revelation. It&rsquo;s not some recent discovery, nor is it something I think there will be much of a debate about. It&rsquo;s just me venting.</p>
+
+<!--more-->
+
+
+<h2>Stumbling around</h2>
+
+<p>The rift between the older generations and the younger ones is huge. There&rsquo;s
+just so many things that a child, teenager or young adult these days has gone
+through that are absolutely necessary for a person if he or she was to have
+a thoughtful conversation about the world of video games, not to mention
+enjoying them.</p>
+
+<p>The first thing that stands in the way is the interface between the player and
+the game. Those who&rsquo;ve grown up with games have accumulated a set of skills
+that a non-gamer will need a long time to accumulate, or even get close.</p>
+
+<p>Have you ever placed a non-gamer in front of a free look first person
+perspective game (keyboard and mouse or controller doesn&rsquo;t matter)? If you
+have, you probably remember them looking straight up into the ceiling or right
+down into the ground for the first minutes. If they didn&rsquo;t give up completely,
+they might have progressed to having great issues with the concept of strafing,
+or actually moving around while looking in different directions at all. You
+might also remember sudden inexplicable movements in directions that they can&rsquo;t
+explain themselves and surprise over why the character hasn&rsquo;t stopped when
+they&rsquo;re actually still holding some movement key. This is assuming that they
+aren&rsquo;t overcome by intense motion sickness and have to abandon the exercise
+altogether (yes, I&rsquo;ve seen this happen).</p>
+
+<p>They&rsquo;re simply new to it, and while a gamer will have time to appreciate
+everything from game mechanics to the beautiful scenery, the non-gamer will
+have their mind completely occupied by the fact that they can&rsquo;t move properly.
+They can&rsquo;t appreciate what they <em>can&rsquo;t take in</em>.</p>
+
+<h2>Joy behind complexity</h2>
+
+<p>Even worse is it with games where the difficulty does not lie in hand-eye
+coordination, but in knowing that playing is a rewarding experience.</p>
+
+<p>When I play an empire building simulator or a real-time strategy game, even
+with one I&rsquo;ve never played before, I&rsquo;ll put in the time to learn it because
+I know that the process of building your empire/army/whatever is a rewarding
+one. It becomes a sort of expression of you and your plan. You&rsquo;ll remember
+where you started, what adversities you had to go through and how your journey
+ended; throughout this kind of journey you&rsquo;ll have done things your way and it
+will show in the game.</p>
+
+<p>You know this, I know this, <em>but they don&rsquo;t</em>. They&rsquo;ll see the units moving
+across the screen, try interacting for a few minutes and after a couple of
+minutes turn their head towards you and ask &ldquo;Why am I doing this?&rdquo;</p>
+
+<p><strong>There&rsquo;s NO drive.</strong></p>
+
+<p>We&rsquo;ve seen why it&rsquo;s a delightful experience and we take it for granted. Sure,
+we might try out a bad game and be disappointed over the journey not being
+satisfying, but we put up with the time because we know that some games offer
+immense satisfaction if we put in the time to explore them.</p>
+
+<h2>An alien experience</h2>
+
+<p>What&rsquo;s worse is that even if they penetrate through the surface, if they go
+through the effort of learning how to navigate the world and come to understand
+what does what and somehow get talked into giving the world a chance to
+interest them, they will still have to face the challenge of drawing pleasure
+from a process that might feel completely alien to them. Not only that: they&rsquo;ll
+have to accept a large number of things as &ldquo;enjoyable&rdquo; and &ldquo;parts of the
+experience&rdquo;.</p>
+
+<p>We&rsquo;ve grown accustomed to violence, grinding, unclear goals, exploration as
+a joy, psychedelic imagery, terrifying experiences, implied horrors and
+cutthroat competition, just to name a few. It&rsquo;s very easy to underestimate the
+wide variety of things one goes through playing games a couple of times a week
+for multiple years. It doesn&rsquo;t even need to be something immediately repulsive,
+just very different from what you&rsquo;d experience while reading a book or watching
+a movie.</p>
+
+<p>Every time a non-gamer gets past the difficulties of just <em>playing</em> the game,
+remember that there&rsquo;s a mountain of things that they&rsquo;re not accustomed to;
+every one of these things can, depending on the person, be a thing that will
+scare away or intrigue. The big problem is that when these things come at the
+person ten at a time or more, &ldquo;scare away&rdquo; is probably more likely. At the very
+least immersion will probably be broken, which is the last thing you want while
+playing.</p>
+
+<h2>The prejudices</h2>
+
+<p>All of the above are reasons for why it would be hard for a non-gamer to <em>try</em>
+to play these games, never mind them actually enjoying it or get something out
+of them. But that&rsquo;s assuming they actually try, which isn&rsquo;t a guarantee at all.</p>
+
+<p>Before the thought of trying to play would even occur to them, they&rsquo;d have to
+punch through every one of their prejudices against the entire image that is
+&ldquo;playing video games&rdquo;. The addictions, the violent kids, the weird young
+adults, the nerds, the social outcasts and so on. There are so many things that
+you&rsquo;d have to set aside and say &ldquo;I&rsquo;m going to see for myself&rdquo; before the
+thought to try them would even cross their minds.</p>
+
+<p>I have pretty good faith in that this is reason enough for it to be <em>highly</em>
+unlikely that that someone who isn&rsquo;t a gamer would become one (and by that
+I mean going from &ldquo;doesn&rsquo;t play&rdquo; to &ldquo;plays a lot&rdquo;).</p>
+
+<h2>Don&rsquo;t waste your time</h2>
+
+<p>The gaming industry is thriving, it&rsquo;s here to stay and the average age of
+gamers is moving upwards. Undoubtedly, these people will disappear way before
+video games ever will.</p>
+
+<p>So why am I writing this?</p>
+
+<p>The next time you come across a person that have never played and you can tell
+that he or she probably <em>never will</em> play:</p>
+
+<p>Please, understand that they <em>won&rsquo;t</em> understand. Leave it, save your breath and
+live happy in the knowledge that despite them not having a damn clue about
+games, they&rsquo;ll still be just as enjoyable.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Planescape: Torment could have been more]]></title>
+    <link href="http://linduxed.github.io/blog/2013/09/09/planescape-torment-could-have-been-more/"/>
+    <updated>2013-09-09T13:00:00+02:00</updated>
+    <id>http://linduxed.github.io/blog/2013/09/09/planescape-torment-could-have-been-more</id>
+    <content type="html"><![CDATA[<p>In contrast to Fallout 2, which I finished in my early teens, I got around to
+playing through <em>Planescape: Torment</em> about half a year ago. Just as everyone
+around the net had said, it was a world to get lost in, with interesting
+characters, ample amounts of dialogue and a captivating setting that let the
+imagination flow.</p>
+
+<p>While I could talk at length about the many things that make this game so
+remarkable, others have already done this many times over; &ldquo;Final frontier&rdquo;
+wrote <a href="https://medium.com/final-frontier/35ffb4e847cc">a good blog post on the subject</a> about a month ago, well worth
+reading.</p>
+
+<p>Instead, I&rsquo;d like to talk about what I felt was missing in this beautiful game.</p>
+
+<!--more-->
+
+
+<p>(There will be spoilers, so you might want to finish the game first.)</p>
+
+<p><span class='caption-wrapper'><img class='caption' src='http://th08.deviantart.net/fs11/PRE/i/2006/182/0/8/The_Planescape_Multiverse_by_zen79.jpg' width='' height='' title='[The Planescape Multiverse](http://zen79.deviantart.com/art/The-Planescape-Multiverse-35619350)'><span class='caption-text'><a href="http://zen79.deviantart.com/art/The-Planescape-Multiverse-35619350">The Planescape Multiverse</a></span></span></p>
+
+<h2>Planescape smorgasbord</h2>
+
+<p>Throughout the course of the game, the Nameless One will spend most of his time
+in the city of Sigil, a torus sitting at the top of the infinitely tall
+mountain Spire. Ruled by the Lady of Pain, it&rsquo;s a place of absolute neutrality,
+both with regards to Good versus Evil and Law versus Chaos. It&rsquo;s a place which
+the <a href="http://en.wikipedia.org/wiki/Lady_of_Pain">Lady of Pain</a> doesn&rsquo;t allow to
+slant to a specific alignment and is therefore used as a hub for creatures from
+all of the other planes. Also, it&rsquo;s (if I recall the setting correctly) a place
+which souls inhabit after arriving from the Prime Material Plane, until they
+show a definitive alignment which would allow them to travel to the respective
+plane for that alignment.</p>
+
+<p>Essentially this gives the player the opportunity to experience a tiny piece of
+every plane.</p>
+
+<p>We get to speak to the Abishai from the world of Lawful-Evil, Baator;
+unscrupulous creatures speaking of a world where cruelty, treachery and deceit
+is commonplace. We get to travel with a Githzerai, formerly an inhabitant of
+the plane of Limbo, an ever-changing place where strong will of the individual
+actually shapes the world around him. We get to hear the thoughts of a Modron,
+an inhabitant of Mechanus, an infinite plane constructed out of giant cogs,
+guarded by gear spirits.</p>
+
+<p>There are so many stories that one gets to hear, but we don&rsquo;t really get to see
+them. <em>We get a wealth of excellently crafted samples for tasting, but never the
+whole meal</em>.</p>
+
+<p>I wanted to see Mount Celestia and its inhabitants, beings embodying
+Lawful-Good. I wanted to see the verdant plane of Arborea and I wanted to see
+the home plane of my Githzerai companion, Limbo.</p>
+
+<p>I realize this would have exceeded the budget and scope of the game that Black
+Isle was creating, but at the end of the game, when I had somewhat digested
+what a fantastic experience the game was, I couldn&rsquo;t help but say to myself:</p>
+
+<p><strong>&ldquo;There&rsquo;s so much more that I want to see.&rdquo;</strong></p>
+
+<h2>Underwhelming worlds</h2>
+
+<p>When I played the game, I found the world so intriguing that I made an effort
+to talk to as many different characters as possible. The writing of the dialog
+and the amount of different stories they had to tell kept me glued to the
+screen. As mentioned above, the imagination was constantly flowing.</p>
+
+<p>This made the occasional trips outside of Sigil disappointing, since I had made
+up these fantastic worlds in my head which the game could not live up to. Yes,
+that&rsquo;s a normal situation, I know: when you have a fantastic place described to
+you through the medium of text, be it a book or (as in this game) ample amounts
+of dialogue, an artist&rsquo;s rendition of that will often disappoint (hence the
+very often occurrence of &ldquo;the book was so much better&rdquo;).</p>
+
+<p>Still, when I set foot in Baator, I expected more than a bunch of hostile
+creatures amidst some piles of red rocks. Sure the Pillar of Skulls was
+a deeply satisfying thing to interact with, but the plane which it was on very
+much wasn&rsquo;t; Baator was not much more than a gauntlet of enemies.</p>
+
+<p>Carceri was a plane placed between the Gray Waste (Neutral-Evil) and the Abyss
+(Chaotic-Evil), and yet it didn&rsquo;t feel much different from the streets of
+Sigil. It&rsquo;s supposedly &ldquo;The prison realm&rdquo; but the plane&rsquo;s character or
+alignment didn&rsquo;t shine through. Even the city&rsquo;s descent into chaos due to the
+influence of Trias didn&rsquo;t feel as impactful as it could have been. While I was
+very happy to see that Trias power (drawn from the evil of the citizens) was
+affected by how many people you converted to make good deeds, the setting
+itself only changed in the sense that there was an ongoing invasion from the
+adjacent plane. My imagination had told me that a shift in a plane&rsquo;s alignment
+introduced huge changes, where as in the game it was not much more than a shift
+in the behaviour of the inhabitants.</p>
+
+<p>Once again, I understand that creating something like that costs money and
+time, something which the developers might not have had at that point, but it&rsquo;s
+something that keeps bugging me.</p>
+
+<p>What transpired in Baator and in Carceri was necessary for the story to
+progress and the events themselves were well written, but the planes left me
+wishing for far more.</p>
+
+<h2>Hope for Numenera</h2>
+
+<p>With all of the above said I&rsquo;d like to reiterate that there&rsquo;s a great amount of
+things I could praise the game for. I wrote this because I wanted one of the
+best games I&rsquo;ve played to be even better.</p>
+
+<p>With <em>Torment: Tides of Numenera</em> in the hands of a remarkable team, I&rsquo;m sure
+that the spiritual successor to <em>Planescape: Torment</em> will be a great
+experience. What I&rsquo;m hoping, though, is that they&rsquo;ll be able keep everything
+that was great about the original but surpass its scope.</p>
+
+<p>With the team that inExile has assembled, it just might be possible.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Screencasts in Linux]]></title>
+    <link href="http://linduxed.github.io/blog/2013/09/08/screencasts-in-linux/"/>
+    <updated>2013-09-08T16:42:54+02:00</updated>
+    <id>http://linduxed.github.io/blog/2013/09/08/screencasts-in-linux</id>
+    <content type="html"><![CDATA[<p>Some time ago I wrote a rant about the
+<a href="http://linduxed.github.io/blog/2012/03/15/when-the-tools-just-dont-work/">sorry state of streaming on Linux</a>. About a month ago I needed to
+find an application which would record my desktop for a screencast, giving me
+a perfect opportunity to see if the situation had changed somewhat in this
+field.</p>
+
+<p>While streaming is still quite bad (video+audio works but there&rsquo;s still nothing
+like <a href="http://obsproject.com/">OBS</a>), desktop recording is in a better spot
+since you only need the raw footage (bells and whistles can be handled
+afterwards in a video editor). Although it took some searching, I actually
+found something with which I can reliably record my desktop, with microphone
+audio.</p>
+
+<!--more-->
+
+
+<h2>The bad</h2>
+
+<p>Before I start I&rsquo;d like to say a few words about the applications I won&rsquo;t use.
+When I was looking for a screencasting solution I had a couple of criteria:</p>
+
+<ol>
+<li>There can be no dropped frames.</li>
+<li>Synchronized audio recording is preferable, so I don&rsquo;t have to record audio separately.</li>
+<li>I must be able to play the resulting video without any issues.</li>
+<li>Screen number, window or screen area needs to be easy to set as a target.</li>
+<li>Give me configuration options. I will need to tweak things.</li>
+<li>Do not. DROP. <strong>FRAMES</strong>.</li>
+</ol>
+
+
+<p>The vast majority of the tools available were almost immediately disqualified
+since I could <em>never</em> depend on them giving me back a normal, functioning,
+video. I remember plenty of errors during playback about not correctly marked
+frames, warnings about bad keyframes, along with other stuff I&rsquo;ve probably
+forgotten. I was sort of amazed by how bad the results from the applications
+were (not even taking into account how they handled #2 and #4), considering
+I&rsquo;ve seen many a blog recommending these tools.</p>
+
+<p>By the way, this was tried on one top of the line laptop and another laptop
+which I would at the very least call &ldquo;powerful&rdquo;. There was no hardware related
+reason for this to happen.</p>
+
+<p>The one that was closest to passing was <code>recordmydesktop</code> (I used the front-end
+<code>gtk-recordmydesktop</code>). It&rsquo;s got a decent amount of settings one can tweak,
+covering pretty much every point except for #3. The resulting video had so many
+problems that it couldn&rsquo;t be loaded into various tools, with <code>mplayer</code>
+screaming warnings all throughout every generated video.<br/>
+That was the application that came the closest.</p>
+
+<p><code>kazam</code> broke rule #1 and had an almost total absence of configuration. I tried
+<code>byzanz</code>, but it broke rule number #6. <code>istanbul</code> broke both rule #1 and #6 so
+I didn&rsquo;t bother with it for long. All I remember about <code>xvidcap</code> was that it
+didn&rsquo;t last long either; maybe it was that one with which the best results were
+achieved by setting it to &ldquo;output as folder with screenshots&rdquo;&hellip;</p>
+
+<p>There were a couple of others I tried, but I&rsquo;ve forgotten the names by now.</p>
+
+<p>Maybe there&rsquo;s a project I&rsquo;ve missed that JustFuckingWorks™, but until
+I discover that (<code>simplescreenrecorder</code> looks good, will have to try it), I&rsquo;ll
+have to make due with good old ffmpeg.</p>
+
+<h2>ffcast with ffmpeg settings</h2>
+
+<blockquote><p>FFmpeg is a free software project that produces libraries and programs for handling multimedia data.</p><footer><strong>Wikipedia</strong> <cite><a href='http://en.wikipedia.org/wiki/FFmpeg'>en.wikipedia.org/wiki/FFmpeg/&hellip;</a></cite></footer></blockquote>
+
+
+<p>Another way of putting it is that it&rsquo;s a command that lets you do almost
+anything video related, as long as you know the correct parameters. While
+setting <code>ffmpeg</code> up to record your screen is possible by setting geometry
+options and such, the application <a href="https://github.com/lolilolicon/FFcast2"><code>ffcast</code></a> (available in the <a href="https://aur.archlinux.org/packages/ffcast/">AUR</a> if you use Arch) lets you easily
+select the desired window or screen to record. Whatever isn&rsquo;t area selection
+functionality is covered by an <code>ffmpeg</code> command.</p>
+
+<p>In a two screen setup, I&rsquo;m using this command for recording my laptop screen
+with the microphone for audio:</p>
+
+<pre><code>ffcast -x 1 ffmpeg -f alsa -i pulse -vcodec libx264 -vpre libvpx-1080p out.mkv
+</code></pre>
+
+<p><code>-x 0</code> chooses my laptop screen; it will probably be different for you so run
+<code>ffcast -x list</code> to find out the correct screen. If you prefer to choose
+a window to record use <code>-w</code> instead.</p>
+
+<p><code>-f alsa -i pulse</code> is for telling <code>ffmpeg</code> that I want to use <code>pulse</code> for input
+audio. As for the <code>-f</code> flag, you need it for the <code>-i</code> flag to work, so just
+consider those two as a package.</p>
+
+<p>Choose whatever codec that works well, <code>libx264</code> is one.</p>
+
+<p>Finally we come to the <code>-vpre</code> flag (and the output filename at the end, but
+that one&rsquo;s obvious). This flag dictates what preset you want to use for
+recording. Depending on what preset you use (or maybe you don&rsquo;t use any) the
+quality of the video will range from artifact ridden garbage to crisp beauty.
+To determine which presets you have available you need to list the contents of
+the directory <code>/usr/share/ffmpeg</code>.<br/>
+Try some of these out. If none of these presets work for you then I&rsquo;m sure you
+can find some alternatives on the net.</p>
+
+<h2>Progress!</h2>
+
+<p>While this solution is complicated, it works, which is something I haven&rsquo;t been
+able to say about the other tools I&rsquo;ve in this area. If stream overlays, scenes
+and all of that stuff isn&rsquo;t important to your streaming, this might also be
+a decent solution for Linux based streaming, although I haven&rsquo;t tried it myself
+yet.</p>
+
+<p>Now that I can record videos, I&rsquo;ll have to find a decent video editor&hellip;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Old favourites]]></title>
@@ -1951,527 +2735,6 @@ serve as a different perspective in EU, as the extremists that broaden the
 scope.</p>
 
 <p>One can at least have hope.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Unreal Tournament 3 + Titan Pack]]></title>
-    <link href="http://linduxed.github.io/blog/2009/06/03/unreal-tournament-3-plus-titan-pack/"/>
-    <updated>2009-06-03T17:41:28+02:00</updated>
-    <id>http://linduxed.github.io/blog/2009/06/03/unreal-tournament-3-plus-titan-pack</id>
-    <content type="html"><![CDATA[<p>When Unreal Tournament 3 was officially announced, a wave of mixed feelings
-went through the Unreal-community.</p>
-
-<p>UT2004 was essentially everything most people could have ever wanted in terms
-of a shooter. Sure, there were going to be UT99 purists who would object to the
-style and the zealous Quake gamers who still claim that after Q3 the world
-could have stopped spinning, but disregarding people who would never have it
-any different than graphically updated clones, UT2004 was a milestone in FPS
-gaming. The mechanics were done right, the content was abundant, the community
-was sprawling and everything was kept at a impressively high standard. Within
-UT2004 we had almost everything we could ask for.</p>
-
-<p>Now I&rsquo;ve only been playing UT3 for the &ldquo;Play UT3 for free!&rdquo;-weekends offered on Steam. Since these have occurred twice I&rsquo;ve got somewhere around 20 hours of total play time. I therefore don&rsquo;t feel entitled to a final opinion, but I want to share my observations.</p>
-
-<!--more-->
-
-
-<h2>A legacy to live up to</h2>
-
-<p>Throughout the history of culture the successful sequels (any field) have made
-us relate to the original, yet find new content to explore. Some sequels have
-it very easy because the original was of such high quality that the audience
-will settle for &ldquo;more of the same&rdquo;, demanding slight tweaks but retaining very
-large parts of the structure. Other sequels might have the privilege to work
-with a well received but raw original, providing the liberty to shape and/or
-expand in many different directions.</p>
-
-<p>UT3 didn&rsquo;t have the luxury of either of those.</p>
-
-<p>The audience had already seen the Unreal Tournament formula go through three
-very different, but still coherent and intertwined, iterations. Most content
-(and especially the good one) we already had experienced three times over (some
-will argue that UT2003 was not as enjoyable as the other two, I respectfully
-disagree). This unfortunately put Epic in the situation where anything (that
-I can think of) that would stay true to the UT-franchise will inevitably have
-been tried, <em>especially</em> after the monstrous amount of content provided with
-UT2004. While &ldquo;more of the same&rdquo; didn&rsquo;t necessarily result in a bad game, it
-did make a large part of the audience wonder if they were getting their money&rsquo;s
-worth, they already had the provided content in older games (and that&rsquo;s
-speaking of UT3+TP, vanilla UT3 must have felt like a rip-off).</p>
-
-<p>Unreal Tournament is a franchise that is very flexible when it comes to play
-styles, as long as it&rsquo;s futuristic and creatures kill each other it&rsquo;s
-acceptable and in canon. The mentioned opportunity of a &ldquo;raw original&rdquo; (which
-in this case would mean the mentioned flexibility) is exploited, but it seems
-Epic put a lot more pressure on making small changes and execute those well
-than taking risks with new styles of play. This is in no way a bad decision,
-but it&rsquo;s a stark contrast to what the release of UT2004 looked like. Both fans
-and ordinary gamers were treated with (among other things):</p>
-
-<ul>
-<li>Close to every game mode ever introduced in UT (including a mind-blowing
-reintroduction of Assault)</li>
-<li>The inception of the new game modes like Invasion, Mutant and to a lesser
-extent Vehicle-CTF (no maps but the support was there).</li>
-<li>This deserves it&rsquo;s own point: Onslaught<br/>
-Many saw it feasible to detach this as a separate game.</li>
-<li>More maps in a UT-release than we had ever seen, each and everyone sticking
-to Epic&rsquo;s tradition of being of the best in the industry.</li>
-<li>An improved single player that felt interesting enough to keep you
-entertained without multiplayer.</li>
-</ul>
-
-
-<p>With this being only some of the big reasons to buy the <em>initial release</em>
-(which excludes the fantastic community and official support the game got
-post-release) it got hard for UT3 to live up to the expectations.</p>
-
-<h2>The Good and Bad</h2>
-
-<p>First of all, there are two aspects that basically define the feel of playing
-a certain shooter. This sole &ldquo;feel&rdquo; can make or break the game. The two aspects
-are the movement and the weapons, in no particular order (because should I want
-an order I would need another article explaining my choice). All the other
-things come secondary.</p>
-
-<h3>The movement</h3>
-
-<p>The movement is essentially a mix between UT2004 and UT99, double jump is there
-but you can&rsquo;t add a jump at the end of a dodge. This meant that the verticality
-was preserved but some of the horizontality was lost. UT has always been about
-the explosive horizontal movement, which is one of the things that made it so
-different Quake 3. This statement will make some upset and have them call upon
-the different aspects of bunny jumping and RocketLauncher/PlasmaGun maneuvers.
-I will however claim that while these are interesting in their own right, the
-dodging mechanic found in UT2004 was something sublime that offered the jerky
-and unpredictable maneuvers of the Q3-RocketLauncher both inside the heat of
-point black combat, and outside when a chase or escape was present.</p>
-
-<p>I will at some point address why I feel UT is superior to Quake, but I think it
-is sufficient to say that removing the dodge-jump removed something important.
-Some will object saying that UT3 is with it&rsquo;s lack of a dodge-jump similar in
-movement to UT99, but this is very far from the truth; UT99 had
-a proportionally higher running speed, which made the game feel a lot faster
-than UT3.</p>
-
-<p>It takes some time to get used to, but overall it doesn&rsquo;t feel as interesting,
-and it&rsquo;s most definitely slower than any of it&rsquo;s predecessors. With that said,
-the maps are perfectly aligned with the movement, so it feels right but it&rsquo;s
-not what I wanted.</p>
-
-<p>As a minor note I&rsquo;d like to add that they&rsquo;ve added hover boards which are always
-available in the Onslaught equivalent called Warfare, this is a nice touch that
-remedies some of the camping on vehicle spawns on those huge maps where going
-on foot is simply not feasible.</p>
-
-<h3>The weapons</h3>
-
-<p>I will further down address the graphics and art style a bit more thoroughly
-but the first thing you notice about the weapons is that they look
-unnecessarily contrived. There are more details than you can count, and while
-it&rsquo;s never really distracting, a lot of people will prefer the simpler models
-shown in previous installments of UT (that might just be nostalgia speaking,
-who knows). The feel of the weapons is an improvement however. It seems the
-small tweaks added make the weapons feel fresh again, even though we&rsquo;ve had
-most of them for four games now (the flak cannon in Unreal was a beast&hellip;).
-A quick rundown:</p>
-
-<ul>
-<li>Impact hammer has taken the shield gun&rsquo;s place. I understand that some have
-gripes with the shield, and I do find this hammer very nice. Sound, visuals
-and the power, love them. They didn&rsquo;t however need to make the secondary
-attack completely worthless (knocking off powerups with melee anyone?).</li>
-<li>The fan favourite Enforcer is back and unfortunately it feels wimpier. This
-is sad because the reason people wanted it back was because the UT99
-enforcers were monsters, dealing solid damage with good accuracy. This is
-better than the Assault Rifle, but it&rsquo;s not the real deal.</li>
-<li>The Bio Gun is easier to hit with now, and charged blobs of goo don&rsquo;t make
-instant damage, but drains depending on the size of the blob. A welcome
-change to one of my favourite weapons.</li>
-<li>The Shock Rifle now has harder to hit shock cores, other than that it&rsquo;s the
-same thing.</li>
-<li>Link Gun is the same deal, although at first, second and third glance it
-seemed as Epic had dropped linking. Apparently you have to stand really close
-to each other for linking to work. Linking was mainly used in Onslaught so
-this change is trivial for me.</li>
-<li>The Stinger Minigun is very nice. Sound, visuals and fire modes are all top
-notch.</li>
-<li>The Flak Cannon seem to fire more shrapnel in a wider spread, and the shells
-seem to do more damage. More versatile than ever.</li>
-<li>Sniper Rifle&hellip; What can I say? I liked the Lightning Gun, apparently others
-didn&rsquo;t.</li>
-</ul>
-
-
-<p>The rest of the weapons are basically the same, nothing special. Overall it&rsquo;s
-a mixed bag of changes, but nothing is messed up, and some changes are very
-nice so the weapons are fine.</p>
-
-<h3>Gamemodes</h3>
-
-<p>Warfare is basically Onslaught with hoverboards and the ability to capture
-nodes instantly with orbs that any player can pick up in their base. An
-interesting addition, but nothing special, the games seems to flow the same way
-(except on smaller maps when a lot of uncalled for captures occur, IOW love or
-hate scenarios). The new vehicles are different but for the most parts nothing
-game changing. They are now divided into the Axon (basically the ones found in
-UT2004) and the Necris (which are totally different, it&rsquo;s really a question of
-trying them out yourself).<br/>
-The addition of special events linked to special nodes is a very interesting
-twist however.</p>
-
-<p>Deathmatch, Team Deathmatch, Capture the Flag, Vehicle Capture the Flag and
-Duel I feel no need to cover because all thing necessary to say have been in
-&ldquo;Movement&rdquo;, &ldquo;Weapons&rdquo; or in the short Warfare paragraph.</p>
-
-<p>Then we have Greed (which is nothing but a straight incorporation of the UT2004
-mod) and Betrayal, with the latter being such an amazing game mode it has not
-only had me thinking about purchasing the game just for this one game mode, it
-has also motivated me to start learning UnrealScript so I can port it to
-UT2004. It&rsquo;s just that much fun.</p>
-
-<p>Finally there&rsquo;s also a handy new mutator that can really mix up the existing
-game modes called the Titan mutator, which can turn any mode into something
-completely new. A good addition.</p>
-
-<h3>Graphics and artstyle</h3>
-
-<p>Graphics set to max are nothing but jaw dropping. Period.<br/>
-I was also pleased to find that it scaled the graphics on the fly quite nicely,
-so what I would expect to lag horribly on my laptop, turned out to run very
-well.</p>
-
-<p>The sceneries are rich on details, which at times shifts from being atmospheric
-to being cluttered and overloaded. The claim that the characters have an
-uncanny resemblance of Gears of War is to a large extent true. Overall I found
-the characters to be impressive, but not as interesting as the ones found in
-UT2004 were.</p>
-
-<p>The maps are as mentioned well designed, and the artwork here is spot on. Some
-of the maps were so beautiful and so amazingly designed it absolutely blew my
-mind. Epic are still the ones who provide the best maps in the industry.</p>
-
-<h3>Verdict</h3>
-
-<p>We are treated with unspeakable amounts of FPS games lately, but when it comes
-to multiplayer which today is where the games&#8217; true lifespan lies, only a few
-companies know how to do it right. The Battlefield series is one setting, the
-Halo series is another, but in the end it&rsquo;s the futuristic arena combat
-introduced by Unreal Tournament and Quake 3 that showed me what real
-multiplayer FPS should look like.</p>
-
-<p>UT3 might not be the best game in the series, and it comes in a time where it
-is no longer as unique as UT2004 was when it came out, but one needs not to be
-outstanding to be good.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Why American humour doesn't humour me]]></title>
-    <link href="http://linduxed.github.io/blog/2009/06/02/why-american-humour-doesnt-humour-me/"/>
-    <updated>2009-06-02T22:11:24+02:00</updated>
-    <id>http://linduxed.github.io/blog/2009/06/02/why-american-humour-doesnt-humour-me</id>
-    <content type="html"><![CDATA[<p>I went to see Dylan Moran yesterday.<br/>
-I was quite hesitant at first to order the ticket, having two exams the same
-week. In retrospect however, I would never be able to forgive myself for not
-taking the opportunity to see my favorite comedian, bar none.</p>
-
-<!--more-->
-
-
-<p>Me and my friend <a href="http://www.pinheadlounge.com/FreddyBoy">FreddyBoy</a> (with whom
-I went to see the performance) are the type of people who have seen the
-<a href="http://www.imdb.com/title/tt0262150/">Black Books series</a> somewhere around
-four times over, and we&rsquo;ve both lost count on how many times we&rsquo;ve seen the
-standups <a href="http://youtu.be/HNAh9_BPBFk">Like, Totally</a> and <a href="http://youtu.be/lpkiIaFv5As">Monster</a> (playlist). This inevitably made us wonder whether
-we would have to sit through an amalgamation of all the punchlines we knew by
-heart, even though this was a part of a new tour called <a href="http://youtu.be/hieTxQ0oJPc">What it is</a> (<strong>EDIT</strong>: link added).</p>
-
-<p>All my hesitation was gone within the first few minutes, and I was quickly
-reminded why Black Books was the first TV-series that had me laughing into
-pain. I spent a bit more than two hours listening to witty sarcasm and
-interesting views of our everyday lives, and I just kept wanting more. The main
-theme was what a person is to believe in, in this turbulent world of ours.
-Science, religion and politics were discarded in favor of pleasure. Naturally,
-the performance took different directions at times, which only served to make
-the show more interesting.</p>
-
-<p>Dylan Moran is a master of comedy. What puts him among the legends is the
-unpredictability and his lapidary way of portraying the world around him.<br/>
-The first mentioned trait is what has made me stop appreciating and literally
-avoid American comedy. Often I both know every word that is going to be said,
-and how it is going to be said. Indeed it might have been entertaining the
-first or second time, but that&rsquo;s where it ends.</p>
-
-<p>Brittish comedy often challenges the audience, asks it to try to keep up with
-the twists and turns created by the authors. Unpredictability creates interest
-because it gives us something to explore. But what if the world explored is
-a bland one? That is where Moran is able to use a few select words to
-exaggerate it into a caricature which grabs your attention, seemingly out of
-nowhere.</p>
-
-<p>No matter how much I love this man&rsquo;s work however, I have to point out that it
-seems the ones sharing my taste are rather few. The majority of friends I&rsquo;ve
-shown Moran&rsquo;s work for have sat for lengthy amounts of time wondering where the
-fun is to be had. Take it as both a warning and an invitation.</p>
-
-<p>When Moran is speaking, I listen. You should too.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[No Vista - No gaming ; Hate Vista - Love gaming]]></title>
-    <link href="http://linduxed.github.io/blog/2009/05/29/no-vista-no-gaming-hate-vista-love-gaming/"/>
-    <updated>2009-05-29T04:02:16+02:00</updated>
-    <id>http://linduxed.github.io/blog/2009/05/29/no-vista-no-gaming-hate-vista-love-gaming</id>
-    <content type="html"><![CDATA[<p>In my last entry I described my nocturnal attempts at installing an OS. After
-a little closer reflection, I shouldn&rsquo;t have been so quick to blame the distros
-for dodgy discs and weird installs, sleep depravity and lack of will to fix
-issues (which were bound to arise) don&rsquo;t give you privileges to fling poo at
-good OSs.</p>
-
-<!--more-->
-
-
-<p>Now, I&rsquo;ve grown used to certain things when it comes to GNU/Linux, one of the
-most prominent being that certain hardware takes some work to get working. I&rsquo;ve
-got a rather new sound card, that causes problems. My wireless card was also
-quite problematic (as in wasn&rsquo;t compatible) until the 2.6.28 kernel.<br/>
-This is quite explainable, there&rsquo;s rarely official support so the more
-ambitious geeks around the world hero-code, so that we have anything at all.
-A remarkable job is done in this respect.</p>
-
-<p>This leads me to be thoroughly pissed when a certain OS gets treated with
-official drivers to every damn component in a computer and still doesn&rsquo;t work
-as intended.</p>
-
-<p>After the events described in the last entry, with some magic tools I recovered
-the most necessary files out of the Windows partition, and decided to reinstall
-the system. Not the most thrilling task I could have imagined but what&rsquo;s
-a gamer got to do?</p>
-
-<h2>The install, and some love for Vista</h2>
-
-<p>Before I go into the details of my setting up my game station, I&rsquo;d like to point out that Acer made me a real favour when I bought the laptop:</p>
-
-<p>The only Windows version that has full driver support for this computer turns out to be Vista.</p>
-
-<p>Truly, I couldn&rsquo;t be more thankful, because what the hell else would manage to
-force me into the &ldquo;next generation&rdquo; of Microsoft&rsquo;s flagship products? I&rsquo;m quite
-sure I wouldn&rsquo;t have done it voluntarily. So in my case, I was installing Vista
-Business 64.</p>
-
-<p>I could elaborate on my issues with Vista, but would I have done so the site
-would most likely close after one or two visitors; I have monthly bandwidth cap
-at 125 GB. I&rsquo;ll write a summary at some point however.</p>
-
-<p>The installation of the system itself was thankfully straightforward, but
-that&rsquo;s where the fun stopped. Ubuntu is in a way forced to have an absolutely
-stellar auto detection of hardware, to avoid having Windows converts shit their
-breeches at the prospect of actually doing anything with their new system.</p>
-
-<p>Microsoft on the other hand is in no way forced to do any drivers whatsoever,
-that is left to the hardware vendors. This is not something one can hold
-against them, with drivers for Windows having preposterous sizes these days,
-you wouldn&rsquo;t have space for anything else on a DVD, especially an OS as space
-&ldquo;efficient&rdquo; as Windows.<br/>
-Some might now argue they should at least be treated with proper default
-drivers with all the space the OS takes&hellip;</p>
-
-<p>&ldquo;At the expense of what?&rdquo; says linduxed in a sarcastic voice.<br/>
-&ldquo;A fresh install of Vista takes roughly 16 GB of disk space, at such a miniscule size it has to be chock-full of crucial code! How would you fit said drivers? You know that you only have the space of a DVD to install from, right?</p>
-
-<p>What would you cut?<br/>
-With such a delicate and cutting edge system you&rsquo;d have to make some big
-decisions! What would Vista be without the <code>do_nothing_loop()</code> methods? Or the
-<code>hang_system()</code> calls? Would you seriously dare to boot up your computer if you
-knew that Microsoft decided to cut the <code>do_some_stuff()</code> method?<br/>
-Proper default drivers are simply not feasible, and hearing some people
-suggesting that an OS should have applications included to actually be able to
-do something with the god damn thing is preposterous.&#8221;</p>
-
-<h4>Returning to the installation&hellip;</h4>
-
-<p>So as soon as the system was installed I was greeted with a slow and stone
-age-resolution touting desktop. I came prepared however, and plugged in my
-USB-drive, which I had previously filled with drivers. It is worth to mention
-that these were the official drivers, downloaded from the Acer website.</p>
-
-<p>Having installed some Windows systems by now, I knew that some drivers are
-arrogant pricks, which absolutely demand that no other drivers are installed
-before reboot. If I don&rsquo;t listen to them, I&rsquo;ll end up with anything between the
-driver not installing at all, and not being able to shutdown properly.<br/>
-I counted four pricks, three annoying bastards, and the rest (close to ten)
-were of the nicer kind. This led to about five or six guaranteed reboots, and
-then came the unforeseen ones on top of that.</p>
-
-<p>The ones which were in a particularly fickle mood were the sound and graphics
-drivers. Both thought getting installed was such a thrill they demanded to go
-through the ride three times each, every time craving a reboot. I wasn&rsquo;t in the
-mood for more, and apparently the web cam interpreted the grinding of teeth as
-a sign to have mr. Sound and mr. Graphics to stop dicking around.</p>
-
-<h2>Concluding</h2>
-
-<p>I lost count of all the reboots, but in the end that doesn&rsquo;t matter, because
-after the installation of drivers I still had &ldquo;features&rdquo; to turn off (UAC,
-anyone?), applications to install and settings to set up. That is however not
-really a part of the installation itself in my opinion.</p>
-
-<p>I&rsquo;m past it now and have gotten my games to work, but I know that it&rsquo;s just
-a matter of time before I&rsquo;ll bump into this process again. When I move to
-Windows 7 (and I will, I doubt it can get worse than Vista), I suspect I&rsquo;ll
-have the same issues.</p>
-
-<p>I guess another rant will be needed at that time then.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Late night OS adventures]]></title>
-    <link href="http://linduxed.github.io/blog/2009/05/26/late-night-os-adventures/"/>
-    <updated>2009-05-26T22:30:23+02:00</updated>
-    <id>http://linduxed.github.io/blog/2009/05/26/late-night-os-adventures</id>
-    <content type="html"><![CDATA[<p>So it was a late night, a day or so after the 23rd of April, Jaunty had just
-been released. I was very excited because I had been using Intrepid for
-a while, and I wasn&rsquo;t as satisfied with it as I was with Hardy; an upgrade felt
-like a nice thing to do. It turned out that Jaunty had some issues that I at the
-time felt relatively unmotivated to solve, most notably <a href="http://linduxed.github.io/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g/">no sound</a> and an
-<a href="http://linduxed.github.io/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04/">inability to install Awesome</a>.</p>
-
-<p>Perfect reason to start distrohopping.</p>
-
-<!--more-->
-
-
-<h2>3 x Linux vs. Eyelids</h2>
-
-<p>Debian was first up. I burned a stable Lenny ISO, rebooted, turned out i burned
-a dodgy CD, wouldn&rsquo;t boot.<br/>
-I instantly decided that I didn&rsquo;t care for Debian since it wouldn&rsquo;t boot,
-making it the most uncalled for discarding of a piece of software this year.</p>
-
-<p>Next up was Intrepid, mainly because it worked to a larger extent than Jaunty.
-Obviously, the tired linduxed decided after a quick installation that getting
-the sound to work in Intrepid would not be fun (despite knowing that it would
-need tweaking regardless of distro), so Intrepid was also discarded.</p>
-
-<p>Two systems in less than an hour, both cases making no sense whatsoever; that
-must be a record of some sort.</p>
-
-<p>Next up was Arch. I really like this system, but I should have known better
-than setting up an OS pretty much from scratch when I was so tired I had
-trouble locating my hands.</p>
-
-<p>I somehow managed to progress all the way up to the partitioning stage, which in retrospect I can&rsquo;t decide if it was a good or a bad thing.<br/>
-I came to the reasonable conclusion that having both a /home-partition and
-a /-partition might be superior to just having a /-partition. What was not as
-reasonable was to start formatting partitions and editing individual cylinder
-values while my brain tried to make it clear to me that the numbers and letters
-had transformed into hamburgers and frisbees.</p>
-
-<p>This basically lead to corrupting the entire partition table, which made me call it a day.</p>
-
-<h3>Stroke of luck</h3>
-
-<p>The next morning I could confirm that I had no systems to boot into and that my brain was still in the mood for illogical decisions:</p>
-
-<p>It was time to install Jaunty again!</p>
-
-<p>Why? Because this time everything was going to work, I said to myself.
-A generously flawed assumption, but it turns out I was right. Apparently Ubuntu
-seeks to comfort Windows converts by being just as unpredictable, all the
-issues I had in the previous install of Jaunty seemed to fix themselves, an
-interesting feat indeed.</p>
-
-<p>So the distrohopping ended happily, but what happened to Windows? A geek has to
-game right?</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Getting Awesome 3.x in Ubuntu 9.04]]></title>
-    <link href="http://linduxed.github.io/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04/"/>
-    <updated>2009-05-25T17:19:06+02:00</updated>
-    <id>http://linduxed.github.io/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04</id>
-    <content type="html"><![CDATA[<p>Awesome is awesome. That simple. The 3.x series introduced a tray which removed
-all hesitation and made Awesome the WM of choice for me. Unfortunately for
-Ubuntu users (which for the time being includes me) the official repositories
-are quite outdated:</p>
-
-<!--more-->
-
-
-
-
-<blockquote><p>&#8230;</p><p>In contrast to pre-release versions, official releases of Ubuntu are subject to<br/>much wider use, and by a different demographic of user. During development,<br/>changes to the distribution primarily affect developers, early adopters and<br/>other advanced users, all of whom have elected to use pre-release software at<br/>their own risk.</p><p>Users of the official release, in contrast, expect a high degree of stability.<br/>They use their Ubuntu system for their day-to-day work, and problems they<br/>experience with it can be extremely disruptive. Many of them are less<br/>experienced with Ubuntu and with Linux, and expect a reliable system which does<br/>not require their intervention.</p><p>&#8230;</p><footer><strong>Ubuntu package policy</strong> <cite><a href='http://wiki.ubuntu.com/StableReleaseUpdates'>wiki.ubuntu.com/&hellip;</a></cite></footer></blockquote>
-
-
-<p>That in other words means that anyone suggesting the introduction of new
-versions of existing packages has to pass the hurdle of &ldquo;is this a stability
-release or a feature release?&rdquo;. This is why the 3.x series, though superior in
-most ways to 2.x, will wait until Karmic Koala before it will be incorporated
-into Ubuntu&rsquo;s repositories.</p>
-
-<p>With that said, there are two ways of getting Awesome 3.x installed onto
-Jaunty. The first one is using a PPA and the other one is compiling from
-source.</p>
-
-<h2>Using a PPA</h2>
-
-<p>This is the easiest method, because not only does it eliminate the search for
-dependencies but it is also a method that is tested to work with Jaunty (to the
-extent of the PPA maintainers ability of course).</p>
-
-<p>To install from the PPA you must first add it. The PPA we&rsquo;re going to use
-belongs to <a href="https://launchpad.net/~aguignard/+archive/ppa">Arnaud Guignard and lies here</a>. If you have never added a PPA
-then <a href="http://www.youtube.com/watch?v=UUZOQsNo_ws">this YouTube video</a> will
-explain how to do it quite thoroughly; written instructions can be found
-<a href="http://help.launchpad.net/Packaging/PPA#Adding%20a%20PPA%20to%20your%20Ubuntu%20repositories">here</a>.</p>
-
-<p>After adding the repository, simply type the following command:</p>
-
-<pre><code>sudo aptitude install awesome
-</code></pre>
-
-<p>This should get you at the time of writing the <code>3.2.1-1~ppa1</code> version of
-Awesome. All you need to do is log out and choose Awesome as the session to use
-in in your desktop manager (<code>gdm</code>, <code>kdm</code> or whatever you use).</p>
-
-<h2>Compiling from git</h2>
-
-<p>This method I personally don&rsquo;t recommend, simply because using the PPA is so
-much easier and it should work flawlessly. With that said, I suspect that most
-people who use Awesome in Ubuntu compile it to get the latest
-version, so it&rsquo;s by no means a bad way to do it.</p>
-
-<p>A thing to take note of is that this will most likely screw up your package
-manager, because we might be overwriting packages and at times installing
-packages that are newer than the ones in the repositories. If at some point you
-install some package that overwrite your manually installed files, tough, you
-should have used the PPA.</p>
-
-<p>With that out of the way, the instructions I used to install the latest
-checkout are located on the <a href="http://ubuntuforums.org/showthread.php?t=960841">Ubuntu forums</a>, it&rsquo;s basically a step by step guide.</p>
-
-<p>The only thing I&rsquo;d like to add is that there is a nice way of remedying at
-least some of the problems associated with compiling and doing <code>sudo make
-install</code>, and it&rsquo;s the marvelous utility called <code>checkinstall.</code> First you need
-to run the following command to obtain it:</p>
-
-<pre><code>sudo aptitude install checkinstall
-</code></pre>
-
-<p>After that, whenever the you are asked to do the classic <code>./configure &amp;&amp; make
-&amp;&amp; sudo make install</code>, substitute the <code>sudo make install</code> with <code>sudo
-checkinstall</code>.</p>
-
-<p>This will instead of dropping files outside of the package manager, build
-a <code>.deb</code> that can then be installed (thus eliminating some problems). This
-doesn&rsquo;t always work (for reasons I can&rsquo;t explain) but it is a wholesome way of
-installing when it does. A more detailed guide to <code>checkinstall</code> can be found
-<a href="http://help.ubuntu.com/community/CheckInstall">here</a>.</p>
 ]]></content>
   </entry>
   

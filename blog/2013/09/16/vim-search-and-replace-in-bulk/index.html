@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Vim search and replace in bulk - Rants of a geek</title>
+  <meta name="author" content="linduxed">
+
+  
+  <meta name="description" content="Every once in a while you&rsquo;ll have some word or phrase that is present in
+multiple files across your project. Finding all of instances can be &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://linduxed.github.io/blog/2013/09/16/vim-search-and-replace-in-bulk">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Rants of a geek" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Rants of a geek</a></h1>
+  
+    <h2>linduxed's ramblings</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:linduxed.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Vim search and replace in bulk</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-16T13:57:07+02:00" pubdate data-updated="true">Sep 16<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Every once in a while you&rsquo;ll have some word or phrase that is present in
+multiple files across your project. Finding all of instances can be done with
+tools like <code>grep</code> outside of Vim. You could probably also use <code>sed</code>, <code>awk</code> or
+some other tool to perform a substitution inside these files.</p>
+
+<p>While there&rsquo;s nothing wrong with this approach, what if you wanted to do this
+kind of multi-file search and replace inside Vim?</p>
+
+<!--more-->
+
+
+<p>The following methods are by no means the only ways of doing things, it&rsquo;s just
+how I tend to solve this problem.</p>
+
+<h2>Finding stuff</h2>
+
+<p>When in a terminal, if you wanted to find all instances of <code>FoobarQuux</code> in
+a project, you&rsquo;d probably run one of these commands:</p>
+
+<pre><code>grep "FoobarQuux" $(git ls-files)
+git grep "FoobarQuux"
+ack "FoobarQuux"
+ag "FoobarQuux"
+</code></pre>
+
+<p>Let&rsquo;s look at alternatives.</p>
+
+<h3>vimgrep</h3>
+
+<p>The built-in equivalent that Vim has is <code>vimgrep.</code> A search similar to the ones
+above would be this:</p>
+
+<pre><code>:vimgrep /FoobarQuux/ `git ls-files`
+</code></pre>
+
+<p>You&rsquo;ll notice a couple of things here.</p>
+
+<p>First of all, the command uses slashes to encapsulate the regex and grave accents for eval. I&rsquo;m pretty sure the <code>$()</code> syntax doesn&rsquo;t work here.</p>
+
+<p>Secondly, the results aren&rsquo;t highlighted in the way that a regular search
+performed with <code>/</code> would be. Instead, the Quickfix-list is populated with the
+results and you can go through them with <code>:cnext</code> and <code>:cprevious</code> (quicker
+bindings for that with <a href="https://github.com/tpope/vim-unimpaired">tpope&rsquo;s unimpaired</a>).</p>
+
+<p>Lastly, and most importantly, you&rsquo;ll notice that vimgrep is <em>remarkably</em> slow.
+I don&rsquo;t know why that is and I don&rsquo;t particularly care since there are
+alternatives.</p>
+
+<h3>ack.vim</h3>
+
+<p>We can speed things up by using the <code>ack.vim</code> plugin, which you can find
+<a href="https://github.com/mileszs/ack.vim">over on Github</a>. I&rsquo;m going to assume that
+you&rsquo;ve already got a preferred method of installing plugins, but in case you&rsquo;re
+new to them, here&rsquo;s a <a href="http://stackoverflow.com/questions/4905554/managing-vim-plugins">helpful Stack Overflow question</a>.</p>
+
+<p>You&rsquo;ll have to install the ack package for whatever OS you use, then you&rsquo;ll be
+able to run commands like this in Vim:</p>
+
+<pre><code>:Ack "FoobarQuux"
+</code></pre>
+
+<p>This is just like running <code>ack FoobarQuux</code> from the command line, but the
+results get loaded into a Quickfix-list. This time however, there&rsquo;s
+a noticeable increase in performance.</p>
+
+<h3>the_silver_searcher</h3>
+
+<p>Mr. ggreer once said &ldquo;But who has the time?&rdquo;, and lo and behold,
+<em>the_silver_searcher</em> was created. If you&rsquo;re not familiar with
+<a href="https://github.com/ggreer/the_silver_searcher">the_silver_searcher</a>, it&rsquo;s
+basically <code>ack</code> but even quicker. What&rsquo;s even nicer is that you don&rsquo;t need
+another plugin for using it (although <a href="https://github.com/rking/ag.vim">you can get one</a>), you just change the command which <code>ack.vim</code>
+runs. Add this to your <code>.vimrc</code> and you&rsquo;re good to go:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">if</span> executable<span class="p">(</span><span class="s2">&quot;ag&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">let</span> <span class="k">g</span>:ackprg <span class="p">=</span> <span class="s1">&#39;ag --nogroup --nocolor --column&#39;</span>
+</span><span class='line'><span class="k">endif</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I like to use this solution because I&rsquo;ve found that on distros like Debian,
+<code>ack</code> is readily available in the repositories while <code>ag</code> isn&rsquo;t, so it&rsquo;s a bit
+more portable.</p>
+
+<h2>Replacing the stuff you&rsquo;ve found</h2>
+
+<p>So now your Quickfix-list list is filled with lines that contain some word or
+phrase you want to change. Here&rsquo;s an interesting fact for you then:</p>
+
+<p>Vim has <code>bufdo</code> for running a certain command in all open buffers. It also has
+<code>windo</code> for all open windows, <code>tabdo</code> for all tabs and <code>argdo</code> for all files in
+the <a href="http://vimcasts.org/episodes/meet-the-arglist/">arglist</a>. All these
+things, but no <code>quickfixdo</code>.</p>
+
+<p>If <code>bufdo</code> doesn&rsquo;t overlap with the files you wish to perform replacements on
+(it sometimes does), you can use <a href="https://github.com/nelstrom/vim-qargs">the following plugin</a> to populate the arglist with the
+contents of the Quickfix-list. The creator of the plugin
+<a href="http://stackoverflow.com/a/5686810/1106810">gives an example</a>:</p>
+
+<pre><code>:Ack FoobarQuux
+:Qargs
+:argdo %s/FoobarQuux/Cranberries/gc
+:argdo update
+</code></pre>
+
+<p>That works, and lets us see every change due to the confirm flag at the end of
+the third line.</p>
+
+<p>But what if there was one command for doing it all?</p>
+
+<h3>greplace &ndash; global search and replace</h3>
+
+<p><a href="https://github.com/skwp/greplace.vim">This plugin</a> is pretty old and there
+might be newer alternatives, but it does what it should and that&rsquo;s all I need.</p>
+
+<p>From the help page:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'>The following commands are provided by this plugin:
+</span><span class='line'>
+</span><span class='line'><span class="p">:</span>Gsearch         Search <span class="k">for</span> <span class="k">a</span> given pattern <span class="k">in</span> the specified
+</span><span class='line'>                 group of <span class="k">files</span> and <span class="nb">display</span> the matches <span class="k">in</span>
+</span><span class='line'>                 the replace buffer.
+</span><span class='line'><span class="p">:</span>Gbuffersearch   Search <span class="k">for</span> <span class="k">a</span> given pattern <span class="k">in</span> <span class="k">all</span> the <span class="k">buffers</span>
+</span><span class='line'>                 <span class="k">in</span> the Vim buffer <span class="nb">list</span>.
+</span><span class='line'><span class="p">:</span>Gargsearch      Search <span class="k">for</span> <span class="k">a</span> given pattern <span class="k">in</span> <span class="k">all</span> the <span class="k">files</span> <span class="k">in</span>
+</span><span class='line'>                 the Vim <span class="k">argument</span> <span class="nb">list</span>.
+</span><span class='line'><span class="p">:</span>Gqfopen         Use the results from the quickfix <span class="nb">list</span>.
+</span><span class='line'><span class="p">:</span>Greplace        Incorporate the modifications from the
+</span><span class='line'>                 replace buffer into the corresponding <span class="k">files</span>.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So if you were to do <code>:Gsearch</code> you&rsquo;d get to input the regex, then input what files you wish to apply this to and then you&rsquo;ll get an <em>editable</em> with every found line!</p>
+
+<p>When you&rsquo;re done editing the found line, you run <code>:Greplace</code> and then you&rsquo;ll get to approve each change in the actual file.</p>
+
+<p>Regardless of how often this scenario pops up for you, you ought to try it to
+see how nice this plugin is. I might also add that when you&rsquo;re in that editing
+buffer, you could probably improve your experience even more by using the
+<code>:Subvert</code> command from <a href="https://github.com/tpope/vim-abolish">tpope&rsquo;s abolish plugin</a>, functionality which is explained
+<a href="http://vimcasts.org/episodes/supercharged-substitution-with-subvert/">in this Vimcast</a>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">linduxed</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-16T13:57:07+02:00" pubdate data-updated="true">Sep 16<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://linduxed.github.io/blog/2013/09/16/vim-search-and-replace-in-bulk/" data-via="linduxed" data-counturl="http://linduxed.github.io/blog/2013/09/16/vim-search-and-replace-in-bulk/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/09/12/adult-gaming/" title="Previous Post: Adult gaming">&laquo; Adult gaming</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/01/21/currying-and-other-haskell-spices/" title="Next Post: Currying and other Haskell spices">Currying and other Haskell spices &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/01/21/currying-and-other-haskell-spices/">Currying and other Haskell spices</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/16/vim-search-and-replace-in-bulk/">Vim search and replace in bulk</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/12/adult-gaming/">Adult gaming</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/09/planescape-torment-could-have-been-more/">Planescape: Torment could have been more</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/08/screencasts-in-linux/">Screencasts in Linux</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - linduxed -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

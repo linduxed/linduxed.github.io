@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tech | Rants of a geek]]></title>
   <link href="http://linduxed.github.io/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-06-22T18:46:41+02:00</updated>
+  <updated>2014-06-22T20:08:36+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,254 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Currying and other Haskell spices]]></title>
+    <link href="http://linduxed.github.io/blog/2014/01/21/currying-and-other-haskell-spices/"/>
+    <updated>2014-01-21T23:24:04+01:00</updated>
+    <id>http://linduxed.github.io/blog/2014/01/21/currying-and-other-haskell-spices</id>
+    <content type="html"><![CDATA[<p>Most people who start looking at Haskell come from a background of one of the
+more established languages. Be it Java, Ruby, Python or something else; most
+often in those method signatures very clearly define the way in which the
+methods can be called.</p>
+
+<p>Not only does Haskell do things a bit differently, the differences allow for
+increased flexibility when it comes to usage of functions in general.</p>
+
+<!--more-->
+
+
+<h2>A simple intro</h2>
+
+<p>The <code>(+)</code> function takes two arguments and returns the sum of those two
+arguments (provided it&rsquo;s actually possible to sum the two). You can both invoke
+it the &ldquo;infix&rdquo; way:</p>
+
+<pre><code>Prelude&gt; 2 + 3
+5
+</code></pre>
+
+<p>&hellip;or by using the usual function application syntax (function first, arguments
+later):</p>
+
+<pre><code>Prelude&gt; (+) 2 3
+5
+</code></pre>
+
+<p>In the case of <code>+</code> we need to surround it with parentheses for it not to be
+treated as an infix function.</p>
+
+<p>Let&rsquo;s look at the type of <code>+</code>:</p>
+
+<pre><code>Prelude&gt; :type (+)
+(+) :: Num a =&gt; a -&gt; a -&gt; a
+</code></pre>
+
+<p>The <code>Num a</code> part indicates that the type variable a must implement the
+typeclass <code>Num</code>. That&rsquo;s a fancy way of saying that our arguments (represented
+by the <code>a</code>&rsquo;s) must work like numbers. The fact that they&rsquo;re all <code>a</code>&rsquo;s also
+means that the arguments and the return value must all have the same type. For
+people coming from languages like Java, think of <code>Num</code> as an interface that
+each <code>a</code> must implement.</p>
+
+<p>When you see that type declaration you might be thinking thinking &ldquo;Why does it
+use the same arrow <code>(-&gt;)</code> for both arguments and return values?&rdquo;</p>
+
+<p>The reason for this is that functions in Haskell actually take only one
+argument and either return a result or a new function. For our <code>+</code> function,
+this could be shown as follows:</p>
+
+<pre><code>Prelude&gt; :type (+) 2
+(+) 2 :: Num a =&gt; a -&gt; a
+</code></pre>
+
+<p>Note that this new function takes one <code>a</code> and returns an <code>a</code> (once again, as
+long as they&rsquo;re <code>Num</code>). It&rsquo;s the same syntax as before, but this time since
+we&rsquo;re at the end of the line, we don&rsquo;t get a function but a result back.</p>
+
+<p>These functions which return &ldquo;intermediate&rdquo; functions due to having more than
+one argument are called <em>curried functions</em>. The interesting thing about this
+is (as you might have figured out from the <code>(+) 2</code> example) that we can create
+so called partially applied functions with great ease.</p>
+
+<p>We could use that previous example to create a handy <code>plusTen</code> function:</p>
+
+<pre><code>Prelude&gt; let plusTen = (+) 10
+Prelude&gt; :type plusTen
+plusTen :: Integer -&gt; Integer
+Prelude&gt; plusTen 10
+20
+Prelude&gt; plusTen 1
+11
+</code></pre>
+
+<p>As said, this is a very simple example, but I think we can see some potential
+here!</p>
+
+<h2>Partial application in bulk</h2>
+
+<p>So in the example with <code>(+)</code> we created the more rigid <code>plusTen</code> function as an
+alternative to being able to add any number to any other number. As you might
+have guessed, this comes in handy when you have a useful general function, from
+which you can spawn various utility functions, just by setting one or two
+arguments to fixed values.</p>
+
+<p>The fact that Haskell considers these partially applied functions as valid
+constructs that we can pass around means that you could incorporate them into
+more complex structures.</p>
+
+<h3>Selling apples</h3>
+
+<p>Let&rsquo;s imagine that we&rsquo;ve got an apple salesman, standing in the middle of
+a town square and he needs to attract the attention of people around him. He&rsquo;s
+got red and green apples, and he can either be really loud and obnoxious or
+just quietly announce what he has to sell.</p>
+
+<p>Here&rsquo;s some code:</p>
+
+<p>```haskell
+module Apples where</p>
+
+<p>data Apple = Green | Red
+data Loudness = Loud | Quiet</p>
+
+<p>shouting :: Apple &ndash;> Loudness &ndash;> String
+shouting Green Quiet = &ldquo;Emerald green apples; get your Granny Smiths here!&rdquo;
+shouting Green Loud  = &ldquo;GREEN APPLES, YOU NEED ONE!&rdquo;
+shouting Red   Quiet = &ldquo;Ruby red apples; get your Red Delicious here!&rdquo;
+shouting Red   Loud  = &ldquo;RED APPLES DAMMIT, BUY EM'!&rdquo;
+```</p>
+
+<p>We&rsquo;re using pattern matching in this case to handle the various
+<code>Apple</code>&ndash;<code>Loudness</code> combinations, but it could have been implemented any other
+way.</p>
+
+<p>We can try to load this module and make the salesman peddle his apples:</p>
+
+<pre><code>Prelude&gt; :load apples.hs
+[1 of 1] Compiling Apples           ( apples.hs, interpreted  )
+Ok, modules loaded: Apples.
+*Apples&gt; shouting Green Loud
+"GREEN APPLES, YOU NEED ONE!"
+*Apples&gt; shouting Red Quiet
+"Ruby red apples; get your Red Delicious here!"
+</code></pre>
+
+<p>OK, so that works, but it would get tedious quick. I mean, we&rsquo;ve got a basket
+full of apples to sell:</p>
+
+<pre><code>*Apples&gt; let basket = [Red, Red, Green, Red, Green, Red]
+*Apples&gt; :t basket
+basket :: [Apple]
+</code></pre>
+
+<p>So what if we just generated a lot of functions which already have their Apple set?</p>
+
+<h3>Other spices</h3>
+
+<p>The <code>zipWith</code> function takes two lists, takes the head of both of the lists and
+apply a given function to both of the values. The result is put into a new
+array, then this is repeated until one of the first two lists have run out of
+elements. An example:</p>
+
+<pre><code>*Apples&gt; zipWith (+) [1,1,1,1] [1,2,3,4]
+[2,3,4,5]
+</code></pre>
+
+<p>There&rsquo;s another function which is generally used as an infix operator that&rsquo;s
+called <code>$</code>. It serves the purpose of eliminating parentheses. Look at the
+following example and see that the two calls are equivalent:</p>
+
+<pre><code>*Apples&gt; head $ reverse $ "Hello!"
+'!'
+*Apples&gt; head ( reverse ( "Hello!" ) )
+'!'
+</code></pre>
+
+<p>We&rsquo;ll bring in a final function to help us, <code>repeat</code>. It creates an infinite
+list of whatever you give it. Since Haskell is lazily evaluated, as long as you
+only take a fixed number of elements from this list, having an infinite list is
+totally fine:</p>
+
+<pre><code>*Apples&gt; take 4 $ repeat 1
+[1,1,1,1]
+</code></pre>
+
+<h3>Putting it all together</h3>
+
+<p>Let&rsquo;s combine them all and generate some &ldquo;Apple-fixed&rdquo; functions!</p>
+
+<pre><code>*Apples&gt; let basketShouting = zipWith ($) (repeat shouting) basket
+*Apples&gt; :t basketShouting
+basketShouting :: [Loudness -&gt; String]
+</code></pre>
+
+<p>Lots of stuff going on here so let&rsquo;s take it piece by piece.</p>
+
+<p>We take the function <code>($)</code> and give its first argument from the first list.
+This list is an infinite list that looks like this:</p>
+
+<pre><code>[shouting, shouting, shouting...]
+</code></pre>
+
+<p>As the second argument for the <code>$</code> function we take the first element from the
+second list. The second list looks like this:</p>
+
+<pre><code>[Red, Red, Green, Red, Green]
+</code></pre>
+
+<p>Do this until one list runs out of elements (hint: it&rsquo;s not the infinite one),
+and our resulting list will look something like this:</p>
+
+<pre><code>[shouting Red, shouting Red, shouting Green, shouting Red, shouting Green]
+</code></pre>
+
+<p>You see, we used <code>$</code> to &ldquo;bind&rdquo; the function and the argument together. Since
+function argument is the same thing as function $ argument we can use that
+operator to tie things together as nicely as we&rsquo;ve done here.</p>
+
+<p>I should mention that the more experienced readers might be saying &ldquo;Hey, why
+not just use a <code>map</code> instead of <code>zipWith</code>?&rdquo;</p>
+
+<p>Good point, but where&rsquo;s the fun in that? :-P</p>
+
+<p>To continue: with this collection of partially applied functions, it&rsquo;s as if
+the peddler is holding the apples, just having to decide whether he wants to be
+<code>Loud</code> or <code>Quiet</code>. He could for instance decide that he wants to start <code>Quiet</code>
+with the first apple:</p>
+
+<pre><code>*Apples&gt; (head basketShouting) Quiet
+"Ruby red apples; get your Red Delicious here!"
+</code></pre>
+
+<p>Then he might want to <code>Loud</code>ly sell his third apple:</p>
+
+<pre><code>*Apples&gt; (basketShouting !! 2) Loud
+"GREEN APPLES, YOU NEED ONE!"
+</code></pre>
+
+<p>The <code>!!</code> function takes a list index (starting with zero).</p>
+
+<p>Finally we could go ahead and have the guy sell all of the apples:</p>
+
+<pre><code>*Apples&gt; zipWith ($) basketShouting (repeat Loud)
+["RED APPLES DAMMIT, BUY EM'!","RED APPLES DAMMIT, BUY EM'!","GREEN APPLES, YOU NEED ONE!","RED APPLES DAMMIT, BUY EM'!","GREEN APPLES, YOU NEED ONE!"]
+</code></pre>
+
+<p>Let&rsquo;s turn this into a newline separated string and have it look like some real
+output:</p>
+
+<pre><code>*Apples&gt; putStrLn $ unlines $ zipWith ($) basketShouting (repeat Loud)
+RED APPLES DAMMIT, BUY EM'!
+RED APPLES DAMMIT, BUY EM'!
+GREEN APPLES, YOU NEED ONE!
+RED APPLES DAMMIT, BUY EM'!
+GREEN APPLES, YOU NEED ONE!
+</code></pre>
+
+<p>And there we have it! Loud and clear.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Vim plugins - Why, How and Which]]></title>

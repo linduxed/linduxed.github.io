@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Rants of a geek]]></title>
   <link href="http://linduxed.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-06-22T18:46:41+02:00</updated>
+  <updated>2014-06-22T20:08:36+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,285 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Vim search and replace in bulk]]></title>
+    <link href="http://linduxed.github.io/blog/2013/09/16/vim-search-and-replace-in-bulk/"/>
+    <updated>2013-09-16T13:57:07+02:00</updated>
+    <id>http://linduxed.github.io/blog/2013/09/16/vim-search-and-replace-in-bulk</id>
+    <content type="html"><![CDATA[<p>Every once in a while you&rsquo;ll have some word or phrase that is present in
+multiple files across your project. Finding all of instances can be done with
+tools like <code>grep</code> outside of Vim. You could probably also use <code>sed</code>, <code>awk</code> or
+some other tool to perform a substitution inside these files.</p>
+
+<p>While there&rsquo;s nothing wrong with this approach, what if you wanted to do this
+kind of multi-file search and replace inside Vim?</p>
+
+<!--more-->
+
+
+<p>The following methods are by no means the only ways of doing things, it&rsquo;s just
+how I tend to solve this problem.</p>
+
+<h2>Finding stuff</h2>
+
+<p>When in a terminal, if you wanted to find all instances of <code>FoobarQuux</code> in
+a project, you&rsquo;d probably run one of these commands:</p>
+
+<pre><code>grep "FoobarQuux" $(git ls-files)
+git grep "FoobarQuux"
+ack "FoobarQuux"
+ag "FoobarQuux"
+</code></pre>
+
+<p>Let&rsquo;s look at alternatives.</p>
+
+<h3>vimgrep</h3>
+
+<p>The built-in equivalent that Vim has is <code>vimgrep.</code> A search similar to the ones
+above would be this:</p>
+
+<pre><code>:vimgrep /FoobarQuux/ `git ls-files`
+</code></pre>
+
+<p>You&rsquo;ll notice a couple of things here.</p>
+
+<p>First of all, the command uses slashes to encapsulate the regex and grave accents for eval. I&rsquo;m pretty sure the <code>$()</code> syntax doesn&rsquo;t work here.</p>
+
+<p>Secondly, the results aren&rsquo;t highlighted in the way that a regular search
+performed with <code>/</code> would be. Instead, the Quickfix-list is populated with the
+results and you can go through them with <code>:cnext</code> and <code>:cprevious</code> (quicker
+bindings for that with <a href="https://github.com/tpope/vim-unimpaired">tpope&rsquo;s unimpaired</a>).</p>
+
+<p>Lastly, and most importantly, you&rsquo;ll notice that vimgrep is <em>remarkably</em> slow.
+I don&rsquo;t know why that is and I don&rsquo;t particularly care since there are
+alternatives.</p>
+
+<h3>ack.vim</h3>
+
+<p>We can speed things up by using the <code>ack.vim</code> plugin, which you can find
+<a href="https://github.com/mileszs/ack.vim">over on Github</a>. I&rsquo;m going to assume that
+you&rsquo;ve already got a preferred method of installing plugins, but in case you&rsquo;re
+new to them, here&rsquo;s a <a href="http://stackoverflow.com/questions/4905554/managing-vim-plugins">helpful Stack Overflow question</a>.</p>
+
+<p>You&rsquo;ll have to install the ack package for whatever OS you use, then you&rsquo;ll be
+able to run commands like this in Vim:</p>
+
+<pre><code>:Ack "FoobarQuux"
+</code></pre>
+
+<p>This is just like running <code>ack FoobarQuux</code> from the command line, but the
+results get loaded into a Quickfix-list. This time however, there&rsquo;s
+a noticeable increase in performance.</p>
+
+<h3>the_silver_searcher</h3>
+
+<p>Mr. ggreer once said &ldquo;But who has the time?&rdquo;, and lo and behold,
+<em>the_silver_searcher</em> was created. If you&rsquo;re not familiar with
+<a href="https://github.com/ggreer/the_silver_searcher">the_silver_searcher</a>, it&rsquo;s
+basically <code>ack</code> but even quicker. What&rsquo;s even nicer is that you don&rsquo;t need
+another plugin for using it (although <a href="https://github.com/rking/ag.vim">you can get one</a>), you just change the command which <code>ack.vim</code>
+runs. Add this to your <code>.vimrc</code> and you&rsquo;re good to go:</p>
+
+<p>```vim
+if executable(&ldquo;ag&rdquo;)</p>
+
+<pre><code>let g:ackprg = 'ag --nogroup --nocolor --column'
+</code></pre>
+
+<p>endif
+```</p>
+
+<p>I like to use this solution because I&rsquo;ve found that on distros like Debian,
+<code>ack</code> is readily available in the repositories while <code>ag</code> isn&rsquo;t, so it&rsquo;s a bit
+more portable.</p>
+
+<h2>Replacing the stuff you&rsquo;ve found</h2>
+
+<p>So now your Quickfix-list list is filled with lines that contain some word or
+phrase you want to change. Here&rsquo;s an interesting fact for you then:</p>
+
+<p>Vim has <code>bufdo</code> for running a certain command in all open buffers. It also has
+<code>windo</code> for all open windows, <code>tabdo</code> for all tabs and <code>argdo</code> for all files in
+the <a href="http://vimcasts.org/episodes/meet-the-arglist/">arglist</a>. All these
+things, but no <code>quickfixdo</code>.</p>
+
+<p>If <code>bufdo</code> doesn&rsquo;t overlap with the files you wish to perform replacements on
+(it sometimes does), you can use <a href="https://github.com/nelstrom/vim-qargs">the following plugin</a> to populate the arglist with the
+contents of the Quickfix-list. The creator of the plugin
+<a href="http://stackoverflow.com/a/5686810/1106810">gives an example</a>:</p>
+
+<pre><code>:Ack FoobarQuux
+:Qargs
+:argdo %s/FoobarQuux/Cranberries/gc
+:argdo update
+</code></pre>
+
+<p>That works, and lets us see every change due to the confirm flag at the end of
+the third line.</p>
+
+<p>But what if there was one command for doing it all?</p>
+
+<h3>greplace &ndash; global search and replace</h3>
+
+<p><a href="https://github.com/skwp/greplace.vim">This plugin</a> is pretty old and there
+might be newer alternatives, but it does what it should and that&rsquo;s all I need.</p>
+
+<p>From the help page:</p>
+
+<p>```
+The following commands are provided by this plugin:</p>
+
+<p>:Gsearch         Search for a given pattern in the specified</p>
+
+<pre><code>             group of files and display the matches in
+             the replace buffer.
+</code></pre>
+
+<p>:Gbuffersearch   Search for a given pattern in all the buffers</p>
+
+<pre><code>             in the Vim buffer list.
+</code></pre>
+
+<p>:Gargsearch      Search for a given pattern in all the files in</p>
+
+<pre><code>             the Vim argument list.
+</code></pre>
+
+<p>:Gqfopen         Use the results from the quickfix list.
+:Greplace        Incorporate the modifications from the</p>
+
+<pre><code>             replace buffer into the corresponding files.
+</code></pre>
+
+<p>```</p>
+
+<p>So if you were to do <code>:Gsearch</code> you&rsquo;d get to input the regex, then input what files you wish to apply this to and then you&rsquo;ll get an <em>editable</em> with every found line!</p>
+
+<p>When you&rsquo;re done editing the found line, you run <code>:Greplace</code> and then you&rsquo;ll get to approve each change in the actual file.</p>
+
+<p>Regardless of how often this scenario pops up for you, you ought to try it to
+see how nice this plugin is. I might also add that when you&rsquo;re in that editing
+buffer, you could probably improve your experience even more by using the
+<code>:Subvert</code> command from <a href="https://github.com/tpope/vim-abolish">tpope&rsquo;s abolish plugin</a>, functionality which is explained
+<a href="http://vimcasts.org/episodes/supercharged-substitution-with-subvert/">in this Vimcast</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Screencasts in Linux]]></title>
+    <link href="http://linduxed.github.io/blog/2013/09/08/screencasts-in-linux/"/>
+    <updated>2013-09-08T16:42:54+02:00</updated>
+    <id>http://linduxed.github.io/blog/2013/09/08/screencasts-in-linux</id>
+    <content type="html"><![CDATA[<p>Some time ago I wrote a rant about the
+<a href="/blog/2012/03/15/when-the-tools-just-dont-work/">sorry state of streaming on Linux</a>. About a month ago I needed to
+find an application which would record my desktop for a screencast, giving me
+a perfect opportunity to see if the situation had changed somewhat in this
+field.</p>
+
+<p>While streaming is still quite bad (video+audio works but there&rsquo;s still nothing
+like <a href="http://obsproject.com/">OBS</a>), desktop recording is in a better spot
+since you only need the raw footage (bells and whistles can be handled
+afterwards in a video editor). Although it took some searching, I actually
+found something with which I can reliably record my desktop, with microphone
+audio.</p>
+
+<!--more-->
+
+
+<h2>The bad</h2>
+
+<p>Before I start I&rsquo;d like to say a few words about the applications I won&rsquo;t use.
+When I was looking for a screencasting solution I had a couple of criteria:</p>
+
+<ol>
+<li>There can be no dropped frames.</li>
+<li>Synchronized audio recording is preferable, so I don&rsquo;t have to record audio separately.</li>
+<li>I must be able to play the resulting video without any issues.</li>
+<li>Screen number, window or screen area needs to be easy to set as a target.</li>
+<li>Give me configuration options. I will need to tweak things.</li>
+<li>Do not. DROP. <strong>FRAMES</strong>.</li>
+</ol>
+
+
+<p>The vast majority of the tools available were almost immediately disqualified
+since I could <em>never</em> depend on them giving me back a normal, functioning,
+video. I remember plenty of errors during playback about not correctly marked
+frames, warnings about bad keyframes, along with other stuff I&rsquo;ve probably
+forgotten. I was sort of amazed by how bad the results from the applications
+were (not even taking into account how they handled #2 and #4), considering
+I&rsquo;ve seen many a blog recommending these tools.</p>
+
+<p>By the way, this was tried on one top of the line laptop and another laptop
+which I would at the very least call &ldquo;powerful&rdquo;. There was no hardware related
+reason for this to happen.</p>
+
+<p>The one that was closest to passing was <code>recordmydesktop</code> (I used the front-end
+<code>gtk-recordmydesktop</code>). It&rsquo;s got a decent amount of settings one can tweak,
+covering pretty much every point except for #3. The resulting video had so many
+problems that it couldn&rsquo;t be loaded into various tools, with <code>mplayer</code>
+screaming warnings all throughout every generated video.<br/>
+That was the application that came the closest.</p>
+
+<p><code>kazam</code> broke rule #1 and had an almost total absence of configuration. I tried
+<code>byzanz</code>, but it broke rule number #6. <code>istanbul</code> broke both rule #1 and #6 so
+I didn&rsquo;t bother with it for long. All I remember about <code>xvidcap</code> was that it
+didn&rsquo;t last long either; maybe it was that one with which the best results were
+achieved by setting it to &ldquo;output as folder with screenshots&rdquo;&hellip;</p>
+
+<p>There were a couple of others I tried, but I&rsquo;ve forgotten the names by now.</p>
+
+<p>Maybe there&rsquo;s a project I&rsquo;ve missed that JustFuckingWorks™, but until
+I discover that (<code>simplescreenrecorder</code> looks good, will have to try it), I&rsquo;ll
+have to make due with good old ffmpeg.</p>
+
+<h2>ffcast with ffmpeg settings</h2>
+
+<p><blockquote><p>FFmpeg is a free software project that produces libraries and programs for handling multimedia data.</p><footer><strong>Wikipedia <a href="http://en.wikipedia.org/wiki/FFmpeg">http://en.wikipedia.org/wiki/FFmpeg</a></strong></footer></blockquote></p>
+
+<p>Another way of putting it is that it&rsquo;s a command that lets you do almost
+anything video related, as long as you know the correct parameters. While
+setting <code>ffmpeg</code> up to record your screen is possible by setting geometry
+options and such, the application <a href="https://github.com/lolilolicon/FFcast2"><code>ffcast</code></a> (available in the <a href="https://aur.archlinux.org/packages/ffcast/">AUR</a> if you use Arch) lets you easily
+select the desired window or screen to record. Whatever isn&rsquo;t area selection
+functionality is covered by an <code>ffmpeg</code> command.</p>
+
+<p>In a two screen setup, I&rsquo;m using this command for recording my laptop screen
+with the microphone for audio:</p>
+
+<pre><code>ffcast -x 1 ffmpeg -f alsa -i pulse -vcodec libx264 -vpre libvpx-1080p out.mkv
+</code></pre>
+
+<p><code>-x 0</code> chooses my laptop screen; it will probably be different for you so run
+<code>ffcast -x list</code> to find out the correct screen. If you prefer to choose
+a window to record use <code>-w</code> instead.</p>
+
+<p><code>-f alsa -i pulse</code> is for telling <code>ffmpeg</code> that I want to use <code>pulse</code> for input
+audio. As for the <code>-f</code> flag, you need it for the <code>-i</code> flag to work, so just
+consider those two as a package.</p>
+
+<p>Choose whatever codec that works well, <code>libx264</code> is one.</p>
+
+<p>Finally we come to the <code>-vpre</code> flag (and the output filename at the end, but
+that one&rsquo;s obvious). This flag dictates what preset you want to use for
+recording. Depending on what preset you use (or maybe you don&rsquo;t use any) the
+quality of the video will range from artifact ridden garbage to crisp beauty.
+To determine which presets you have available you need to list the contents of
+the directory <code>/usr/share/ffmpeg</code>.<br/>
+Try some of these out. If none of these presets work for you then I&rsquo;m sure you
+can find some alternatives on the net.</p>
+
+<h2>Progress!</h2>
+
+<p>While this solution is complicated, it works, which is something I haven&rsquo;t been
+able to say about the other tools I&rsquo;ve in this area. If stream overlays, scenes
+and all of that stuff isn&rsquo;t important to your streaming, this might also be
+a decent solution for Linux based streaming, although I haven&rsquo;t tried it myself
+yet.</p>
+
+<p>Now that I can record videos, I&rsquo;ll have to find a decent video editor&hellip;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Macros and the expression register in Vim]]></title>
@@ -589,145 +868,6 @@ consuming.</p>
 <p>Some day I&rsquo;ll probably give it another shot, but by that time I&rsquo;ll probably come
 prepared with far more patience and without the expectation to actually replace
 Firefox.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[When the tools just don't work]]></title>
-    <link href="http://linduxed.github.io/blog/2012/03/15/when-the-tools-just-dont-work/"/>
-    <updated>2012-03-15T12:38:30+01:00</updated>
-    <id>http://linduxed.github.io/blog/2012/03/15/when-the-tools-just-dont-work</id>
-    <content type="html"><![CDATA[<p>Every once in a while you stumble on that area of software that Linux just
-doesn&rsquo;t have covered. You might now be thinking that I&rsquo;d like to talk about
-audio and video editing. A fair guess, since you&rsquo;ll hear people talk about
-these two as areas where the other platforms have significantly more
-sophisticated software available. But this isn&rsquo;t what I&rsquo;m going to talk about.</p>
-
-<!--more-->
-
-
-<p>You see, I&rsquo;ve had a look at the video and audio editors out there for Linux, and
-while it&rsquo;s generally not as good as what you&rsquo;d have on OSX or Windows, there are
-projects that make honest efforts to compete (Rosegarden comes to mind). I think
-even the cynics can at least call the tools in these areas “rudimentary”.</p>
-
-<p>“Streaming your desktop” in Linux, however, is one area you can&rsquo;t even fucking
-call rudimentary. The appropriate description I&rsquo;ve come up with is “technically
-working with the help of wizardry”, and I&rsquo;m thinking about whether that&rsquo;s too
-generous.</p>
-
-<h2>No audience</h2>
-
-<p>I can&rsquo;t say I&rsquo;m particularly surprised by this situation, because apart from the
-occasional recorded screen cast for some brand new package, there isn&rsquo;t that
-much of a need, it seems. We don&rsquo;t have the games to stream, which I would
-assume is a large part of what drives the revenue of a page like Justin.tv.</p>
-
-<p>I assume most of the people who code in Linux aren&rsquo;t exactly eager to stream and
-narrate their work, which could have been that “other area” of content that
-would have driven the development of tools for streaming. I understand that the
-Linux community might have less scenarios under which one would want to stream
-one&rsquo;s desktop, but I&rsquo;m still surprised by how dire the software situation is.</p>
-
-<h2>The tools</h2>
-
-<p>From what I&rsquo;ve gathered, the most “mature” application available for handling
-the various aspects of streaming (sound, picture, overlays and so on) is
-WebcamStudio, which didn&rsquo;t exactly work. At the best of times it was giving me
-something that looked like the stream I wanted to pass on, but I never managed
-to actually get any streaming site to accept the data. This completely sidesteps
-the issue that is the buggy-as-fuck interface, that neither looks good nor works
-well.</p>
-
-<p>The most stable solution I&rsquo;ve found, that has actually let me see my desktop on
-the internet, is the combination of:</p>
-
-<ul>
-<li>Letting VLC capture your desktop with a wide array of flags to make sure it
-comes out right. Figuring out those was a ton of fun.</li>
-<li>Having a script called “jtvlc” catch the data and send it in through the
-Justin.tv API.</li>
-</ul>
-
-
-<p>It&rsquo;s way better than nothing, but this gives me absolutely no ability to
-customize the output, except choosing what part of my monitor set-up it should
-grab.</p>
-
-<h2>Conclusion</h2>
-
-<p>In a way, I hope I&rsquo;ve missed something; I hope there&rsquo;s an obscure package that
-simply grabs the part of the desktop you want, has a nice interface, and just
-works. If that magic package exists however, then I haven&rsquo;t found it.</p>
-
-<p>There are times when I really would have liked to share the view of one of my
-screens, with some embedded microphone commentary. When the ideas pop up, I&rsquo;d
-like to go ahead and just try them out, but in this case, I&rsquo;m completely
-hindered. It might be that the process of getting these things to work under the
-other systems is also a chore, but at least I&rsquo;ve seen plenty examples of there
-being an end result. That&rsquo;s something I&rsquo;ve yet to see here in Linux.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Late night OS adventures]]></title>
-    <link href="http://linduxed.github.io/blog/2009/05/26/late-night-os-adventures/"/>
-    <updated>2009-05-26T22:30:23+02:00</updated>
-    <id>http://linduxed.github.io/blog/2009/05/26/late-night-os-adventures</id>
-    <content type="html"><![CDATA[<p>So it was a late night, a day or so after the 23rd of April, Jaunty had just
-been released. I was very excited because I had been using Intrepid for
-a while, and I wasn&rsquo;t as satisfied with it as I was with Hardy; an upgrade felt
-like a nice thing to do. It turned out that Jaunty had some issues that I at the
-time felt relatively unmotivated to solve, most notably <a href="/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g/">no sound</a> and an
-<a href="/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04/">inability to install Awesome</a>.</p>
-
-<p>Perfect reason to start distrohopping.</p>
-
-<!--more-->
-
-
-<h2>3 x Linux vs. Eyelids</h2>
-
-<p>Debian was first up. I burned a stable Lenny ISO, rebooted, turned out i burned
-a dodgy CD, wouldn&rsquo;t boot.<br/>
-I instantly decided that I didn&rsquo;t care for Debian since it wouldn&rsquo;t boot,
-making it the most uncalled for discarding of a piece of software this year.</p>
-
-<p>Next up was Intrepid, mainly because it worked to a larger extent than Jaunty.
-Obviously, the tired linduxed decided after a quick installation that getting
-the sound to work in Intrepid would not be fun (despite knowing that it would
-need tweaking regardless of distro), so Intrepid was also discarded.</p>
-
-<p>Two systems in less than an hour, both cases making no sense whatsoever; that
-must be a record of some sort.</p>
-
-<p>Next up was Arch. I really like this system, but I should have known better
-than setting up an OS pretty much from scratch when I was so tired I had
-trouble locating my hands.</p>
-
-<p>I somehow managed to progress all the way up to the partitioning stage, which in retrospect I can&rsquo;t decide if it was a good or a bad thing.<br/>
-I came to the reasonable conclusion that having both a /home-partition and
-a /-partition might be superior to just having a /-partition. What was not as
-reasonable was to start formatting partitions and editing individual cylinder
-values while my brain tried to make it clear to me that the numbers and letters
-had transformed into hamburgers and frisbees.</p>
-
-<p>This basically lead to corrupting the entire partition table, which made me call it a day.</p>
-
-<h3>Stroke of luck</h3>
-
-<p>The next morning I could confirm that I had no systems to boot into and that my brain was still in the mood for illogical decisions:</p>
-
-<p>It was time to install Jaunty again!</p>
-
-<p>Why? Because this time everything was going to work, I said to myself.
-A generously flawed assumption, but it turns out I was right. Apparently Ubuntu
-seeks to comfort Windows converts by being just as unpredictable, all the
-issues I had in the previous install of Jaunty seemed to fix themselves, an
-interesting feat indeed.</p>
-
-<p>So the distrohopping ended happily, but what happened to Windows? A geek has to
-game right?</p>
 ]]></content>
   </entry>
   

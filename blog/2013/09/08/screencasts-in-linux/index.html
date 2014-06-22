@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Screencasts in Linux - Rants of a geek</title>
+  <meta name="author" content="linduxed">
+
+  
+  <meta name="description" content="Some time ago I wrote a rant about the
+sorry state of streaming on Linux. About a month ago I needed to
+find an application which would record my &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://linduxed.github.io/blog/2013/09/08/screencasts-in-linux">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Rants of a geek" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Rants of a geek</a></h1>
+  
+    <h2>linduxed's ramblings</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:linduxed.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Screencasts in Linux</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-08T16:42:54+02:00" pubdate data-updated="true">Sep 8<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Some time ago I wrote a rant about the
+<a href="/blog/2012/03/15/when-the-tools-just-dont-work/">sorry state of streaming on Linux</a>. About a month ago I needed to
+find an application which would record my desktop for a screencast, giving me
+a perfect opportunity to see if the situation had changed somewhat in this
+field.</p>
+
+<p>While streaming is still quite bad (video+audio works but there&rsquo;s still nothing
+like <a href="http://obsproject.com/">OBS</a>), desktop recording is in a better spot
+since you only need the raw footage (bells and whistles can be handled
+afterwards in a video editor). Although it took some searching, I actually
+found something with which I can reliably record my desktop, with microphone
+audio.</p>
+
+<!--more-->
+
+
+<h2>The bad</h2>
+
+<p>Before I start I&rsquo;d like to say a few words about the applications I won&rsquo;t use.
+When I was looking for a screencasting solution I had a couple of criteria:</p>
+
+<ol>
+<li>There can be no dropped frames.</li>
+<li>Synchronized audio recording is preferable, so I don&rsquo;t have to record audio separately.</li>
+<li>I must be able to play the resulting video without any issues.</li>
+<li>Screen number, window or screen area needs to be easy to set as a target.</li>
+<li>Give me configuration options. I will need to tweak things.</li>
+<li>Do not. DROP. <strong>FRAMES</strong>.</li>
+</ol>
+
+
+<p>The vast majority of the tools available were almost immediately disqualified
+since I could <em>never</em> depend on them giving me back a normal, functioning,
+video. I remember plenty of errors during playback about not correctly marked
+frames, warnings about bad keyframes, along with other stuff I&rsquo;ve probably
+forgotten. I was sort of amazed by how bad the results from the applications
+were (not even taking into account how they handled #2 and #4), considering
+I&rsquo;ve seen many a blog recommending these tools.</p>
+
+<p>By the way, this was tried on one top of the line laptop and another laptop
+which I would at the very least call &ldquo;powerful&rdquo;. There was no hardware related
+reason for this to happen.</p>
+
+<p>The one that was closest to passing was <code>recordmydesktop</code> (I used the front-end
+<code>gtk-recordmydesktop</code>). It&rsquo;s got a decent amount of settings one can tweak,
+covering pretty much every point except for #3. The resulting video had so many
+problems that it couldn&rsquo;t be loaded into various tools, with <code>mplayer</code>
+screaming warnings all throughout every generated video.<br/>
+That was the application that came the closest.</p>
+
+<p><code>kazam</code> broke rule #1 and had an almost total absence of configuration. I tried
+<code>byzanz</code>, but it broke rule number #6. <code>istanbul</code> broke both rule #1 and #6 so
+I didn&rsquo;t bother with it for long. All I remember about <code>xvidcap</code> was that it
+didn&rsquo;t last long either; maybe it was that one with which the best results were
+achieved by setting it to &ldquo;output as folder with screenshots&rdquo;&hellip;</p>
+
+<p>There were a couple of others I tried, but I&rsquo;ve forgotten the names by now.</p>
+
+<p>Maybe there&rsquo;s a project I&rsquo;ve missed that JustFuckingWorks™, but until
+I discover that (<code>simplescreenrecorder</code> looks good, will have to try it), I&rsquo;ll
+have to make due with good old ffmpeg.</p>
+
+<h2>ffcast with ffmpeg settings</h2>
+
+<blockquote><p>FFmpeg is a free software project that produces libraries and programs for handling multimedia data.</p><footer><strong>Wikipedia</strong> <cite><a href='http://en.wikipedia.org/wiki/FFmpeg'>en.wikipedia.org/wiki/FFmpeg/&hellip;</a></cite></footer></blockquote>
+
+
+<p>Another way of putting it is that it&rsquo;s a command that lets you do almost
+anything video related, as long as you know the correct parameters. While
+setting <code>ffmpeg</code> up to record your screen is possible by setting geometry
+options and such, the application <a href="https://github.com/lolilolicon/FFcast2"><code>ffcast</code></a> (available in the <a href="https://aur.archlinux.org/packages/ffcast/">AUR</a> if you use Arch) lets you easily
+select the desired window or screen to record. Whatever isn&rsquo;t area selection
+functionality is covered by an <code>ffmpeg</code> command.</p>
+
+<p>In a two screen setup, I&rsquo;m using this command for recording my laptop screen
+with the microphone for audio:</p>
+
+<pre><code>ffcast -x 1 ffmpeg -f alsa -i pulse -vcodec libx264 -vpre libvpx-1080p out.mkv
+</code></pre>
+
+<p><code>-x 0</code> chooses my laptop screen; it will probably be different for you so run
+<code>ffcast -x list</code> to find out the correct screen. If you prefer to choose
+a window to record use <code>-w</code> instead.</p>
+
+<p><code>-f alsa -i pulse</code> is for telling <code>ffmpeg</code> that I want to use <code>pulse</code> for input
+audio. As for the <code>-f</code> flag, you need it for the <code>-i</code> flag to work, so just
+consider those two as a package.</p>
+
+<p>Choose whatever codec that works well, <code>libx264</code> is one.</p>
+
+<p>Finally we come to the <code>-vpre</code> flag (and the output filename at the end, but
+that one&rsquo;s obvious). This flag dictates what preset you want to use for
+recording. Depending on what preset you use (or maybe you don&rsquo;t use any) the
+quality of the video will range from artifact ridden garbage to crisp beauty.
+To determine which presets you have available you need to list the contents of
+the directory <code>/usr/share/ffmpeg</code>.<br/>
+Try some of these out. If none of these presets work for you then I&rsquo;m sure you
+can find some alternatives on the net.</p>
+
+<h2>Progress!</h2>
+
+<p>While this solution is complicated, it works, which is something I haven&rsquo;t been
+able to say about the other tools I&rsquo;ve in this area. If stream overlays, scenes
+and all of that stuff isn&rsquo;t important to your streaming, this might also be
+a decent solution for Linux based streaming, although I haven&rsquo;t tried it myself
+yet.</p>
+
+<p>Now that I can record videos, I&rsquo;ll have to find a decent video editor&hellip;</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">linduxed</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-08T16:42:54+02:00" pubdate data-updated="true">Sep 8<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://linduxed.github.io/blog/2013/09/08/screencasts-in-linux/" data-via="linduxed" data-counturl="http://linduxed.github.io/blog/2013/09/08/screencasts-in-linux/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/09/07/old-favourites/" title="Previous Post: Old favourites">&laquo; Old favourites</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/09/09/planescape-torment-could-have-been-more/" title="Next Post: Planescape: Torment could have been more">Planescape: Torment could have been more &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/01/21/currying-and-other-haskell-spices/">Currying and other Haskell spices</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/16/vim-search-and-replace-in-bulk/">Vim search and replace in bulk</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/12/adult-gaming/">Adult gaming</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/09/planescape-torment-could-have-been-more/">Planescape: Torment could have been more</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/08/screencasts-in-linux/">Screencasts in Linux</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - linduxed -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
