@@ -10,6 +10,8 @@ with books, video games and movies. Time has passed and having indulged in the
 work of art so many times made me forget what made it so special in the first
 place.
 
+<!--more-->
+
 About a year ago I veered away from my tried and true collection of
 instrumental music and found new joy in the world of dance music, ranging from
 electro-swing like Parov Stelar to house like Deadmau5. Ambient music soon
