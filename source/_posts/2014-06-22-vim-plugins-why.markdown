@@ -3,7 +3,7 @@ layout: post
 title: "Vim plugins - Why, How and Which"
 date: Sat, 13 Apr 2013 21:12:33 +0000
 comments: true
-categories: [gnu/linux, tech]
+categories: [linux, tech]
 ---
 A lot of times when I meet "Vim neophytes" they mention that Vim is a great
 editor, but they miss certain features that they find in their previous

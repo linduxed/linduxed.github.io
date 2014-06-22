@@ -3,7 +3,7 @@ layout: post
 title: "Not ready for the switch"
 date: Thu, 10 May 2012 12:12:25 +0000
 comments: true
-categories: [gnu/linux, tech]
+categories: [linux, tech]
 ---
 Yesterday, for some unknown reason, [Pentadactyl](
 http://5digits.org/pentadactyl/) decided that it didn't want to work any more.
