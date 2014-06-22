@@ -121,7 +121,7 @@ might be newer alternatives, but it does what it should and that's all I need.
 
 From the help page:
 
-```
+```plain
 The following commands are provided by this plugin:
 
 :Gsearch         Search for a given pattern in the specified
