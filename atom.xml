@@ -4,7 +4,7 @@
   <title><![CDATA[Rants of a geek]]></title>
   <link href="http://linduxed.github.io/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-06-22T20:08:36+02:00</updated>
+  <updated>2014-06-22T20:09:44+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -408,19 +408,18 @@ might be newer alternatives, but it does what it should and that&rsquo;s all I n
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='vim'><span class='line'>The following commands are provided by this plugin:
+</pre></td><td class='code'><pre><code class=''><span class='line'>The following commands are provided by this plugin:
 </span><span class='line'>
-</span><span class='line'><span class="p">:</span>Gsearch         Search <span class="k">for</span> <span class="k">a</span> given pattern <span class="k">in</span> the specified
-</span><span class='line'>                 group of <span class="k">files</span> and <span class="nb">display</span> the matches <span class="k">in</span>
+</span><span class='line'>:Gsearch         Search for a given pattern in the specified
+</span><span class='line'>                 group of files and display the matches in
 </span><span class='line'>                 the replace buffer.
-</span><span class='line'><span class="p">:</span>Gbuffersearch   Search <span class="k">for</span> <span class="k">a</span> given pattern <span class="k">in</span> <span class="k">all</span> the <span class="k">buffers</span>
-</span><span class='line'>                 <span class="k">in</span> the Vim buffer <span class="nb">list</span>.
-</span><span class='line'><span class="p">:</span>Gargsearch      Search <span class="k">for</span> <span class="k">a</span> given pattern <span class="k">in</span> <span class="k">all</span> the <span class="k">files</span> <span class="k">in</span>
-</span><span class='line'>                 the Vim <span class="k">argument</span> <span class="nb">list</span>.
-</span><span class='line'><span class="p">:</span>Gqfopen         Use the results from the quickfix <span class="nb">list</span>.
-</span><span class='line'><span class="p">:</span>Greplace        Incorporate the modifications from the
-</span><span class='line'>                 replace buffer into the corresponding <span class="k">files</span>.
-</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>:Gbuffersearch   Search for a given pattern in all the buffers
+</span><span class='line'>                 in the Vim buffer list.
+</span><span class='line'>:Gargsearch      Search for a given pattern in all the files in
+</span><span class='line'>                 the Vim argument list.
+</span><span class='line'>:Gqfopen         Use the results from the quickfix list.
+</span><span class='line'>:Greplace        Incorporate the modifications from the
+</span><span class='line'>                 replace buffer into the corresponding files.</span></code></pre></td></tr></table></div></figure>
 
 
 <p>So if you were to do <code>:Gsearch</code> you&rsquo;d get to input the regex, then input what files you wish to apply this to and then you&rsquo;ll get an <em>editable</em> with every found line!</p>

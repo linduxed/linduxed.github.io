@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Rants of a geek]]></title>
   <link href="http://linduxed.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-06-22T20:08:36+02:00</updated>
+  <updated>2014-06-22T20:09:44+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -138,7 +138,7 @@ might be newer alternatives, but it does what it should and that&rsquo;s all I n
 
 <p>From the help page:</p>
 
-<p>```
+<p>```plain
 The following commands are provided by this plugin:</p>
 
 <p>:Gsearch         Search for a given pattern in the specified</p>
