@@ -32,7 +32,7 @@ Let's look at alternatives.
 
 ### vimgrep
 
-The built-in equivalent that Vim has is `vimgrep.` A search similar to the ones
+The built-in equivalent that Vim has is `vimgrep`. A search similar to the ones
 above would be this:
 
     :vimgrep /FoobarQuux/ `git ls-files`
