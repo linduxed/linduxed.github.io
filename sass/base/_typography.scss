@@ -1,21 +1,11 @@
 $blockquote: $type-border !default;
 
-$serif:
-"EB Garamond",
-Georgia,
-serif !default;
-
-$heading-font-family:
-"Raleway",
-Trebuchet MS,
-sans-serif !default;
-
+$serif: "EB Garamond", Georgia, serif !default;
+$heading-font-family: "Raleway", Trebuchet MS, sans-serif !default;
 $mono: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace !default;
 
 // Fonts
-.heading {
-  font-family: $heading-font-family;
-}
+.heading { font-family: $heading-font-family; }
 .serif { font-family: $serif; }
 .mono { font-family: $mono; }
 
@@ -89,11 +79,17 @@ strong { font-weight: bold; }
 
 em { font-style: italic; }
 
-sup, sub { font-size: 0.75em; position: relative;  display: inline-block; padding: 0 .2em; line-height: .8em;}
+sup, sub {
+  font-size: 0.75em;
+  position: relative;
+  display: inline-block;
+  padding: 0 .2em;
+  line-height: .8em;
+}
 sup { top: -.5em; }
 sub { bottom: -.5em; }
 
-a[rev='footnote']{ font-size: .75em; padding: 0 .3em; line-height: 1;}
+a[rev='footnote']{ font-size: .75em; padding: 0 .3em; line-height: 1; }
 
 q { font-style: italic;
   &:before { content: "\201C"; }
@@ -126,8 +122,18 @@ article blockquote {
   border-left: 4px solid rgba($text-color-light, .5);
   cite {
     font-style: italic;
-    a { color: $text-color-light !important; word-wrap: break-word; }
-    &:before { content: '\2014'; padding:{right: .3em; left: .3em;} color: $text-color-light; }
+    a {
+      color: $text-color-light !important;
+      word-wrap: break-word;
+    }
+    &:before {
+      content: '\2014';
+      padding: {
+        right: .3em;
+        left: .3em;
+      }
+      color: $text-color-light;
+    }
   }
   @media only screen and (min-width: 992px) {
     padding-left: 1.5em;
@@ -171,4 +177,4 @@ article blockquote {
   word-wrap: break-word;
 }
 
-a, a:visited, a:hover, a:active {text-decoration:none;}
+a, a:visited, a:hover, a:active { text-decoration:none; }
