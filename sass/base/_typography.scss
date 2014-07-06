@@ -6,14 +6,11 @@ Georgia,
 serif !default;
 
 $mono: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace !default;
-$heading-font-family: $serif !default;
 
-$header-title-font-family:
+$heading-font-family:
 "Raleway",
 Trebuchet MS,
 sans-serif !default;
-
-$header-subtitle-font-family: $serif !default;
 
 // Fonts
 .heading {
@@ -26,14 +23,15 @@ body > header h1 {
   text-transform: uppercase;
   font-size: 1.8em;
   @extend .heading;
-  font-family: $header-title-font-family;
+  font-family: $heading-font-family;
   font-weight: normal;
   line-height: 1.2em;
   margin-bottom: 0.6667em;
 }
+
 body > header h2 {
   font-size: 0.7em;
-  font-family: $header-subtitle-font-family;
+  font-family: $heading-font-family;
 }
 
 body {
@@ -41,6 +39,7 @@ body {
   color: $text-color;
   @extend .serif;
 }
+
 h1 {
   font-size: 1.9em;
   line-height: 1.2em;
