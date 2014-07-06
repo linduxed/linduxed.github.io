@@ -1,25 +1,16 @@
 $blockquote: $type-border !default;
 
 $serif:
-"Cardo",
-"Della Respira",
 "EB Garamond",
-"Sorts Mill Goudy",
-"Helvetica Neue",
-Tahoma,
+Georgia,
 serif !default;
 
 $mono: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace !default;
 $heading-font-family: $serif !default;
 
 $header-title-font-family:
-"Lato",
-"Fontdiner Swanky",
-"Germania One",
-"Poller One",
-"Georgia",
-"Helvetica Neue",
-Arial,
+"Raleway",
+Trebuchet MS,
 sans-serif !default;
 
 $header-subtitle-font-family: $serif !default;
