@@ -9,9 +9,10 @@ Based on an rather small amount of unscientifically acquired data, a handful of
 anecdotes and a healthy dose of prejudice, I'm going to make the following
 statement:
 
-#### Large parts of the previous generations are incompatible with video games.
+**Large parts of the previous generations are incompatible with video games.**
 
-This isn't a new revelation. It's not some recent discovery, nor is it something I think there will be much of a debate about. It's just me venting.
+This isn't a new revelation. It's not some recent discovery, nor is it
+something I think there will be much of a debate about. It's just me venting.
 
 <!--more-->
 
