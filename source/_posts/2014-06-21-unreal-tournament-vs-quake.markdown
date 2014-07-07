@@ -39,7 +39,7 @@ Badass" (to quote a certain Epic Games employee).
 Unreal Tournament has by now had four iterations, with UT2003 not being much
 more than a solid precursor to UT2004, cutting down the real number to three.
 There are important differences between the iterations of Unreal Tournament,
-but since the the purpose of the article is comparing what I believe to be the
+but since the purpose of the article is comparing what I believe to be the
 foremost of both series, UT2004 will be seen as the representative game. While
 I don't feel it is fair to disqualify the other two without a proper
 explanation, I'll leave that to a different article (some of it has been
