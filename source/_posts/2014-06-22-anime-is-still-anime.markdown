@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Anime is still anime"
+alias: /blog/2013/6/29/anime-is-still-anime
 date: Sat, 29 Jun 2013 14:33:04 +0000
 comments: true
 categories: personal

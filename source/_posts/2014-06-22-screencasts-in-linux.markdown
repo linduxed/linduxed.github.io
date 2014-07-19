@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Screencasts in Linux"
+alias: /blog/2013/9/8/screencasts-in-linux
 date: Sun, 08 Sep 2013 14:42:54 +0000
 comments: true
 categories: linux

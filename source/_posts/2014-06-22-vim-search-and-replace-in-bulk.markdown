@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Vim search and replace in bulk"
+alias: /blog/2013/9/16/vim-search-and-replace-in-bulk
 date: Mon, 16 Sep 2013 11:57:07 +0000
 comments: true
 categories: linux

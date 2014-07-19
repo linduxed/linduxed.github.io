@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Planescape: Torment could have been more"
+alias: /blog/2013/9/7/planescape-torment-could-have-been-more
 date: Mon, 09 Sep 2013 11:00:00 +0000
 comments: true
 categories: gaming

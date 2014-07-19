@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Adult gaming"
+alias: /blog/2013/9/13/adult-gaming
 date: Thu, 12 Sep 2013 11:00:00 +0000
 comments: true
 categories: gaming
