@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tech | Rants of a geek]]></title>
   <link href="http://linduxed.github.io/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-07-19T19:09:51+02:00</updated>
+  <updated>2014-07-25T06:31:41+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,211 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[The state of RMagick development]]></title>
+    <link href="http://linduxed.github.io/blog/2014/07/25/the-state-of-rmagick-development/"/>
+    <updated>2014-07-25T04:40:18+02:00</updated>
+    <id>http://linduxed.github.io/blog/2014/07/25/the-state-of-rmagick-development</id>
+    <content type="html"><![CDATA[<p>Yesterday <a href="https://github.com/rmagick/rmagick/issues/18#issuecomment-50022523">someone got fed up</a> with the situation that the RMagick gem is in and forked the project.</p>
+
+<p>Neither <a href="https://github.com/rmagick/rmagick/network">is this the first time</a>, nor do I know if this fork will help the project at large, but I think it&rsquo;s time people got to know what&rsquo;s going on with the project.</p>
+
+<p>All of which I&rsquo;m going to write might be obvious, old news or stuff people already knew in one way or another, but here it is anyway.
+Here&rsquo;s some backstory that might answer the following question:</p>
+
+<p><em>&ldquo;What&rsquo;s going on with RMagick?&rdquo;</em></p>
+
+<p>Or rather&hellip;</p>
+
+<p><em>&ldquo;Why is <strong>nothing</strong> happening with RMagick?&rdquo;</em></p>
+
+<!--more-->
+
+
+<h4>TL;DR</h4>
+
+<p>RMagick isn&rsquo;t going to go anywhere until a fork takes off, because the sole maintainer doesn&rsquo;t seem to be likely to do anything.</p>
+
+<h2>Some talk with the maintainer</h2>
+
+<p>In early September I joined a company that used RMagick for one of their projects.
+As an Archlinux user, I quickly got to join the crowd who <a href="https://github.com/rmagick/rmagick/issues/18">had a certain problem with the gem</a>.</p>
+
+<p>Nothing really happened with the issue and people were already making their own solutions to the problem, so after a while I got fed up with the situation and sent an email to the main/only maintainer, <a href="https://github.com/mmaiza">@mmaiza</a>.
+For @mmaiza&rsquo;s sake, I won&rsquo;t post the actual email exchange between us, but I&rsquo;ll give you the important gist of it.
+My first email basically consisted off:</p>
+
+<p><em>&ldquo;Hey, there&rsquo;s a lot of things happening on the issue tracker for the project, could we figure something out to get things going again?&rdquo;</em></p>
+
+<p>We had some brief back-and-forth and then in early November we had a talk about the state of the project.</p>
+
+<h3>Skype call</h3>
+
+<p>The guy inherited a large amount of code that someone else wrote and didn&rsquo;t have the time to maintain it.
+He really admired the previous guy&rsquo;s work and felt it was a shame if the project died.
+On the other hand, he didn&rsquo;t want the project to move forward without assuring that a certain level of quality was maintained.</p>
+
+<p>First of all he stressed that he had no intentions to move towards merging pull requests or fixing issues while the test suite had failing tests.
+Both at the time of the conversation and now, the test suite has <em>a lot</em> of failing tests.</p>
+
+<p>I also got the feeling (from the mail exchange and from the call) that he wasn&rsquo;t as interested in &ldquo;distributed help&rdquo; as he was in finding a successor for his position, a developer who could dedicate a lot of time to shape things up.
+Neither was I qualified for such a position at the time, I felt, nor did I have the time;
+I explicitly said that I was not asking for any Push access rights on the repository.</p>
+
+<p>However, I did suggest that if he created a milestone on Github for fixing all of these tests, and in the milestone he wrote about his requirement for the tests to be green (and maybe update the README with some instructions on how to run them because that <em>does</em> take work), then maybe people would feel like helping out.</p>
+
+<p>I was met with &ldquo;Sounds like a decent plan, we&rsquo;ll see about getting it going.&rdquo;</p>
+
+<h2>Radio silence</h2>
+
+<p>Two months went by and not much had happened.
+The problem that originally brought me to the RMagick issue tracker <a href="https://github.com/rmagick/rmagick/pull/90">was fixed</a> and a <a href="https://github.com/rmagick/rmagick/pull/78">license file was added</a>, but a new gem version was not made, the fixes only live in the <code>master</code> branch of the project.</p>
+
+<p>Around New Year I sent him another message.
+I reminded him that there would be great benefit to following through with that idea for creating a bug squashing milestone and communicating the state of the project.
+That, and making it easier to run the tests so the project could be improved easier.</p>
+
+<p>About a week after New Year I got a short mail that boiled down to &ldquo;Yeah, we should get those tests green, I&rsquo;ll get back to you.&rdquo;</p>
+
+<p>Unfortunately, almost seven months later, he hasn&rsquo;t.
+I sent him a two more messages over that time, in one of them proposing that if he gave me Push access then I could take care of all the things for him, but I haven&rsquo;t heard from him at all since early January.</p>
+
+<h2>Zombie application</h2>
+
+<p>I knew full well that I didn&rsquo;t have the time to (or a whole lot of will) to fix all the failing tests and problems that this project has.
+Disregarding the fact that @mmaiza considered it to be of importance that updated versions of the gem were provided on RubyForge (which has since then <a href="http://en.wikipedia.org/wiki/RubyForge#Shutting_Down">shut down</a>), I knew that if I would start a fork, people would need not only to contribute to it, but the world would need to catch on to the fact that there&rsquo;s a fork of the <code>rmagick</code> gem they need to use to get the latest and greatest.</p>
+
+<p>I don&rsquo;t know if <a href="https://github.com/gemhome/rmagick">the fork that was just made</a> by <a href="https://github.com/bf4">@bf4</a> will gain traction or if the project will improve from here.
+RMagick seems to have its detractors, with one of my developer friends summing it up as &ldquo;probably the most hated gem in the ecosystem&rdquo;.
+I don&rsquo;t know if that&rsquo;s the case, and some of the enmity is probably purely caused by <a href="https://twitter.com/garybernhardt/status/224329120346144769">people&rsquo;s dislike of ImageMagick</a>.<br/>
+Regardless, there&rsquo;s a lot of things that could be improved, and it&rsquo;s probably no small task to do so.</p>
+
+<p>Salutations and good luck to those who actually attempt to fix this thing.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Moving from Squarespace to Octopress]]></title>
+    <link href="http://linduxed.github.io/blog/2014/07/20/moving-from-squarespace-to-octopress/"/>
+    <updated>2014-07-20T13:51:13+02:00</updated>
+    <id>http://linduxed.github.io/blog/2014/07/20/moving-from-squarespace-to-octopress</id>
+    <content type="html"><![CDATA[<p>Squarespace had been my blogging platform of choice for numerous years.
+It looked good, had good editing features and took care of a lot of stuff for you.
+However, when my posting slowed down,
+I started considering whether what I was using was worth the annual bill I was paying.</p>
+
+<p>I needed something that was both cheaper and that gave me a bit more control.
+I was recommended Octopress by a colleague and decided to give it a spin;
+I realized very quickly that this platform was a much better fit for me.</p>
+
+<p>These are some thoughts I&rsquo;ve gathered up on the subject, about a month after moving.</p>
+
+<!--more-->
+
+
+<h2>Squarespace, the good and the bad</h2>
+
+<p>I got Squarespace about four years ago and the platform has since then had a major redesign,
+but overall my interaction with it didn&rsquo;t change much over time.</p>
+
+<p>There were four things about Squarespace that I very much enjoyed:</p>
+
+<ol>
+<li>A wide selection of well designed templates.
+Suitable for many different styles, it made it very easy to get up and going quickly.
+Additionally, there were plenty of easy ways to tweak the chosen design.</li>
+<li>Easy-to-use tools for content creation.
+Especially after the redesign, the platform gave you a large variety of tools to build your blog posts with.
+If I wanted to create a blog post, I didn&rsquo;t just write a text document that I could embed some stuff in,
+rather I&rsquo;d insert <a href="http://help.squarespace.com/guides/what-is-a-content-block">content blocks</a> to compose my document.
+The interfaces were also nice and clean, which made editing pleasant.</li>
+<li>The surrounding tools, provided by Squarespace, were of high quality.
+Whether it was the built-in analytics tools,
+the comment overview pages or the Android/iOS app they released to manage your site,
+they gave me a lot of well made tools that improved all the non-writing activities.</li>
+<li>The support was remarkably good.
+Support tickets got handled quickly and getting help was always an enjoyable experience.</li>
+</ol>
+
+
+<p>There was an overall high level of quality that made it all very pleasant to use.</p>
+
+<p>With all of that said, there were a few things which made me consider an alternative platform:</p>
+
+<ul>
+<li>It cost me money.
+It&rsquo;s not like it was a cost I couldn&rsquo;t handle, but why pay for something that I could make myself easily?</li>
+<li>It had <em>no</em> out-of-the-box tools for formatting code well.
+This is something that kept surprising me:
+there seemed to be no push towards making it easy to paste code and have it nicely rendered.<br/>
+This is important if one of the primary things you write about is programming.</li>
+<li>As much as Squarespace let me configure things with its interface,
+it doesn&rsquo;t compare to building something on your own.<br/>
+I build webapps for a living, so while it wasn&rsquo;t something that bugged me when I got Squarespace,
+today not having access to the internals is something that frustrates me.</li>
+</ul>
+
+
+<h2>Along comes Octopress</h2>
+
+<p>As mentioned previously, a colleague of mine recommended me to have a look at Octopress.
+While I had ideas for other frameworks I could use, this one stood out to me because of the following:</p>
+
+<ul>
+<li>Free hosting on Github Pages.</li>
+<li>It gives you something working right away.</li>
+<li>They call it the &ldquo;hacker&rsquo;s blogging platform&rdquo; and it did look kind of exciting.</li>
+<li>Static page generation from nothing but text documents? Yes, please.</li>
+</ul>
+
+
+<p>I decided to try it before I&rsquo;d consider going for some other alternatives and I must say I&rsquo;m very happy with my decision.</p>
+
+<p>Octopress is based on Jekyll which is a static page generator that I&rsquo;ve heard good things about.
+It&rsquo;s built in Ruby, which is a big plus for me considering it&rsquo;s my primary programming language,
+and it&rsquo;s actively being developed.</p>
+
+<h2>Setup and configuration</h2>
+
+<p>Getting Octopress up and running locally was very straight-forward:
+<code>plain Setup http://octopress.org/docs/setup/
+git clone git://github.com/imathis/octopress.git octopress
+cd octopress
+bundle install
+bundle exec rake install
+</code>
+This installs the default theme and let&rsquo;s you start a local server:
+<code>plain
+bundle exec rake preview
+</code>
+This fires up a local server on <code>localhost:4000</code> where you can see the site.
+There&rsquo;s nothing on it at the moment, but you already have a working environment.
+Almost all the non-styling related configuration is done <a href="https://github.com/imathis/octopress/blob/master/_config.yml">in the <code>_config.yml</code> file</a>,
+which is well documented and includes everything from page title to plugin configuration.</p>
+
+<p>Configuration for getting the site up and running on Github Pages is rather straightforward as well.
+Without going into too much detail (instructions can be found <a href="http://octopress.org/docs/deploying/github/">in the Octopress documentation</a>), you only need to do two things:</p>
+
+<ol>
+<li>Push your Octopress code into a repository named <code>your-github-username.github.io</code>.</li>
+<li>Run the following commands:</li>
+</ol>
+
+
+<p><code>plain
+bundle exec rake setup_github_pages
+bundle exec rake generate
+bundle exec rake deploy
+</code></p>
+
+<p>There are more details to it (especially if you want to have a custom domain), but in general it&rsquo;s a pleasantly quick process.</p>
+
+<h2>Content creation</h2>
+
+<p>Blog posts and pages are</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Currying and other Haskell spices]]></title>
@@ -612,177 +817,6 @@ consuming.</p>
 <p>Some day I&rsquo;ll probably give it another shot, but by that time I&rsquo;ll probably come
 prepared with far more patience and without the expectation to actually replace
 Firefox.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[When the tools just don't work]]></title>
-    <link href="http://linduxed.github.io/blog/2012/03/15/when-the-tools-just-dont-work/"/>
-    <updated>2012-03-15T12:38:30+01:00</updated>
-    <id>http://linduxed.github.io/blog/2012/03/15/when-the-tools-just-dont-work</id>
-    <content type="html"><![CDATA[<p>Every once in a while you stumble on that area of software that Linux just
-doesn&rsquo;t have covered. You might now be thinking that I&rsquo;d like to talk about
-audio and video editing. A fair guess, since you&rsquo;ll hear people talk about
-these two as areas where the other platforms have significantly more
-sophisticated software available. But this isn&rsquo;t what I&rsquo;m going to talk about.</p>
-
-<!--more-->
-
-
-<p>You see, I&rsquo;ve had a look at the video and audio editors out there for Linux, and
-while it&rsquo;s generally not as good as what you&rsquo;d have on OSX or Windows, there are
-projects that make honest efforts to compete (Rosegarden comes to mind). I think
-even the cynics can at least call the tools in these areas “rudimentary”.</p>
-
-<p>“Streaming your desktop” in Linux, however, is one area you can&rsquo;t even fucking
-call rudimentary. The appropriate description I&rsquo;ve come up with is “technically
-working with the help of wizardry”, and I&rsquo;m thinking about whether that&rsquo;s too
-generous.</p>
-
-<h2>No audience</h2>
-
-<p>I can&rsquo;t say I&rsquo;m particularly surprised by this situation, because apart from the
-occasional recorded screen cast for some brand new package, there isn&rsquo;t that
-much of a need, it seems. We don&rsquo;t have the games to stream, which I would
-assume is a large part of what drives the revenue of a page like Justin.tv.</p>
-
-<p>I assume most of the people who code in Linux aren&rsquo;t exactly eager to stream and
-narrate their work, which could have been that “other area” of content that
-would have driven the development of tools for streaming. I understand that the
-Linux community might have less scenarios under which one would want to stream
-one&rsquo;s desktop, but I&rsquo;m still surprised by how dire the software situation is.</p>
-
-<h2>The tools</h2>
-
-<p>From what I&rsquo;ve gathered, the most “mature” application available for handling
-the various aspects of streaming (sound, picture, overlays and so on) is
-WebcamStudio, which didn&rsquo;t exactly work. At the best of times it was giving me
-something that looked like the stream I wanted to pass on, but I never managed
-to actually get any streaming site to accept the data. This completely sidesteps
-the issue that is the buggy-as-fuck interface, that neither looks good nor works
-well.</p>
-
-<p>The most stable solution I&rsquo;ve found, that has actually let me see my desktop on
-the internet, is the combination of:</p>
-
-<ul>
-<li>Letting VLC capture your desktop with a wide array of flags to make sure it
-comes out right. Figuring out those was a ton of fun.</li>
-<li>Having a script called “jtvlc” catch the data and send it in through the
-Justin.tv API.</li>
-</ul>
-
-
-<p>It&rsquo;s way better than nothing, but this gives me absolutely no ability to
-customize the output, except choosing what part of my monitor set-up it should
-grab.</p>
-
-<h2>Conclusion</h2>
-
-<p>In a way, I hope I&rsquo;ve missed something; I hope there&rsquo;s an obscure package that
-simply grabs the part of the desktop you want, has a nice interface, and just
-works. If that magic package exists however, then I haven&rsquo;t found it.</p>
-
-<p>There are times when I really would have liked to share the view of one of my
-screens, with some embedded microphone commentary. When the ideas pop up, I&rsquo;d
-like to go ahead and just try them out, but in this case, I&rsquo;m completely
-hindered. It might be that the process of getting these things to work under the
-other systems is also a chore, but at least I&rsquo;ve seen plenty examples of there
-being an end result. That&rsquo;s something I&rsquo;ve yet to see here in Linux.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Code I enjoy]]></title>
-    <link href="http://linduxed.github.io/blog/2012/02/27/code-i-enjoy/"/>
-    <updated>2012-02-27T18:59:41+01:00</updated>
-    <id>http://linduxed.github.io/blog/2012/02/27/code-i-enjoy</id>
-    <content type="html"><![CDATA[<p>Being a CS student means that I will be forced to code in a variety of
-languages. A lot of our code will be written in Java or C++, but we&rsquo;ll
-necessarily get in touch with many other languages, spanning over multiple
-paradigms.</p>
-
-<p>By no means am I a good programmer yet, but the exposure to the different ways
-of crafting code has led me to think about what I value (as a novice
-programmer) in a language. It&rsquo;s, after all, my main tool of expression.<br/>
-Is it the brevity of the code? What the community surrounding the language is
-like? Paradigm or strong vs. weak typing? Or could it be that I need the
-language to be as “simple” as possible for me to be able to formulate ideas?</p>
-
-<!--more-->
-
-
-<h2>My roots, or the lack of them</h2>
-
-<p>My first language I got to code in was actually Borland Delphi. I didn&rsquo;t really
-know what I was doing, I just followed a guide that let me create a “guess what
-number I&rsquo;m thinking of”-application with a GUI that I got to draw. I was
-probably about ten years old at that time, and it wasn&rsquo;t until late elementary
-that I got acquainted with Java, in a programming course.</p>
-
-<p>Since a bit of Delphi was all I had under my belt at the time, Java was quite
-the challenge at first. I didn&rsquo;t like the notion of there being things that
-I had to write that I didn&rsquo;t fully understand the purpose of (the concept of
-“static” was a prime example). Also, while I understood the necessity of
-getters and setters, it felt weird that I had to write them everywhere;
-I already had something against boilerplate.</p>
-
-<p>Java has been with me for more than a decade, so I&rsquo;ve gotten used to its
-intricacies, but it wasn&rsquo;t the language that got me really interested in
-programming.</p>
-
-<h2>Inspiration and motivation</h2>
-
-<p>While I tried borrowing introductory books for both Java and C++, neither of
-the languages really interested me. I felt that there was so much to learn,
-just to accomplish the simplest of things. That&rsquo;s when a friend of mine
-introduced me to Python.</p>
-
-<p>The thing I immediately liked about Python was the brevity. To this day I find
-that there&rsquo;s something special about seeing text no longer than a screen full
-(very reminiscent of pseudo code, one might add) execute and work its magic.
-It&rsquo;s empowering in a way, to so easily make so much happen. To let ideas
-transform into code at such a quick rate becomes not only a tool, but
-a motivation; when scraping together an application gets easier, the
-imagination takes over.</p>
-
-<p>Another thing that I hadn&rsquo;t experienced up until my encounter with Python was
-easily readable code. I didn&rsquo;t know of the expression at that time, but
-“self-documenting code” was something I really enjoyed; whether the names got
-longer or the code had to be restructured, it was worth it for the readability.</p>
-
-<p>Today it so happens that I code more Ruby than I do Python, but I still love
-the language. Python both motivated and influenced me, but not to the extent
-that Haskell did.</p>
-
-<h2>A different way of doing things</h2>
-
-<p>Haskell is special to me because it showed me a totally different way of
-crafting code while still keeping it short and expressive. Once I got past the
-peculiarity of functional programming it made me re-evaluate what I&rsquo;d consider
-“comfortable” when I write code.</p>
-
-<p>As soon as I got the taste for higher order functions, currying, lazy
-evaluation and all of the other facilities that Haskell offers, I started to
-think about why other languages hadn&rsquo;t introduced me to these concepts.</p>
-
-<p>The thing I love the most about the language is that solving problems in it is
-a satisfying experience. When the recursive thinking became more natural, and
-I devoted the time to expand my vocabulary of functions that Haskell offered,
-magic happened. A friend jokingly referred to Haskell as a “set of glorified
-one-liners”, and while there&rsquo;s more to it than that, there&rsquo;s joy in crafting
-those one-liners.</p>
-
-<h2>Learning one&rsquo;s preferences</h2>
-
-<p><blockquote><p>A language that doesn&rsquo;t affect the way you think about programming, is not worth knowing.</p><footer><strong>Alan J. Perlis</strong> <cite>Epigrams on Programming</cite></footer></blockquote></p>
-
-<p>I can&rsquo;t say that I had the greatest time during my struggles with Prolog, or
-that fighting with all the details one has to keep in his head when writing
-Assembly was a pleasure, but it made me see things differently.</p>
-
-<p>I guess it&rsquo;s a “coming of age” thing for a programmer to realize not what you
-want to code, but how you want to do it.</p>
 ]]></content>
   </entry>
   

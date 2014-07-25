@@ -4,7 +4,7 @@
   <title><![CDATA[Rants of a geek]]></title>
   <link href="http://linduxed.github.io/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-07-19T19:09:51+02:00</updated>
+  <updated>2014-07-25T06:31:41+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,46 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[The state of RMagick development]]></title>
+    <link href="http://linduxed.github.io/blog/2014/07/25/the-state-of-rmagick-development/"/>
+    <updated>2014-07-25T04:40:18+02:00</updated>
+    <id>http://linduxed.github.io/blog/2014/07/25/the-state-of-rmagick-development</id>
+    <content type="html"><![CDATA[<p>Yesterday <a href="https://github.com/rmagick/rmagick/issues/18#issuecomment-50022523">someone got fed up</a> with the situation that the RMagick gem is in and forked the project.</p>
+
+<p>Neither <a href="https://github.com/rmagick/rmagick/network">is this the first time</a>, nor do I know if this fork will help the project at large, but I think it&rsquo;s time people got to know what&rsquo;s going on with the project.</p>
+
+<p>All of which I&rsquo;m going to write might be obvious, old news or stuff people already knew in one way or another, but here it is anyway.
+Here&rsquo;s some backstory that might answer the following question:</p>
+
+<p><em>&ldquo;What&rsquo;s going on with RMagick?&rdquo;</em></p>
+
+<p>Or rather&hellip;</p>
+
+<p><em>&ldquo;Why is <strong>nothing</strong> happening with RMagick?&rdquo;</em></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Moving from Squarespace to Octopress]]></title>
+    <link href="http://linduxed.github.io/blog/2014/07/20/moving-from-squarespace-to-octopress/"/>
+    <updated>2014-07-20T13:51:13+02:00</updated>
+    <id>http://linduxed.github.io/blog/2014/07/20/moving-from-squarespace-to-octopress</id>
+    <content type="html"><![CDATA[<p>Squarespace had been my blogging platform of choice for numerous years.
+It looked good, had good editing features and took care of a lot of stuff for you.
+However, when my posting slowed down,
+I started considering whether what I was using was worth the annual bill I was paying.</p>
+
+<p>I needed something that was both cheaper and that gave me a bit more control.
+I was recommended Octopress by a colleague and decided to give it a spin;
+I realized very quickly that this platform was a much better fit for me.</p>
+
+<p>These are some thoughts I&rsquo;ve gathered up on the subject, about a month after moving.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Currying and other Haskell spices]]></title>
@@ -313,39 +353,6 @@ older generations, but is in no way limited to them. It goes like this:</p>
 <h4>Piracy is theft!</h4>
 
 <p>Stop. <strong>Now</strong>.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Configuring your Awesome 3.x install]]></title>
-    <link href="http://linduxed.github.io/blog/2009/06/15/configuring-your-awesome-3-dot-x-install/"/>
-    <updated>2009-06-15T02:59:35+02:00</updated>
-    <id>http://linduxed.github.io/blog/2009/06/15/configuring-your-awesome-3-dot-x-install</id>
-    <content type="html"><![CDATA[<p>After posting my guide on installing Awesome 3.x I got the inevitable question
-of how to actually configure it. This WM is not for the faint of heart.<br/>
-On the other hand it does offer a lot of customization, should you know the lua
-programming language. I for one don&rsquo;t, but that didn&rsquo;t stop me from tweaking
-the defaults, and for most people that will be enough to get them started.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Pirate Party gets into EU-parliament]]></title>
-    <link href="http://linduxed.github.io/blog/2009/06/09/pirate-party-gets-into-eu-parliament/"/>
-    <updated>2009-06-09T18:35:27+02:00</updated>
-    <id>http://linduxed.github.io/blog/2009/06/09/pirate-party-gets-into-eu-parliament</id>
-    <content type="html"><![CDATA[<p>I&rsquo;ve for some time now looked at extreme sides in conflicts/discussions as
-a kind of a necessity. It&rsquo;s not that you will always agree with them, but they
-will inevitably broaden the scope of the argument.<br/>
-I might, for instance, not agree with right-wing extremists, but having them
-there forces one into debates that would otherwise never be had, opening ones
-eyes to opinions outside what is seen as &ldquo;normal&rdquo;.</p>
-
-<p>It was this kind of blindness to other opinion that permeated the Swedish
-(although not in any way limited to) politics when it came to a certain
-subject:</p>
 
 ]]></content>
   </entry>
