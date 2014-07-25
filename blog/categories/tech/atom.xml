@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tech | Rants of a geek]]></title>
   <link href="http://linduxed.github.io/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-07-25T06:31:41+02:00</updated>
+  <updated>2014-07-25T07:17:46+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -14,93 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[The state of RMagick development]]></title>
-    <link href="http://linduxed.github.io/blog/2014/07/25/the-state-of-rmagick-development/"/>
-    <updated>2014-07-25T04:40:18+02:00</updated>
-    <id>http://linduxed.github.io/blog/2014/07/25/the-state-of-rmagick-development</id>
-    <content type="html"><![CDATA[<p>Yesterday <a href="https://github.com/rmagick/rmagick/issues/18#issuecomment-50022523">someone got fed up</a> with the situation that the RMagick gem is in and forked the project.</p>
-
-<p>Neither <a href="https://github.com/rmagick/rmagick/network">is this the first time</a>, nor do I know if this fork will help the project at large, but I think it&rsquo;s time people got to know what&rsquo;s going on with the project.</p>
-
-<p>All of which I&rsquo;m going to write might be obvious, old news or stuff people already knew in one way or another, but here it is anyway.
-Here&rsquo;s some backstory that might answer the following question:</p>
-
-<p><em>&ldquo;What&rsquo;s going on with RMagick?&rdquo;</em></p>
-
-<p>Or rather&hellip;</p>
-
-<p><em>&ldquo;Why is <strong>nothing</strong> happening with RMagick?&rdquo;</em></p>
-
-<!--more-->
-
-
-<h4>TL;DR</h4>
-
-<p>RMagick isn&rsquo;t going to go anywhere until a fork takes off, because the sole maintainer doesn&rsquo;t seem to be likely to do anything.</p>
-
-<h2>Some talk with the maintainer</h2>
-
-<p>In early September I joined a company that used RMagick for one of their projects.
-As an Archlinux user, I quickly got to join the crowd who <a href="https://github.com/rmagick/rmagick/issues/18">had a certain problem with the gem</a>.</p>
-
-<p>Nothing really happened with the issue and people were already making their own solutions to the problem, so after a while I got fed up with the situation and sent an email to the main/only maintainer, <a href="https://github.com/mmaiza">@mmaiza</a>.
-For @mmaiza&rsquo;s sake, I won&rsquo;t post the actual email exchange between us, but I&rsquo;ll give you the important gist of it.
-My first email basically consisted off:</p>
-
-<p><em>&ldquo;Hey, there&rsquo;s a lot of things happening on the issue tracker for the project, could we figure something out to get things going again?&rdquo;</em></p>
-
-<p>We had some brief back-and-forth and then in early November we had a talk about the state of the project.</p>
-
-<h3>Skype call</h3>
-
-<p>The guy inherited a large amount of code that someone else wrote and didn&rsquo;t have the time to maintain it.
-He really admired the previous guy&rsquo;s work and felt it was a shame if the project died.
-On the other hand, he didn&rsquo;t want the project to move forward without assuring that a certain level of quality was maintained.</p>
-
-<p>First of all he stressed that he had no intentions to move towards merging pull requests or fixing issues while the test suite had failing tests.
-Both at the time of the conversation and now, the test suite has <em>a lot</em> of failing tests.</p>
-
-<p>I also got the feeling (from the mail exchange and from the call) that he wasn&rsquo;t as interested in &ldquo;distributed help&rdquo; as he was in finding a successor for his position, a developer who could dedicate a lot of time to shape things up.
-Neither was I qualified for such a position at the time, I felt, nor did I have the time;
-I explicitly said that I was not asking for any Push access rights on the repository.</p>
-
-<p>However, I did suggest that if he created a milestone on Github for fixing all of these tests, and in the milestone he wrote about his requirement for the tests to be green (and maybe update the README with some instructions on how to run them because that <em>does</em> take work), then maybe people would feel like helping out.</p>
-
-<p>I was met with &ldquo;Sounds like a decent plan, we&rsquo;ll see about getting it going.&rdquo;</p>
-
-<h2>Radio silence</h2>
-
-<p>Two months went by and not much had happened.
-The problem that originally brought me to the RMagick issue tracker <a href="https://github.com/rmagick/rmagick/pull/90">was fixed</a> and a <a href="https://github.com/rmagick/rmagick/pull/78">license file was added</a>, but a new gem version was not made, the fixes only live in the <code>master</code> branch of the project.</p>
-
-<p>Around New Year I sent him another message.
-I reminded him that there would be great benefit to following through with that idea for creating a bug squashing milestone and communicating the state of the project.
-That, and making it easier to run the tests so the project could be improved easier.</p>
-
-<p>About a week after New Year I got a short mail that boiled down to &ldquo;Yeah, we should get those tests green, I&rsquo;ll get back to you.&rdquo;</p>
-
-<p>Unfortunately, almost seven months later, he hasn&rsquo;t.
-I sent him a two more messages over that time, in one of them proposing that if he gave me Push access then I could take care of all the things for him, but I haven&rsquo;t heard from him at all since early January.</p>
-
-<h2>Zombie application</h2>
-
-<p>I knew full well that I didn&rsquo;t have the time to (or a whole lot of will) to fix all the failing tests and problems that this project has.
-Disregarding the fact that @mmaiza considered it to be of importance that updated versions of the gem were provided on RubyForge (which has since then <a href="http://en.wikipedia.org/wiki/RubyForge#Shutting_Down">shut down</a>), I knew that if I would start a fork, people would need not only to contribute to it, but the world would need to catch on to the fact that there&rsquo;s a fork of the <code>rmagick</code> gem they need to use to get the latest and greatest.</p>
-
-<p>I don&rsquo;t know if <a href="https://github.com/gemhome/rmagick">the fork that was just made</a> by <a href="https://github.com/bf4">@bf4</a> will gain traction or if the project will improve from here.
-RMagick seems to have its detractors, with one of my developer friends summing it up as &ldquo;probably the most hated gem in the ecosystem&rdquo;.
-I don&rsquo;t know if that&rsquo;s the case, and some of the enmity is probably purely caused by <a href="https://twitter.com/garybernhardt/status/224329120346144769">people&rsquo;s dislike of ImageMagick</a>.<br/>
-Regardless, there&rsquo;s a lot of things that could be improved, and it&rsquo;s probably no small task to do so.</p>
-
-<p>Salutations and good luck to those who actually attempt to fix this thing.</p>
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[Moving from Squarespace to Octopress]]></title>
-    <link href="http://linduxed.github.io/blog/2014/07/20/moving-from-squarespace-to-octopress/"/>
-    <updated>2014-07-20T13:51:13+02:00</updated>
-    <id>http://linduxed.github.io/blog/2014/07/20/moving-from-squarespace-to-octopress</id>
+    <link href="http://linduxed.github.io/blog/2014/07/25/moving-from-squarespace-to-octopress/"/>
+    <updated>2014-07-25T06:50:33+02:00</updated>
+    <id>http://linduxed.github.io/blog/2014/07/25/moving-from-squarespace-to-octopress</id>
     <content type="html"><![CDATA[<p>Squarespace had been my blogging platform of choice for numerous years.
 It looked good, had good editing features and took care of a lot of stuff for you.
 However, when my posting slowed down,
@@ -186,11 +103,12 @@ cd octopress
 bundle install
 bundle exec rake install
 </code>
-This installs the default theme and let&rsquo;s you start a local server:
-<code>plain
-bundle exec rake preview
-</code>
-This fires up a local server on <code>localhost:4000</code> where you can see the site.
+This installs the default theme and let&rsquo;s you start a local server:</p>
+
+<pre><code>bundle exec rake preview
+</code></pre>
+
+<p>This fires up a local server on <code>localhost:4000</code> where you can see the site.
 There&rsquo;s nothing on it at the moment, but you already have a working environment.
 Almost all the non-styling related configuration is done <a href="https://github.com/imathis/octopress/blob/master/_config.yml">in the <code>_config.yml</code> file</a>,
 which is well documented and includes everything from page title to plugin configuration.</p>
@@ -204,7 +122,7 @@ Without going into too much detail (instructions can be found <a href="http://oc
 </ol>
 
 
-<p><code>plain
+<p><code>plain Github deployment http://octopress.org/docs/deploying/github/
 bundle exec rake setup_github_pages
 bundle exec rake generate
 bundle exec rake deploy
@@ -214,7 +132,156 @@ bundle exec rake deploy
 
 <h2>Content creation</h2>
 
-<p>Blog posts and pages are</p>
+<p>Blog posts and pages are created by invoking a <code>rake</code> task:</p>
+
+<pre><code>bundle exec rake new_post["The title of the blog post"]
+bundle exec rake new_page["The title of the new page"]
+</code></pre>
+
+<p>Both of these commands generate markdown files in the <code>source</code> directory with some header data at the top, leaving the rest for you to fill out with your text editor of choice.</p>
+
+<p>If you&rsquo;ve ever written Github markdown, then you know more or less what to expect:
+the support for code blocks and monospaced words is there, along with some other cool stuff which can be read about in the documentation.
+This includes things like pull quotes, inline gists and captioned images.</p>
+
+<p>Above mentioned <code>rake preview</code> allows you to view your changes rendered in your browser.
+For extra fanciness you should try <a href="http://erikzaadi.com/2012/09/16/using-live-reload-with-octopress/">hooking it up</a> to <a href="http://livereload.com/">LiveReload</a>.</p>
+
+<p>As a side note: while I haven&rsquo;t installed many of them myself, there is a wealth of <a href="https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes">themes</a> and <a href="https://github.com/imathis/octopress/wiki/3rd-party-plugins">plugins</a> with which you can improve your Octopress experience.</p>
+
+<h3>Deployment</h3>
+
+<p>Once you&rsquo;re done writing your post/page all you need to do (assuming you&rsquo;re done setting up your remote, be it Github pages, Heroku or something else),
+then you all you need to run is the following command:</p>
+
+<pre><code>bundle exec rake deploy
+</code></pre>
+
+<p>This will generate all the necessary files in the <code>_deploy</code> directory and will push the contents of it as a commit into the <code>master</code> branch,
+making it work as the deployment branch.</p>
+
+<h2>The hiccups</h2>
+
+<p>While I&rsquo;ve been happy with the platform in general and I don&rsquo;t see myself switching any time soon, there have been a couple of points of frustration.</p>
+
+<h3>Styling</h3>
+
+<p>After having installed an alternative theme (in my opinion the default leaves a lot to be desired) I needed to do some tweaking.
+Octopress provides you with a <code>sass/custom</code> directory with files where you have some commented out code for easy tweaking of the basic values like colors and fonts.
+This in itself works for minor changes, but I felt that I needed to dig a bit deeper to get what I wanted.</p>
+
+<p>Editing typography turned out to be more than just changing things in the <code>sass/base/typography.scss</code> file;
+I had to dig around in the source, turning dials here and there, reloading the page and hoping that the thing that I just edited was the one that did the change I wanted.</p>
+
+<p>Normally I don&rsquo;t work with front-end, and maybe the way the style code is set up in Octopress is totally fine if you&rsquo;d ask a designer, but my impression was that parts of it could have been written in a way that necessitated less digging around.</p>
+
+<p>There were some other minor things that I could say about the style code, but in general I&rsquo;d just recommend (if you&rsquo;re just starting out) using one of the themes and try working your way towards what you want from there.</p>
+
+<h3>Updating</h3>
+
+<p>Rebasing your tweaked fork of Octopress on top of <code>upstream/master</code> shouldn&rsquo;t be a big deal, for me the changes were almost without any conflicts.</p>
+
+<p>On the other hand, the platform provides two commands which serve the purpose of applying the upstream changes to your modified code:</p>
+
+<pre><code>bundle exec rake update_source
+bundle exec rake update_style
+</code></pre>
+
+<p>Depending on how much you&rsquo;ve changed yourself or any theme that you applied changed for you, you&rsquo;re likely to bump into a serious <code>git diff</code> which you&rsquo;ll need to wade through to figure out what should go in and what shouldn&rsquo;t.</p>
+
+<p>I ended up opting for not using these commands because everything already works for me and I also think it applies some changes that are only relevant if you use the default theme.</p>
+
+<p>Additionally, there was a recent (at the time of writing) change which moves Octopress from Jekyll 1.x to 2.x, which will probably cause some headaches if you&rsquo;re using certain plugins. I know I had that kind of problem, so while I test some alternative plugins providing the same functionality, I&rsquo;ll be staying on a bit older code.</p>
+
+<h2>Summary</h2>
+
+<p>Despite the hiccups, I feel that this platform makes blogging very comfortable and for anyone who wants something fairly simple but still capable, this platform is a solid choice.</p>
+
+<p>Recommended.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The state of RMagick development]]></title>
+    <link href="http://linduxed.github.io/blog/2014/07/25/the-state-of-rmagick-development/"/>
+    <updated>2014-07-25T04:40:18+02:00</updated>
+    <id>http://linduxed.github.io/blog/2014/07/25/the-state-of-rmagick-development</id>
+    <content type="html"><![CDATA[<p>Yesterday <a href="https://github.com/rmagick/rmagick/issues/18#issuecomment-50022523">someone got fed up</a> with the situation that the RMagick gem is in and forked the project.</p>
+
+<p>Neither <a href="https://github.com/rmagick/rmagick/network">is this the first time</a>, nor do I know if this fork will help the project at large, but I think it&rsquo;s time people got to know what&rsquo;s going on with the project.</p>
+
+<p>All of which I&rsquo;m going to write might be obvious, old news or stuff people already knew in one way or another, but here it is anyway.
+Here&rsquo;s some backstory that might answer the following question:</p>
+
+<p><em>&ldquo;What&rsquo;s going on with RMagick?&rdquo;</em></p>
+
+<p>Or rather&hellip;</p>
+
+<p><em>&ldquo;Why is <strong>nothing</strong> happening with RMagick?&rdquo;</em></p>
+
+<!--more-->
+
+
+<h4>TL;DR</h4>
+
+<p>RMagick isn&rsquo;t going to go anywhere until a fork takes off, because the sole maintainer doesn&rsquo;t seem to be likely to do anything.</p>
+
+<h2>Some talk with the maintainer</h2>
+
+<p>In early September I joined a company that used RMagick for one of their projects.
+As an Archlinux user, I quickly got to join the crowd who <a href="https://github.com/rmagick/rmagick/issues/18">had a certain problem with the gem</a>.</p>
+
+<p>Nothing really happened with the issue and people were already making their own solutions to the problem, so after a while I got fed up with the situation and sent an email to the main/only maintainer, <a href="https://github.com/mmaiza">@mmaiza</a>.
+For @mmaiza&rsquo;s sake, I won&rsquo;t post the actual email exchange between us, but I&rsquo;ll give you the important gist of it.
+My first email basically consisted off:</p>
+
+<p><em>&ldquo;Hey, there&rsquo;s a lot of things happening on the issue tracker for the project, could we figure something out to get things going again?&rdquo;</em></p>
+
+<p>We had some brief back-and-forth and then in early November we had a talk about the state of the project.</p>
+
+<h3>Skype call</h3>
+
+<p>The guy inherited a large amount of code that someone else wrote and didn&rsquo;t have the time to maintain it.
+He really admired the previous guy&rsquo;s work and felt it was a shame if the project died.
+On the other hand, he didn&rsquo;t want the project to move forward without assuring that a certain level of quality was maintained.</p>
+
+<p>First of all he stressed that he had no intentions to move towards merging pull requests or fixing issues while the test suite had failing tests.
+Both at the time of the conversation and now, the test suite has <em>a lot</em> of failing tests.</p>
+
+<p>I also got the feeling (from the mail exchange and from the call) that he wasn&rsquo;t as interested in &ldquo;distributed help&rdquo; as he was in finding a successor for his position, a developer who could dedicate a lot of time to shape things up.
+Neither was I qualified for such a position at the time, I felt, nor did I have the time;
+I explicitly said that I was not asking for any Push access rights on the repository.</p>
+
+<p>However, I did suggest that if he created a milestone on Github for fixing all of these tests, and in the milestone he wrote about his requirement for the tests to be green (and maybe update the README with some instructions on how to run them because that <em>does</em> take work), then maybe people would feel like helping out.</p>
+
+<p>I was met with &ldquo;Sounds like a decent plan, we&rsquo;ll see about getting it going.&rdquo;</p>
+
+<h2>Radio silence</h2>
+
+<p>Two months went by and not much had happened.
+The problem that originally brought me to the RMagick issue tracker <a href="https://github.com/rmagick/rmagick/pull/90">was fixed</a> and a <a href="https://github.com/rmagick/rmagick/pull/78">license file was added</a>, but a new gem version was not made, the fixes only live in the <code>master</code> branch of the project.</p>
+
+<p>Around New Year I sent him another message.
+I reminded him that there would be great benefit to following through with that idea for creating a bug squashing milestone and communicating the state of the project.
+That, and making it easier to run the tests so the project could be improved easier.</p>
+
+<p>About a week after New Year I got a short mail that boiled down to &ldquo;Yeah, we should get those tests green, I&rsquo;ll get back to you.&rdquo;</p>
+
+<p>Unfortunately, almost seven months later, he hasn&rsquo;t.
+I sent him a two more messages over that time, in one of them proposing that if he gave me Push access then I could take care of all the things for him, but I haven&rsquo;t heard from him at all since early January.</p>
+
+<h2>Zombie application</h2>
+
+<p>I knew full well that I didn&rsquo;t have the time to (or a whole lot of will) to fix all the failing tests and problems that this project has.
+I also really hoped that @mmaize would back to lead the continued development of the gem.
+Disregarding the fact that he considered it to be of importance that updated versions of the gem were provided on RubyForge (which has since then <a href="http://en.wikipedia.org/wiki/RubyForge#Shutting_Down">shut down</a>), I knew that if I would start a fork, people would need not only to contribute to it, but the world would need to catch on to the fact that there&rsquo;s a fork of the <code>rmagick</code> gem they need to use to get the latest and greatest.</p>
+
+<p>I don&rsquo;t know if <a href="https://github.com/gemhome/rmagick">the fork that was just made</a> by <a href="https://github.com/bf4">@bf4</a> will gain traction or if the project will improve from here.
+RMagick seems to have its detractors, with one of my developer friends summing it up as &ldquo;probably the most hated gem in the ecosystem&rdquo;.
+I don&rsquo;t know if that&rsquo;s the case, and some of the enmity is probably purely caused by <a href="https://twitter.com/garybernhardt/status/224329120346144769">people&rsquo;s dislike of ImageMagick</a>.<br/>
+Regardless, there&rsquo;s a lot of things that could be improved, and it&rsquo;s probably no small task to do so.</p>
+
+<p>Salutations and good luck to those who actually attempt to fix this thing.</p>
 ]]></content>
   </entry>
   

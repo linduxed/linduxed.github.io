@@ -4,7 +4,7 @@
   <title><![CDATA[Rants of a geek]]></title>
   <link href="http://linduxed.github.io/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-07-25T06:31:41+02:00</updated>
+  <updated>2014-07-25T07:17:46+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,25 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Moving from Squarespace to Octopress]]></title>
+    <link href="http://linduxed.github.io/blog/2014/07/25/moving-from-squarespace-to-octopress/"/>
+    <updated>2014-07-25T06:50:33+02:00</updated>
+    <id>http://linduxed.github.io/blog/2014/07/25/moving-from-squarespace-to-octopress</id>
+    <content type="html"><![CDATA[<p>Squarespace had been my blogging platform of choice for numerous years.
+It looked good, had good editing features and took care of a lot of stuff for you.
+However, when my posting slowed down,
+I started considering whether what I was using was worth the annual bill I was paying.</p>
+
+<p>I needed something that was both cheaper and that gave me a bit more control.
+I was recommended Octopress by a colleague and decided to give it a spin;
+I realized very quickly that this platform was a much better fit for me.</p>
+
+<p>These are some thoughts I&rsquo;ve gathered up on the subject, about a month after moving.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The state of RMagick development]]></title>
@@ -30,25 +49,6 @@ Here&rsquo;s some backstory that might answer the following question:</p>
 <p>Or rather&hellip;</p>
 
 <p><em>&ldquo;Why is <strong>nothing</strong> happening with RMagick?&rdquo;</em></p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Moving from Squarespace to Octopress]]></title>
-    <link href="http://linduxed.github.io/blog/2014/07/20/moving-from-squarespace-to-octopress/"/>
-    <updated>2014-07-20T13:51:13+02:00</updated>
-    <id>http://linduxed.github.io/blog/2014/07/20/moving-from-squarespace-to-octopress</id>
-    <content type="html"><![CDATA[<p>Squarespace had been my blogging platform of choice for numerous years.
-It looked good, had good editing features and took care of a lot of stuff for you.
-However, when my posting slowed down,
-I started considering whether what I was using was worth the annual bill I was paying.</p>
-
-<p>I needed something that was both cheaper and that gave me a bit more control.
-I was recommended Octopress by a colleague and decided to give it a spin;
-I realized very quickly that this platform was a much better fit for me.</p>
-
-<p>These are some thoughts I&rsquo;ve gathered up on the subject, about a month after moving.</p>
 
 ]]></content>
   </entry>
