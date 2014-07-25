@@ -71,7 +71,8 @@ I sent him a two more messages over that time, in one of them proposing that if 
 ## Zombie application
 
 I knew full well that I didn't have the time to (or a whole lot of will) to fix all the failing tests and problems that this project has.
-Disregarding the fact that @mmaiza considered it to be of importance that updated versions of the gem were provided on RubyForge (which has since then [shut down](http://en.wikipedia.org/wiki/RubyForge#Shutting_Down)), I knew that if I would start a fork, people would need not only to contribute to it, but the world would need to catch on to the fact that there's a fork of the `rmagick` gem they need to use to get the latest and greatest.
+I also really hoped that @mmaize would back to lead the continued development of the gem.
+Disregarding the fact that he considered it to be of importance that updated versions of the gem were provided on RubyForge (which has since then [shut down](http://en.wikipedia.org/wiki/RubyForge#Shutting_Down)), I knew that if I would start a fork, people would need not only to contribute to it, but the world would need to catch on to the fact that there's a fork of the `rmagick` gem they need to use to get the latest and greatest.
 
 I don't know if [the fork that was just made](https://github.com/gemhome/rmagick) by [@bf4](https://github.com/bf4) will gain traction or if the project will improve from here.
 RMagick seems to have its detractors, with one of my developer friends summing it up as "probably the most hated gem in the ecosystem".
