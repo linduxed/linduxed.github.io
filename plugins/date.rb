@@ -41,7 +41,7 @@ module Octopress
       end
       date_formatted
     end
-    
+
     # Returns the date-specific liquid attributes
     def liquid_date_attributes
       date_format = self.site.config['date_format']
