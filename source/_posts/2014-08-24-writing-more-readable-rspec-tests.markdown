@@ -330,7 +330,8 @@ It's essentially a way to exacerbate the already significant potential that the 
 
 ## Final words
 
-There's [a video on the subject][upcase], where the man behind the ["Let's Not"][lets-not] article talks about all of these things. The full video is behind a pay-wall, but if you don't already have an account on Upcase I do recommend getting one, since they've got a lot of good material on the site.
+There's [a video on the subject][upcase], where the man behind the ["Let's Not"][lets-not] article talks about all of these things.
+The full video is behind a pay-wall, but if you don't already have an account on Upcase I do recommend getting one, since they've got a lot of good material on the site.
 
 Additionally, let me close by linking to a [short but classic post by Jeff Atwood][coding-horror] on the subject of how to code.
 
