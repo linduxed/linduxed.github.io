@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tech | Rants of a geek]]></title>
   <link href="http://linduxed.github.io/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-08-24T17:49:15+02:00</updated>
+  <updated>2014-08-24T21:51:38+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -147,12 +147,12 @@ Here&rsquo;s when the redundantly arduous procedure starts:</p>
 
 <h4>Jumping back and forth</h4>
 
-<p>First we have to figure out what the <code>subject</code> that <code>its</code> refers to.
+<p>First we have to figure out what the <code>subject</code> that <code>its</code> refers to is.
 Let&rsquo;s backtrack through the code all the way up to line 10 to figure out.
 Or well, not really, because you&rsquo;ll have to read through line 6 to get to know what <code>@user</code> actually means.</p>
 
 <p>Next, what&rsquo;s this <code>newer_micropost</code> thing?
-We&rsquo;ll have to jump up to lines 29-31 to figure out.
+We&rsquo;ll have to jump up to lines 29-31 to figure that out.
 Apparently it&rsquo;s of essence that <code>newer_micropost</code> is evaluated before each example in which it&rsquo;s invoked (since <code>let!</code> is used instead of <code>let</code>).</p>
 
 <p><blockquote><p>This uses the let! (read “let bang”) method in place of let; the reason is that let variables are lazy, meaning that they only spring into existence when referenced. The problem is that we want the microposts to exist immediately, so that the timestamps are in the right order and so that @user.microposts isn’t empty. We accomplish this with let!, which forces the corresponding variable to come into existence immediately.</p><footer><strong>Right before Listing 10.10 <a href="http://www.railstutorial.org/book/user_microposts#sec-ordering_and_dependency">http://www.railstutorial.org/book/user_microposts#sec-ordering_and_dependency</a></strong></footer></blockquote></p>
@@ -161,7 +161,7 @@ Apparently it&rsquo;s of essence that <code>newer_micropost</code> is evaluated 
 Good to know.</p>
 
 <p>Speaking of which, is it really of relevance to us that the <code>newer_micropost</code> was <code>created_at: 1.hour.ago</code>?
-I would assume not, but considering we&rsquo;re using this memoized value and not <code>micropost</code> created just for the test on line 57, we can only guess.</p>
+I would assume not, but considering we&rsquo;re using this memoized value and not a <code>micropost</code> created just for the test on line 57, we can only guess.</p>
 
 <p>Oh, I just accidentally noticed that on line 25 apparently the <code>@user</code> gets saved!
 I&rsquo;m not sure if that changes things but it sure is good to know.</p>
@@ -177,7 +177,7 @@ Then we create three microposts with a specified content, sure.</p>
 <p>To do nothing but <em>understand</em> the full scope of the setup and expectations for the one test on line 57, there&rsquo;s <em>a lot</em> of jumping around, hunting for the procedure that makes the test happen.</p>
 
 <p>When I&rsquo;m already in a confused state over why a test tells me that something in my code broke, the <strong>last</strong> thing I want to do is spend time deciphering the test.
-I&rsquo;ve often heard people from the Ruby community talk about using tests as a live documentation for your code, but if I need to put in this much work to read the documentation than I&rsquo;m starting to think that I might as well start reading the source code.
+I&rsquo;ve often heard people from the Ruby community talk about using tests as a live documentation for your code, but if I need to put in this much work to read the documentation than I&rsquo;m starting to think that I might as well read the source code.
 If the code is well written there will be less to read anyway.</p>
 
 <p>I mentioned previously that I strive to have all the necessary information readily available, where in this case we have a couple of <a href="http://xunitpatterns.com/Obscure%20Test.html#Mystery%20Guest">Mystery guests</a> instead.</p>
@@ -195,10 +195,10 @@ If the code is well written there will be less to read anyway.</p>
 <p>First of all, I&rsquo;m not a fan of testing whether something gets responded to or not.
 Test what it does, and if all it does is that it delegates a message somewhere else, ensure that the message is sent.
 These tests ensure the <em>existence</em> of an interface, not its workings.<br/>
-Tests of this kind could be an attempt to ensure that inheritance of certain methods has occurred, so for the sake of brevity we&rsquo;ll just assume that&rsquo;s the case (if you check <a href="https://github.com/mhartl/sample_app/blob/master/spec/models/user_spec.rb#L26-L28">the tests</a> and then <a href="https://github.com/mhartl/sample_app/blob/master/app/models/user.rb#L22-L32">the code</a>, you&rsquo;ll notice that&rsquo;s not the case for all the tests).</p>
+Tests of this kind could be an attempt to ensure that inheritance of certain methods has occurred, so for the sake of brevity we&rsquo;ll just assume that&rsquo;s the case (if you check <a href="https://github.com/mhartl/sample_app/blob/master/spec/models/user_spec.rb#L26-L28">the tests</a> and then <a href="https://github.com/mhartl/sample_app/blob/master/app/models/user.rb#L22-L32">the code</a>, you&rsquo;ll notice that&rsquo;s not the case for all of them).</p>
 
 <p>Let&rsquo;s turn that block of tests into a case where I <em>could</em> imagine <code>subject</code> being used.
-Oh, and let&rsquo;s assume that we have a <code>User</code> factory available.
+Oh, and let&rsquo;s assume that we have a <code>User</code> factory available.<br/>
 I suspect that the reason <code>@user</code> was instantiated the way it was on on line 6 above, was because it allowed the tests to build an instance of <code>User</code> but run <code>@user.save</code> only in the tests where it was necessary (like on line 25).<br/>
 We&rsquo;ll use <code>FactoryGirl.build</code> and <code>FactoryGirl.create</code> instead.</p>
 
@@ -345,7 +345,8 @@ It&rsquo;s essentially a way to exacerbate the already significant potential tha
 
 <h2>Final words</h2>
 
-<p>There&rsquo;s <a href="https://upcase.com/videos/rspec-best-practices">a video on the subject</a>, where the man behind the <a href="http://robots.thoughtbot.com/lets-not">&ldquo;Let&rsquo;s Not&rdquo;</a> article talks about all of these things you. The full video is behind a pay-wall, but if you don&rsquo;t already have an account on Upcase I do recommend getting one, since they&rsquo;ve got a lot of good material on the site.</p>
+<p>There&rsquo;s <a href="https://upcase.com/videos/rspec-best-practices">a video on the subject</a>, where the man behind the <a href="http://robots.thoughtbot.com/lets-not">&ldquo;Let&rsquo;s Not&rdquo;</a> article talks about all of these things.
+The full video is behind a pay-wall, but if you don&rsquo;t already have an account on Upcase I do recommend getting one, since they&rsquo;ve got a lot of good material on the site.</p>
 
 <p>Additionally, let me close by linking to a <a href="http://blog.codinghorror.com/coding-for-violent-psychopaths/">short but classic post by Jeff Atwood</a> on the subject of how to code.</p>
 ]]></content>
