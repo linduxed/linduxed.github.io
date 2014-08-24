@@ -133,12 +133,12 @@ Here's when the redundantly arduous procedure starts:
 
 #### Jumping back and forth
 
-First we have to figure out what the `subject` that `its` refers to.
+First we have to figure out what the `subject` that `its` refers to is.
 Let's backtrack through the code all the way up to line 10 to figure out.
 Or well, not really, because you'll have to read through line 6 to get to know what `@user` actually means.
 
 Next, what's this `newer_micropost` thing?
-We'll have to jump up to lines 29-31 to figure out.
+We'll have to jump up to lines 29-31 to figure that out.
 Apparently it's of essence that `newer_micropost` is evaluated before each example in which it's invoked (since `let!` is used instead of `let`).
 
 {% blockquote Right before Listing 10.10 http://www.railstutorial.org/book/user_microposts#sec-ordering_and_dependency %}
@@ -149,7 +149,7 @@ So, the usage of `let!` instead of `let` here is completely unrelated to our bro
 Good to know.
 
 Speaking of which, is it really of relevance to us that the `newer_micropost` was `created_at: 1.hour.ago`?
-I would assume not, but considering we're using this memoized value and not `micropost` created just for the test on line 57, we can only guess.
+I would assume not, but considering we're using this memoized value and not a `micropost` created just for the test on line 57, we can only guess.
 
 Oh, I just accidentally noticed that on line 25 apparently the `@user` gets saved!
 I'm not sure if that changes things but it sure is good to know.
@@ -165,7 +165,7 @@ Then we create three microposts with a specified content, sure.
 To do nothing but *understand* the full scope of the setup and expectations for the one test on line 57, there's *a lot* of jumping around, hunting for the procedure that makes the test happen.
 
 When I'm already in a confused state over why a test tells me that something in my code broke, the **last** thing I want to do is spend time deciphering the test.
-I've often heard people from the Ruby community talk about using tests as a live documentation for your code, but if I need to put in this much work to read the documentation than I'm starting to think that I might as well start reading the source code.
+I've often heard people from the Ruby community talk about using tests as a live documentation for your code, but if I need to put in this much work to read the documentation than I'm starting to think that I might as well read the source code.
 If the code is well written there will be less to read anyway.
 
 I mentioned previously that I strive to have all the necessary information readily available, where in this case we have a couple of [Mystery guests][mystery-guest] instead.
@@ -186,13 +186,13 @@ Let's start off by talking about the `respond_to`, `be_valid` and `be_admin` exp
 First of all, I'm not a fan of testing whether something gets responded to or not.
 Test what it does, and if all it does is that it delegates a message somewhere else, ensure that the message is sent.
 These tests ensure the *existence* of an interface, not its workings.  
-Tests of this kind could be an attempt to ensure that inheritance of certain methods has occurred, so for the sake of brevity we'll just assume that's the case (if you check [the tests][tests] and then [the code][code], you'll notice that's not the case for all the tests).
+Tests of this kind could be an attempt to ensure that inheritance of certain methods has occurred, so for the sake of brevity we'll just assume that's the case (if you check [the tests][tests] and then [the code][code], you'll notice that's not the case for all of them).
 
   [tests]: https://github.com/mhartl/sample_app/blob/master/spec/models/user_spec.rb#L26-L28
   [code]: https://github.com/mhartl/sample_app/blob/master/app/models/user.rb#L22-L32
 
 Let's turn that block of tests into a case where I *could* imagine `subject` being used.
-Oh, and let's assume that we have a `User` factory available.
+Oh, and let's assume that we have a `User` factory available.  
 I suspect that the reason `@user` was instantiated the way it was on on line 6 above, was because it allowed the tests to build an instance of `User` but run `@user.save` only in the tests where it was necessary (like on line 25).  
 We'll use `FactoryGirl.build` and `FactoryGirl.create` instead.
 
@@ -330,7 +330,7 @@ It's essentially a way to exacerbate the already significant potential that the 
 
 ## Final words
 
-There's [a video on the subject][upcase], where the man behind the ["Let's Not"][lets-not] article talks about all of these things you. The full video is behind a pay-wall, but if you don't already have an account on Upcase I do recommend getting one, since they've got a lot of good material on the site.
+There's [a video on the subject][upcase], where the man behind the ["Let's Not"][lets-not] article talks about all of these things. The full video is behind a pay-wall, but if you don't already have an account on Upcase I do recommend getting one, since they've got a lot of good material on the site.
 
 Additionally, let me close by linking to a [short but classic post by Jeff Atwood][coding-horror] on the subject of how to code.
 
