@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tech | Rants of a geek]]></title>
   <link href="http://linduxed.github.io/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-08-17T21:30:44+02:00</updated>
+  <updated>2014-08-24T17:49:15+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,344 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Writing more readable RSpec tests]]></title>
+    <link href="http://linduxed.github.io/blog/2014/08/24/writing-more-readable-rspec-tests/"/>
+    <updated>2014-08-24T17:32:27+02:00</updated>
+    <id>http://linduxed.github.io/blog/2014/08/24/writing-more-readable-rspec-tests</id>
+    <content type="html"><![CDATA[<p>Some time ago Joe Ferris wrote a piece on the thoughtbot blog called <a href="http://robots.thoughtbot.com/lets-not">&ldquo;Let&rsquo;s Not&rdquo;</a> (that I recommend you read first),
+which concerns itself with the usage of various RSpec helper methods.
+Methods like <code>let</code>, <code>before</code> and <code>subject</code> come under fire and are deemed as problematic.</p>
+
+<p>While I agree with the message of the article,
+I feel that I could expand on the part about <strong>why</strong> these helpers are as problematic as Mr. Ferris makes them out to be.</p>
+
+<!--more-->
+
+
+<p>I should start off by saying that while my thoughts pertain specifically to usage of RSpec,
+a lot of the mentioned structures, methods and patterns are recurrent in other frameworks and languages.
+I&rsquo;m sure there&rsquo;s information here that could be extrapolated to your non-RSpec setup.</p>
+
+<h2>Cognitive load</h2>
+
+<p>When I write a test there are two rules which guide my writing :</p>
+
+<ul>
+<li>All of the necessary information for understanding what is being tested should be readily available.</li>
+<li>The collaborators in the test should be as minimal as possible.</li>
+<li>Minimize cleverness.</li>
+</ul>
+
+
+<p>Surround your pullquote like this {" text to be quoted "}</p>
+
+<p>Having written tests with and without them for some time now, I find that tools like <code>let</code>, <code>before</code> and <code>subject</code> DRY up your tests, but often at the cost of making the tests less readable.</p>
+
+<h2>Examples in the wild</h2>
+
+<p>Let&rsquo;s look at some code to see what I mean.</p>
+
+<p>One of the things I did to learn Rails was to go through <a href="http://www.railstutorial.org/book">Michael Hartl&rsquo;s Ruby on Rails guide</a>,
+a book which instructs its readers to write their tests in such a way that it starts to violate some of the aforementioned guidelines.</p>
+
+<p>Before I continue I wish to make it clear that I value the book highly: it helped me tremendously and I definitely recommend it as one of the better introductory books for Rails (at least out of those that I know of).
+Additionally, despite what I consider being shortcomings in how the test-related portions of the book are written, these portions contain valuable lessons about <em>what</em> to test, so please don&rsquo;t let this blog post discourage you from reading it.</p>
+
+<p>With that said, there are plenty of examples which illustrate the issues that arise from too extensive usage of the various facilities that RSpec offers you.</p>
+
+<h3>User model tests</h3>
+
+<p>Let&rsquo;s start by looking at the tests for <a href="https://github.com/mhartl/sample_app/blob/master/spec/models/user_spec.rb">the <code>User</code> model</a>.
+Due to the size of the file, I&rsquo;ve removed some tests which I won&rsquo;t be using to illustrate my point.</p>
+
+<p>```ruby
+require &lsquo;spec_helper&rsquo;</p>
+
+<p>describe User do</p>
+
+<p>  before do</p>
+
+<pre><code>@user = User.new(name: "Example User", email: "user@example.com",
+                 password: "foobar", password_confirmation: "foobar")
+</code></pre>
+
+<p>  end</p>
+
+<p>  subject { @user }</p>
+
+<p>  it { should respond_to(:name) }
+  it { should respond_to(:email) }
+  # &hellip;
+  it { should respond_to(:follow!) }
+  it { should respond_to(:unfollow!) }</p>
+
+<p>  it { should be_valid }
+  it { should_not be_admin }</p>
+
+<p>  # &hellip;</p>
+
+<p>  describe &ldquo;micropost associations&rdquo; do</p>
+
+<pre><code>before { @user.save }
+let!(:older_micropost) do
+  FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago)
+end
+let!(:newer_micropost) do
+  FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago)
+end
+
+it "should have the right microposts in the right order" do
+  @user.microposts.should == [newer_micropost, older_micropost]
+end
+
+it "should destroy associated microposts" do
+  microposts = @user.microposts
+  @user.destroy
+  microposts.each do |micropost|
+    Micropost.find_by_id(micropost.id).should be_nil
+  end
+end
+
+describe "status" do
+  let(:unfollowed_post) do
+    FactoryGirl.create(:micropost, user: FactoryGirl.create(:user))
+  end
+  let(:followed_user) { FactoryGirl.create(:user) }
+
+  before do
+    @user.follow!(followed_user)
+    3.times { followed_user.microposts.create!(content: "Lorem ipsum") }
+  end
+
+  its(:feed) { should include(older_micropost) }
+  its(:feed) { should include(newer_micropost) }
+  its(:feed) { should_not include(unfollowed_post) }
+  its(:feed) do
+    followed_user.microposts.each do |micropost|
+      should include(micropost)
+    end
+  end
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # &hellip;
+end
+```</p>
+
+<p>Let&rsquo;s assume that the test on line 57 breaks: for some reason the <code>newer_micropost</code> isn&rsquo;t included in <code>its</code> feed.</p>
+
+<p>The most likely thing you&rsquo;ll first do is open this spec file and jump down to the line in question.
+Here&rsquo;s when the redundantly arduous procedure starts:</p>
+
+<h4>Jumping back and forth</h4>
+
+<p>First we have to figure out what the <code>subject</code> that <code>its</code> refers to.
+Let&rsquo;s backtrack through the code all the way up to line 10 to figure out.
+Or well, not really, because you&rsquo;ll have to read through line 6 to get to know what <code>@user</code> actually means.</p>
+
+<p>Next, what&rsquo;s this <code>newer_micropost</code> thing?
+We&rsquo;ll have to jump up to lines 29-31 to figure out.
+Apparently it&rsquo;s of essence that <code>newer_micropost</code> is evaluated before each example in which it&rsquo;s invoked (since <code>let!</code> is used instead of <code>let</code>).</p>
+
+<p><blockquote><p>This uses the let! (read “let bang”) method in place of let; the reason is that let variables are lazy, meaning that they only spring into existence when referenced. The problem is that we want the microposts to exist immediately, so that the timestamps are in the right order and so that @user.microposts isn’t empty. We accomplish this with let!, which forces the corresponding variable to come into existence immediately.</p><footer><strong>Right before Listing 10.10 <a href="http://www.railstutorial.org/book/user_microposts#sec-ordering_and_dependency">http://www.railstutorial.org/book/user_microposts#sec-ordering_and_dependency</a></strong></footer></blockquote></p>
+
+<p>So, the usage of <code>let!</code> instead of <code>let</code> here is completely unrelated to our broken test.
+Good to know.</p>
+
+<p>Speaking of which, is it really of relevance to us that the <code>newer_micropost</code> was <code>created_at: 1.hour.ago</code>?
+I would assume not, but considering we&rsquo;re using this memoized value and not <code>micropost</code> created just for the test on line 57, we can only guess.</p>
+
+<p>Oh, I just accidentally noticed that on line 25 apparently the <code>@user</code> gets saved!
+I&rsquo;m not sure if that changes things but it sure is good to know.</p>
+
+<p>I guess we&rsquo;ll need to look at some setup to make sense of this:</p>
+
+<p>Lines 51-54 tell us that <code>@user</code> should <code>follow!</code> something called <code>followed_user</code>.
+Oh, that&rsquo;s right above at line 49, fine.
+Then we create three microposts with a specified content, sure.</p>
+
+<h4>Analyzing the journey</h4>
+
+<p>To do nothing but <em>understand</em> the full scope of the setup and expectations for the one test on line 57, there&rsquo;s <em>a lot</em> of jumping around, hunting for the procedure that makes the test happen.</p>
+
+<p>When I&rsquo;m already in a confused state over why a test tells me that something in my code broke, the <strong>last</strong> thing I want to do is spend time deciphering the test.
+I&rsquo;ve often heard people from the Ruby community talk about using tests as a live documentation for your code, but if I need to put in this much work to read the documentation than I&rsquo;m starting to think that I might as well start reading the source code.
+If the code is well written there will be less to read anyway.</p>
+
+<p>I mentioned previously that I strive to have all the necessary information readily available, where in this case we have a couple of <a href="http://xunitpatterns.com/Obscure%20Test.html#Mystery%20Guest">Mystery guests</a> instead.</p>
+
+<p>Confusion was introduced because we had to consider redundant information due to a too large <a href="http://xunitpatterns.com/Obscure%20Test.html#General%20Fixture">General fixture</a>.</p>
+
+<p>Finally we had the case of needing immediate evaluation of something that is normally lazily evaluated (<code>let</code> vs <code>let!</code>), increasing &ldquo;cleverness&rdquo; of the tests.</p>
+
+<p>Let&rsquo;s see what this will look like if we try to avoid these helper methods.</p>
+
+<h3>Alternate implementation of User model tests</h3>
+
+<p>Let&rsquo;s start off by talking about the <code>respond_to</code>, <code>be_valid</code> and <code>be_admin</code> expectations, since they&rsquo;re somewhat unrelated to the topic at hand:</p>
+
+<p>First of all, I&rsquo;m not a fan of testing whether something gets responded to or not.
+Test what it does, and if all it does is that it delegates a message somewhere else, ensure that the message is sent.
+These tests ensure the <em>existence</em> of an interface, not its workings.<br/>
+Tests of this kind could be an attempt to ensure that inheritance of certain methods has occurred, so for the sake of brevity we&rsquo;ll just assume that&rsquo;s the case (if you check <a href="https://github.com/mhartl/sample_app/blob/master/spec/models/user_spec.rb#L26-L28">the tests</a> and then <a href="https://github.com/mhartl/sample_app/blob/master/app/models/user.rb#L22-L32">the code</a>, you&rsquo;ll notice that&rsquo;s not the case for all the tests).</p>
+
+<p>Let&rsquo;s turn that block of tests into a case where I <em>could</em> imagine <code>subject</code> being used.
+Oh, and let&rsquo;s assume that we have a <code>User</code> factory available.
+I suspect that the reason <code>@user</code> was instantiated the way it was on on line 6 above, was because it allowed the tests to build an instance of <code>User</code> but run <code>@user.save</code> only in the tests where it was necessary (like on line 25).<br/>
+We&rsquo;ll use <code>FactoryGirl.build</code> and <code>FactoryGirl.create</code> instead.</p>
+
+<p>```ruby
+require &lsquo;spec_helper&rsquo;</p>
+
+<p>describe User do
+  describe &lsquo;inherited methods&rsquo; do</p>
+
+<pre><code>subject do
+  FactoryGirl.build(:user,
+    name: "Example User",
+    email: "user@example.com",
+    password: "foobar",
+    password_confirmation: "foobar"
+  )
+end
+
+it { should respond_to(:name) }
+it { should respond_to(:email) }
+# ...
+it { should respond_to(:follow!) }
+it { should respond_to(:unfollow!) }
+
+it { should be_valid }
+it { should_not be_admin }
+</code></pre>
+
+<p>  end</p>
+
+<p>  # &hellip;
+end
+```</p>
+
+<p>I think this could be written without <code>subject</code> as well, but this is a case where it would be an acceptable usage, due to the trivial setup that one needs to comprehend after reading a test that broke.</p>
+
+<p>Let&rsquo;s now extend this code with the rewritten <code>describe "micropost associations"</code> block:</p>
+
+<p>```ruby
+require &lsquo;spec_helper&rsquo;</p>
+
+<p>describe User do
+  describe &lsquo;inherited methods&rsquo; do</p>
+
+<pre><code>subject do
+  FactoryGirl.build(:user,
+    name: "Example User",
+    email: "user@example.com",
+    password: "foobar",
+    password_confirmation: "foobar"
+  )
+end
+
+it { should respond_to(:name) }
+it { should respond_to(:email) }
+# ...
+it { should respond_to(:follow!) }
+it { should respond_to(:unfollow!) }
+
+it { should be_valid }
+it { should_not be_admin }
+</code></pre>
+
+<p>  end</p>
+
+<p>  describe &lsquo;micropost associations&rsquo; do</p>
+
+<pre><code>it 'has the right microposts in the right order' do
+  user = FactoryGirl.create(:user)
+  older_micropost = FactoryGirl.create(:micropost, user: user, created_at: 1.day.ago)
+  newer_micropost = FactoryGirl.create(:micropost, user: user, created_at: 1.hour.ago)
+
+  user.microposts.should == [newer_micropost, older_micropost]
+end
+
+it 'destroys associated microposts' do
+  user = FactoryGirl.create(:user)
+  FactoryGirl.create_list(:micropost, 2, user: user)
+  microposts = user.microposts
+
+  user.destroy
+
+  microposts.each do |micropost|
+    Micropost.find_by_id(micropost.id).should be_nil
+  end
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  describe &ldquo;#feed&rdquo; do</p>
+
+<pre><code>it 'includes only followed microposts' do
+  user_that_follows = FactoryGirl.create(:user)
+  own_posts = FactoryGirl.create_list(:micropost, 3, user: user_that_follows)
+  not_followed_user = FactoryGirl.create(:user)
+  not_followed_post = FactoryGirl.create(:micropost, user: not_followed_user)
+  followed_user = FactoryGirl.create(:user)
+  followed_posts = FactoryGirl.create_list(:micropost, 3, user: followed_user)
+
+  user_that_follows.follow!(followed_user)
+
+  feed = user_that_follows.feed
+  expect(feed).to include(own_posts)
+  expect(feed).to include(followed_posts)
+  expect(feed).not_to include(not_followed_post)
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # &hellip;
+end
+```</p>
+
+<p>A number of different things have happened to the tests:</p>
+
+<ul>
+<li>The <code>#feed</code>-related tests have been indented out, giving them a dedicated <code>describe</code> block in which we clearly test nothing but the <code>#feed</code> method.</li>
+<li>Every <code>it</code>-block is self-contained and has everything it needs to carry out the test.
+We&rsquo;ve avoided the <a href="http://xunitpatterns.com/Obscure%20Test.html#Mystery%20Guest">Mystery guest</a> problem.</li>
+<li>Every <code>it</code>-block is written to use a uniform structure of Setup, Procedure and Expectations (in the test on line 25, Procedure was not needed).</li>
+<li>Every collaborating object is as minimal as necessary, assuming that the factories are written <a href="https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md#defining-factories">as minimal as possible (only to pass validation)</a>.
+We&rsquo;ve avoided the <a href="http://xunitpatterns.com/Obscure%20Test.html#General%20Fixture">General fixture</a> problem.</li>
+</ul>
+
+
+<h3>Nested <code>describe</code> blocks</h3>
+
+<p>While not entirely related, an issue that I&rsquo;ve found reoccurring in tests that make heavy use of <code>subject</code>, <code>let</code> and <code>before</code> is deeply nested <code>describe</code> blocks.</p>
+
+<p><a href="user-pages-spec">This spec file is a great example of it</a> (too long to include here).</p>
+
+<p>I remember myself writing these tests when I was going through the tutorial and thinking that it was so clever that you could extend previous scenarios by nesting a <code>describe</code> inside a previous one.
+The error message was extended in a &ldquo;natural&rdquo; way, appending just a tiny bit more.
+I didn&rsquo;t need to write particularly large tests either, since they could use all the stuff that was defined a couple of indendentation levels back.</p>
+
+<p>This is enabled by the previously mentioned methods.</p>
+
+<p>It&rsquo;s also an express train to Confusion Town.</p>
+
+<p>While it might sound cool, it rapidly becomes a frustrating mess to read.
+It&rsquo;s essentially a way to exacerbate the already significant potential that the methods have to write confusing tests.</p>
+
+<h2>Final words</h2>
+
+<p>There&rsquo;s <a href="https://upcase.com/videos/rspec-best-practices">a video on the subject</a>, where the man behind the <a href="http://robots.thoughtbot.com/lets-not">&ldquo;Let&rsquo;s Not&rdquo;</a> article talks about all of these things you. The full video is behind a pay-wall, but if you don&rsquo;t already have an account on Upcase I do recommend getting one, since they&rsquo;ve got a lot of good material on the site.</p>
+
+<p>Additionally, let me close by linking to a <a href="http://blog.codinghorror.com/coding-for-violent-psychopaths/">short but classic post by Jeff Atwood</a> on the subject of how to code.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Moving from Squarespace to Octopress]]></title>
@@ -783,107 +1121,6 @@ stock Vim.</p>
 <a href="https://github.com/linduxed/dotfiles/tree/master/.vim/bundle">the plugins I use</a> and if you&rsquo;ve got
 any problems, just fire up your IRC client of choice and head over to
 <code>#vim@freenode.org</code>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Not ready for the switch]]></title>
-    <link href="http://linduxed.github.io/blog/2012/05/10/not-ready-for-the-switch/"/>
-    <updated>2012-05-10T14:12:25+02:00</updated>
-    <id>http://linduxed.github.io/blog/2012/05/10/not-ready-for-the-switch</id>
-    <content type="html"><![CDATA[<p>Yesterday, for some unknown reason, <a href="http://5digits.org/pentadactyl/">Pentadactyl</a> decided that it didn&rsquo;t want to work any more.
-I still have no idea why, and since I&rsquo;ve been suspending my computer for quite
-a few days now, it might actually have to do with me upgrading Firefox from 11
-to 12 quite recently. The problem was actually pretty easily solved by
-downloading the latest nightly and just fire that up, but before I did that, the
-sudden loss of Vim-style navigation inspired me to pick up an old project of
-mine:</p>
-
-<p>Moving from Firefox to uzbl.</p>
-
-<!--more-->
-
-
-<h2>It sounds so beautiful</h2>
-
-<p>For those who don&rsquo;t know what <a href="http://www.uzbl.org/">uzbl</a> is, it&rsquo;s basically
-a browser that adheres to the UNIX philosophy of &ldquo;doing one thing and doing it
-well&rdquo;. What that means is that the browser is split up into small pieces; you
-have <code>uzbl-core</code> which is not much more than Webkit with some interfaces on top
-of it, and the actual thing that resembles a browser is either <code>uzbl-browser</code> or
-<code>uzbl-tabbed</code>.<br/>
-You know you&rsquo;re in for a ride if the developers initially didn&rsquo;t have
-<code>uzbl-tabbed</code> at all since &ldquo;window managers should be handling the different
-instances of the browser, not the browser itself&rdquo;. All the basic functionality
-that one takes for granted in other browsers that aren&rsquo;t strictly browsing are
-extras here; bookmarks, downloading, completion and other functionality that you
-come to expect are scripts that are loaded by the main configuration file.</p>
-
-<h2>But the beauty comes at a price</h2>
-
-<p>If the application is nice then I&rsquo;m willing to put the time into configuring it.
-Whether it&rsquo;s my ZSH terminal, Vim, Firefox or something else, I&rsquo;ll put in the
-work to get it <em>just right</em> if I know that I can get that magnificent end result
-that I envision. uzbl sounds fantastic because I like the notion of being able
-to configure a system from the ground up, to see what happens and to know what
-does what.</p>
-
-<p>There&rsquo;s just one big problem however:</p>
-
-<p>The work necessary to get uzbl to the state my Firefox is in with the numerous
-extensions and custom configurations would take <em>ages</em>, if at all possible.
-I decided that I can try to live without NoScript, BetterPrivacy, Firebug and
-some other nice extensions, as long as I get what I consider to be core
-functionality to work smoothly. Even this (what I would consider modest)
-aspiration is a challenge to say the least.</p>
-
-<p>The default configuration gives you Vim-like control, with hjkl-movement and
-some other things that you might recognize if you&rsquo;re coming from
-Pentadactyl/Vimperator, but the similarities end fairly quickly. Once the basic
-keys were reconfigured to my liking, one of the first things I wanted to tweak
-was that since I use <code>uzbl_tabbed</code>, I&rsquo;ll want to reconfigure the <code>NEW_WINDOW</code>
-action to load links in new tabs. The fact that only the action <code>NEW_TAB</code> worked
-and not the other two potentially nice ones (<code>NEW_BG_TAB</code> and <code>NEW_BG_TAB_NEXT</code>)
-was a shame, doubly so when there&rsquo;s no information for how get it to work.</p>
-
-<h2>You&rsquo;re on your own</h2>
-
-<p>This was the first encounter (out of many, I might add) with what eventually led
-me to give up on the browser. There&rsquo;s no comprehensive source of information
-about uzbl… anywhere.</p>
-
-<p>I use Archlinux on my main computer but I know that I might not have been if it
-wasn&rsquo;t for the fantastic Wiki. I don&rsquo;t know if that huge source of information
-has spoiled me, but I feel like I&rsquo;m done with the days of guessing myself forth
-when configuring software. I don&rsquo;t enjoy being in the situation of “Well I&rsquo;d
-really like to do foobar, so I guess I&rsquo;ll scour tens of config files to see if
-someone has done something remotely similar from which I can extrapolate some
-kind of solution”.</p>
-
-<p><em>I&rsquo;m done with that shit.</em></p>
-
-<p>The Arch Wiki proves that even if you put docstrings for every line in your
-configuration, a Wiki page with some quick and helpful tweaks that every new
-user would make, is a thousand times better. As soon as I got any idea on how
-I&rsquo;d like to tweak the interface of uzbl, it was followed by the realization that
-there&rsquo;s neither a quick nor an obvious way to do it.</p>
-
-<p>The <a href="http://www.uzbl.org/wiki/">official Wiki</a> is so barren that it seems to be
-made by and exclusively for the current/future developers. Google isn&rsquo;t much
-more helpful, the usual searches for HOWTOs or tutorials yield not much more
-information than what one would derive from the sample configs that one can find
-in the Wiki.</p>
-
-<h2>See you some other time</h2>
-
-<p>The impression I get is that if you&rsquo;re not ready to figure it out, then you
-shouldn&rsquo;t even start. I gave it quite a few hours and at a certain point decided
-that fixing Pentadactyl would be far more beneficial and far less time
-consuming.</p>
-
-<p>Some day I&rsquo;ll probably give it another shot, but by that time I&rsquo;ll probably come
-prepared with far more patience and without the expectation to actually replace
-Firefox.</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Rants of a geek]]></title>
   <link href="http://linduxed.github.io/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-08-17T21:30:44+02:00</updated>
+  <updated>2014-08-24T17:49:15+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Writing more readable RSpec tests]]></title>
+    <link href="http://linduxed.github.io/blog/2014/08/24/writing-more-readable-rspec-tests/"/>
+    <updated>2014-08-24T17:32:27+02:00</updated>
+    <id>http://linduxed.github.io/blog/2014/08/24/writing-more-readable-rspec-tests</id>
+    <content type="html"><![CDATA[<p>Some time ago Joe Ferris wrote a piece on the thoughtbot blog called <a href="http://robots.thoughtbot.com/lets-not">&ldquo;Let&rsquo;s Not&rdquo;</a> (that I recommend you read first),
+which concerns itself with the usage of various RSpec helper methods.
+Methods like <code>let</code>, <code>before</code> and <code>subject</code> come under fire and are deemed as problematic.</p>
+
+<p>While I agree with the message of the article,
+I feel that I could expand on the part about <strong>why</strong> these helpers are as problematic as Mr. Ferris makes them out to be.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Moving from Squarespace to Octopress]]></title>
@@ -337,22 +352,6 @@ be answered:</p>
 
 <p>A broad but familiar question, one that I assume most companies try to figure
 out the answer to.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[At the snap of your fingers]]></title>
-    <link href="http://linduxed.github.io/blog/2009/06/20/at-the-snap-of-your-fingers/"/>
-    <updated>2009-06-20T18:23:15+02:00</updated>
-    <id>http://linduxed.github.io/blog/2009/06/20/at-the-snap-of-your-fingers</id>
-    <content type="html"><![CDATA[<p>I&rsquo;m by now profoundly tired of the misconception that has been floating around
-in our modern digitalized society for too long of a time. It thrives within the
-older generations, but is in no way limited to them. It goes like this:</p>
-
-<h4>Piracy is theft!</h4>
-
-<p>Stop. <strong>Now</strong>.</p>
 
 ]]></content>
   </entry>

@@ -1,0 +1,670 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Writing more readable RSpec tests - Rants of a geek</title>
+  <meta name="author" content="linduxed">
+
+  
+  <meta name="description" content="Some time ago Joe Ferris wrote a piece on the thoughtbot blog called &ldquo;Let&rsquo;s Not&rdquo; (that I recommend you read first),
+which concerns &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://linduxed.github.io/blog/2014/08/24/writing-more-readable-rspec-tests">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Rants of a geek" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-52175024-1', 'linduxed.com');
+    ga('send', 'pageview');
+  </script>
+
+
+</head>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<logo>
+
+<img src="/logo.png" alt="Website Logo. Upload to /source/logo.png ; disable in /source/_includes/logo.html" height="32px" width="32px">
+</logo>
+
+
+
+<body >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Rants of a geek</a></h1>
+  
+    <h2>linduxed's ramblings</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+<br>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:linduxed.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<!--
+<ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+-->
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Writing more readable RSpec tests</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-24T17:32:27+02:00" pubdate data-updated="true">Aug 24<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Some time ago Joe Ferris wrote a piece on the thoughtbot blog called <a href="http://robots.thoughtbot.com/lets-not">&ldquo;Let&rsquo;s Not&rdquo;</a> (that I recommend you read first),
+which concerns itself with the usage of various RSpec helper methods.
+Methods like <code>let</code>, <code>before</code> and <code>subject</code> come under fire and are deemed as problematic.</p>
+
+<p>While I agree with the message of the article,
+I feel that I could expand on the part about <strong>why</strong> these helpers are as problematic as Mr. Ferris makes them out to be.</p>
+
+<!--more-->
+
+
+<p>I should start off by saying that while my thoughts pertain specifically to usage of RSpec,
+a lot of the mentioned structures, methods and patterns are recurrent in other frameworks and languages.
+I&rsquo;m sure there&rsquo;s information here that could be extrapolated to your non-RSpec setup.</p>
+
+<h2>Cognitive load</h2>
+
+<p>When I write a test there are two rules which guide my writing :</p>
+
+<ul>
+<li>All of the necessary information for understanding what is being tested should be readily available.</li>
+<li>The collaborators in the test should be as minimal as possible.</li>
+<li>Minimize cleverness.</li>
+</ul>
+
+
+<p><span class='pullquote-right' data-pullquote='you generally don&#8217;t care about your tests while they&#8217;re green; it&#8217;s when they go red that you start reading them.'>
+The key thing to remember is that a test is written once but read many more times.
+If they aren&rsquo;t on the TODO list for refactoring, then you generally don&rsquo;t care about your tests while they&rsquo;re green; it&rsquo;s when they go red that you start reading them.
+This is why it&rsquo;s of importance that when something <em>does</em> break in your system, you want the test to tell you in as straightforward language as possible <em>what</em> broke and <em>why</em>.
+</span></p>
+
+<p>Having written tests with and without them for some time now, I find that tools like <code>let</code>, <code>before</code> and <code>subject</code> DRY up your tests, but often at the cost of making the tests less readable.</p>
+
+<h2>Examples in the wild</h2>
+
+<p>Let&rsquo;s look at some code to see what I mean.</p>
+
+<p>One of the things I did to learn Rails was to go through <a href="http://www.railstutorial.org/book">Michael Hartl&rsquo;s Ruby on Rails guide</a>,
+a book which instructs its readers to write their tests in such a way that it starts to violate some of the aforementioned guidelines.</p>
+
+<p>Before I continue I wish to make it clear that I value the book highly: it helped me tremendously and I definitely recommend it as one of the better introductory books for Rails (at least out of those that I know of).
+Additionally, despite what I consider being shortcomings in how the test-related portions of the book are written, these portions contain valuable lessons about <em>what</em> to test, so please don&rsquo;t let this blog post discourage you from reading it.</p>
+
+<p>With that said, there are plenty of examples which illustrate the issues that arise from too extensive usage of the various facilities that RSpec offers you.</p>
+
+<h3>User model tests</h3>
+
+<p>Let&rsquo;s start by looking at the tests for <a href="https://github.com/mhartl/sample_app/blob/master/spec/models/user_spec.rb">the <code>User</code> model</a>.
+Due to the size of the file, I&rsquo;ve removed some tests which I won&rsquo;t be using to illustrate my point.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;spec_helper&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">describe</span> <span class="no">User</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">before</span> <span class="k">do</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Example User&quot;</span><span class="p">,</span> <span class="ss">email</span><span class="p">:</span> <span class="s2">&quot;user@example.com&quot;</span><span class="p">,</span>
+</span><span class='line'>                     <span class="ss">password</span><span class="p">:</span> <span class="s2">&quot;foobar&quot;</span><span class="p">,</span> <span class="n">password_confirmation</span><span class="p">:</span> <span class="s2">&quot;foobar&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">subject</span> <span class="p">{</span> <span class="vi">@user</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:name</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:email</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>  <span class="c1"># ...</span>
+</span><span class='line'>  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:follow!</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:unfollow!</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_valid</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">it</span> <span class="p">{</span> <span class="n">should_not</span> <span class="n">be_admin</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># ...</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">describe</span> <span class="s2">&quot;micropost associations&quot;</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">before</span> <span class="p">{</span> <span class="vi">@user</span><span class="o">.</span><span class="n">save</span> <span class="p">}</span>
+</span><span class='line'>    <span class="n">let!</span><span class="p">(</span><span class="ss">:older_micropost</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>      <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:micropost</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="vi">@user</span><span class="p">,</span> <span class="n">created_at</span><span class="p">:</span> <span class="mi">1</span><span class="o">.</span><span class="n">day</span><span class="o">.</span><span class="n">ago</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>    <span class="n">let!</span><span class="p">(</span><span class="ss">:newer_micropost</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>      <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:micropost</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="vi">@user</span><span class="p">,</span> <span class="n">created_at</span><span class="p">:</span> <span class="mi">1</span><span class="o">.</span><span class="n">hour</span><span class="o">.</span><span class="n">ago</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="s2">&quot;should have the right microposts in the right order&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="vi">@user</span><span class="o">.</span><span class="n">microposts</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="o">[</span><span class="n">newer_micropost</span><span class="p">,</span> <span class="n">older_micropost</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="s2">&quot;should destroy associated microposts&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">microposts</span> <span class="o">=</span> <span class="vi">@user</span><span class="o">.</span><span class="n">microposts</span>
+</span><span class='line'>      <span class="vi">@user</span><span class="o">.</span><span class="n">destroy</span>
+</span><span class='line'>      <span class="n">microposts</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">micropost</span><span class="o">|</span>
+</span><span class='line'>        <span class="no">Micropost</span><span class="o">.</span><span class="n">find_by_id</span><span class="p">(</span><span class="n">micropost</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">should</span> <span class="n">be_nil</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">describe</span> <span class="s2">&quot;status&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">let</span><span class="p">(</span><span class="ss">:unfollowed_post</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>        <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:micropost</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:user</span><span class="p">))</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="n">let</span><span class="p">(</span><span class="ss">:followed_user</span><span class="p">)</span> <span class="p">{</span> <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">before</span> <span class="k">do</span>
+</span><span class='line'>        <span class="vi">@user</span><span class="o">.</span><span class="n">follow!</span><span class="p">(</span><span class="n">followed_user</span><span class="p">)</span>
+</span><span class='line'>        <span class="mi">3</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">followed_user</span><span class="o">.</span><span class="n">microposts</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span><span class="ss">content</span><span class="p">:</span> <span class="s2">&quot;Lorem ipsum&quot;</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">its</span><span class="p">(</span><span class="ss">:feed</span><span class="p">)</span> <span class="p">{</span> <span class="n">should</span> <span class="kp">include</span><span class="p">(</span><span class="n">older_micropost</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>      <span class="n">its</span><span class="p">(</span><span class="ss">:feed</span><span class="p">)</span> <span class="p">{</span> <span class="n">should</span> <span class="kp">include</span><span class="p">(</span><span class="n">newer_micropost</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>      <span class="n">its</span><span class="p">(</span><span class="ss">:feed</span><span class="p">)</span> <span class="p">{</span> <span class="n">should_not</span> <span class="kp">include</span><span class="p">(</span><span class="n">unfollowed_post</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>      <span class="n">its</span><span class="p">(</span><span class="ss">:feed</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>        <span class="n">followed_user</span><span class="o">.</span><span class="n">microposts</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">micropost</span><span class="o">|</span>
+</span><span class='line'>          <span class="n">should</span> <span class="kp">include</span><span class="p">(</span><span class="n">micropost</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># ...</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&rsquo;s assume that the test on line 57 breaks: for some reason the <code>newer_micropost</code> isn&rsquo;t included in <code>its</code> feed.</p>
+
+<p>The most likely thing you&rsquo;ll first do is open this spec file and jump down to the line in question.
+Here&rsquo;s when the redundantly arduous procedure starts:</p>
+
+<h4>Jumping back and forth</h4>
+
+<p>First we have to figure out what the <code>subject</code> that <code>its</code> refers to.
+Let&rsquo;s backtrack through the code all the way up to line 10 to figure out.
+Or well, not really, because you&rsquo;ll have to read through line 6 to get to know what <code>@user</code> actually means.</p>
+
+<p>Next, what&rsquo;s this <code>newer_micropost</code> thing?
+We&rsquo;ll have to jump up to lines 29-31 to figure out.
+Apparently it&rsquo;s of essence that <code>newer_micropost</code> is evaluated before each example in which it&rsquo;s invoked (since <code>let!</code> is used instead of <code>let</code>).</p>
+
+<blockquote><p>This uses the let! (read “let bang”) method in place of let; the reason is that let variables are lazy, meaning that they only spring into existence when referenced. The problem is that we want the microposts to exist immediately, so that the timestamps are in the right order and so that @user.microposts isn’t empty. We accomplish this with let!, which forces the corresponding variable to come into existence immediately.</p><footer><strong>Right before Listing 10.10</strong> <cite><a href='http://www.railstutorial.org/book/user_microposts#sec-ordering_and_dependency'>www.railstutorial.org/book/&hellip;</a></cite></footer></blockquote>
+
+
+<p>So, the usage of <code>let!</code> instead of <code>let</code> here is completely unrelated to our broken test.
+Good to know.</p>
+
+<p>Speaking of which, is it really of relevance to us that the <code>newer_micropost</code> was <code>created_at: 1.hour.ago</code>?
+I would assume not, but considering we&rsquo;re using this memoized value and not <code>micropost</code> created just for the test on line 57, we can only guess.</p>
+
+<p>Oh, I just accidentally noticed that on line 25 apparently the <code>@user</code> gets saved!
+I&rsquo;m not sure if that changes things but it sure is good to know.</p>
+
+<p>I guess we&rsquo;ll need to look at some setup to make sense of this:</p>
+
+<p>Lines 51-54 tell us that <code>@user</code> should <code>follow!</code> something called <code>followed_user</code>.
+Oh, that&rsquo;s right above at line 49, fine.
+Then we create three microposts with a specified content, sure.</p>
+
+<h4>Analyzing the journey</h4>
+
+<p>To do nothing but <em>understand</em> the full scope of the setup and expectations for the one test on line 57, there&rsquo;s <em>a lot</em> of jumping around, hunting for the procedure that makes the test happen.</p>
+
+<p>When I&rsquo;m already in a confused state over why a test tells me that something in my code broke, the <strong>last</strong> thing I want to do is spend time deciphering the test.
+I&rsquo;ve often heard people from the Ruby community talk about using tests as a live documentation for your code, but if I need to put in this much work to read the documentation than I&rsquo;m starting to think that I might as well start reading the source code.
+If the code is well written there will be less to read anyway.</p>
+
+<p>I mentioned previously that I strive to have all the necessary information readily available, where in this case we have a couple of <a href="http://xunitpatterns.com/Obscure%20Test.html#Mystery%20Guest">Mystery guests</a> instead.</p>
+
+<p>Confusion was introduced because we had to consider redundant information due to a too large <a href="http://xunitpatterns.com/Obscure%20Test.html#General%20Fixture">General fixture</a>.</p>
+
+<p>Finally we had the case of needing immediate evaluation of something that is normally lazily evaluated (<code>let</code> vs <code>let!</code>), increasing &ldquo;cleverness&rdquo; of the tests.</p>
+
+<p>Let&rsquo;s see what this will look like if we try to avoid these helper methods.</p>
+
+<h3>Alternate implementation of User model tests</h3>
+
+<p>Let&rsquo;s start off by talking about the <code>respond_to</code>, <code>be_valid</code> and <code>be_admin</code> expectations, since they&rsquo;re somewhat unrelated to the topic at hand:</p>
+
+<p>First of all, I&rsquo;m not a fan of testing whether something gets responded to or not.
+Test what it does, and if all it does is that it delegates a message somewhere else, ensure that the message is sent.
+These tests ensure the <em>existence</em> of an interface, not its workings.<br/>
+Tests of this kind could be an attempt to ensure that inheritance of certain methods has occurred, so for the sake of brevity we&rsquo;ll just assume that&rsquo;s the case (if you check <a href="https://github.com/mhartl/sample_app/blob/master/spec/models/user_spec.rb#L26-L28">the tests</a> and then <a href="https://github.com/mhartl/sample_app/blob/master/app/models/user.rb#L22-L32">the code</a>, you&rsquo;ll notice that&rsquo;s not the case for all the tests).</p>
+
+<p>Let&rsquo;s turn that block of tests into a case where I <em>could</em> imagine <code>subject</code> being used.
+Oh, and let&rsquo;s assume that we have a <code>User</code> factory available.
+I suspect that the reason <code>@user</code> was instantiated the way it was on on line 6 above, was because it allowed the tests to build an instance of <code>User</code> but run <code>@user.save</code> only in the tests where it was necessary (like on line 25).<br/>
+We&rsquo;ll use <code>FactoryGirl.build</code> and <code>FactoryGirl.create</code> instead.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;spec_helper&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">describe</span> <span class="no">User</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">describe</span> <span class="s1">&#39;inherited methods&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">subject</span> <span class="k">do</span>
+</span><span class='line'>      <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="ss">:user</span><span class="p">,</span>
+</span><span class='line'>        <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Example User&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="ss">email</span><span class="p">:</span> <span class="s2">&quot;user@example.com&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="ss">password</span><span class="p">:</span> <span class="s2">&quot;foobar&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">password_confirmation</span><span class="p">:</span> <span class="s2">&quot;foobar&quot;</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:name</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:email</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>    <span class="c1"># ...</span>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:follow!</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:unfollow!</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_valid</span> <span class="p">}</span>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">should_not</span> <span class="n">be_admin</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># ...</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I think this could be written without <code>subject</code> as well, but this is a case where it would be an acceptable usage, due to the trivial setup that one needs to comprehend after reading a test that broke.</p>
+
+<p>Let&rsquo;s now extend this code with the rewritten <code>describe "micropost associations"</code> block:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;spec_helper&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">describe</span> <span class="no">User</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">describe</span> <span class="s1">&#39;inherited methods&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">subject</span> <span class="k">do</span>
+</span><span class='line'>      <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="ss">:user</span><span class="p">,</span>
+</span><span class='line'>        <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Example User&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="ss">email</span><span class="p">:</span> <span class="s2">&quot;user@example.com&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="ss">password</span><span class="p">:</span> <span class="s2">&quot;foobar&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">password_confirmation</span><span class="p">:</span> <span class="s2">&quot;foobar&quot;</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:name</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:email</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>    <span class="c1"># ...</span>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:follow!</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:unfollow!</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">be_valid</span> <span class="p">}</span>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">should_not</span> <span class="n">be_admin</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">describe</span> <span class="s1">&#39;micropost associations&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">it</span> <span class="s1">&#39;has the right microposts in the right order&#39;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">user</span> <span class="o">=</span> <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">older_micropost</span> <span class="o">=</span> <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:micropost</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span> <span class="n">created_at</span><span class="p">:</span> <span class="mi">1</span><span class="o">.</span><span class="n">day</span><span class="o">.</span><span class="n">ago</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">newer_micropost</span> <span class="o">=</span> <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:micropost</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span> <span class="n">created_at</span><span class="p">:</span> <span class="mi">1</span><span class="o">.</span><span class="n">hour</span><span class="o">.</span><span class="n">ago</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">user</span><span class="o">.</span><span class="n">microposts</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="o">[</span><span class="n">newer_micropost</span><span class="p">,</span> <span class="n">older_micropost</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="s1">&#39;destroys associated microposts&#39;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">user</span> <span class="o">=</span> <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span>
+</span><span class='line'>      <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create_list</span><span class="p">(</span><span class="ss">:micropost</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="n">user</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">microposts</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">microposts</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">user</span><span class="o">.</span><span class="n">destroy</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">microposts</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">micropost</span><span class="o">|</span>
+</span><span class='line'>        <span class="no">Micropost</span><span class="o">.</span><span class="n">find_by_id</span><span class="p">(</span><span class="n">micropost</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">should</span> <span class="n">be_nil</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">describe</span> <span class="s2">&quot;#feed&quot;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">it</span> <span class="s1">&#39;includes only followed microposts&#39;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">user_that_follows</span> <span class="o">=</span> <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">own_posts</span> <span class="o">=</span> <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create_list</span><span class="p">(</span><span class="ss">:micropost</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="n">user_that_follows</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">not_followed_user</span> <span class="o">=</span> <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">not_followed_post</span> <span class="o">=</span> <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:micropost</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="n">not_followed_user</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">followed_user</span> <span class="o">=</span> <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">followed_posts</span> <span class="o">=</span> <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create_list</span><span class="p">(</span><span class="ss">:micropost</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="n">followed_user</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">user_that_follows</span><span class="o">.</span><span class="n">follow!</span><span class="p">(</span><span class="n">followed_user</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">feed</span> <span class="o">=</span> <span class="n">user_that_follows</span><span class="o">.</span><span class="n">feed</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">feed</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="kp">include</span><span class="p">(</span><span class="n">own_posts</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">feed</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="kp">include</span><span class="p">(</span><span class="n">followed_posts</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">feed</span><span class="p">)</span><span class="o">.</span><span class="n">not_to</span> <span class="kp">include</span><span class="p">(</span><span class="n">not_followed_post</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># ...</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A number of different things have happened to the tests:</p>
+
+<ul>
+<li>The <code>#feed</code>-related tests have been indented out, giving them a dedicated <code>describe</code> block in which we clearly test nothing but the <code>#feed</code> method.</li>
+<li>Every <code>it</code>-block is self-contained and has everything it needs to carry out the test.
+We&rsquo;ve avoided the <a href="http://xunitpatterns.com/Obscure%20Test.html#Mystery%20Guest">Mystery guest</a> problem.</li>
+<li>Every <code>it</code>-block is written to use a uniform structure of Setup, Procedure and Expectations (in the test on line 25, Procedure was not needed).</li>
+<li>Every collaborating object is as minimal as necessary, assuming that the factories are written <a href="https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md#defining-factories">as minimal as possible (only to pass validation)</a>.
+We&rsquo;ve avoided the <a href="http://xunitpatterns.com/Obscure%20Test.html#General%20Fixture">General fixture</a> problem.</li>
+</ul>
+
+
+<h3>Nested <code>describe</code> blocks</h3>
+
+<p>While not entirely related, an issue that I&rsquo;ve found reoccurring in tests that make heavy use of <code>subject</code>, <code>let</code> and <code>before</code> is deeply nested <code>describe</code> blocks.</p>
+
+<p><a href="user-pages-spec">This spec file is a great example of it</a> (too long to include here).</p>
+
+<p>I remember myself writing these tests when I was going through the tutorial and thinking that it was so clever that you could extend previous scenarios by nesting a <code>describe</code> inside a previous one.
+The error message was extended in a &ldquo;natural&rdquo; way, appending just a tiny bit more.
+I didn&rsquo;t need to write particularly large tests either, since they could use all the stuff that was defined a couple of indendentation levels back.</p>
+
+<p>This is enabled by the previously mentioned methods.</p>
+
+<p>It&rsquo;s also an express train to Confusion Town.</p>
+
+<p>While it might sound cool, it rapidly becomes a frustrating mess to read.
+It&rsquo;s essentially a way to exacerbate the already significant potential that the methods have to write confusing tests.</p>
+
+<h2>Final words</h2>
+
+<p>There&rsquo;s <a href="https://upcase.com/videos/rspec-best-practices">a video on the subject</a>, where the man behind the <a href="http://robots.thoughtbot.com/lets-not">&ldquo;Let&rsquo;s Not&rdquo;</a> article talks about all of these things you. The full video is behind a pay-wall, but if you don&rsquo;t already have an account on Upcase I do recommend getting one, since they&rsquo;ve got a lot of good material on the site.</p>
+
+<p>Additionally, let me close by linking to a <a href="http://blog.codinghorror.com/coding-for-violent-psychopaths/">short but classic post by Jeff Atwood</a> on the subject of how to code.</p>
+</div>
+
+
+  <footer>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://linduxed.github.io/blog/2014/08/24/writing-more-readable-rspec-tests/" data-via="linduxed" data-counturl="http://linduxed.github.io/blog/2014/08/24/writing-more-readable-rspec-tests/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Text authored by <span class="fn">linduxed</span></span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/25/moving-from-squarespace-to-octopress/"
+           title="Previous Post: Moving from Squarespace to Octopress">&laquo; Moving from Squarespace to Octopress</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Website copyright &copy; 2014 - linduxed |
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/TheChymera/Koenigspress">Königspress</a></span>.
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
