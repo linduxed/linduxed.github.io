@@ -5,10 +5,6 @@ body > nav {
   padding-top: .35em;
   padding-bottom: .35em;
   text-align: center;
-/*
-  margin-left:35%;
-  margin-right:35%;
-*/
 
   form {
     @include background-clip(padding-box);
@@ -38,9 +34,16 @@ body > nav {
       }
     }
   }
-  fieldset[role=search]{ width: 48%;}
-  fieldset.mobile-nav{ width: 48%;
-    select{ width: 100%; font-size: .8em; border: 1px solid #888;}
+  fieldset[role=search] {
+    width: 50%;
+  }
+  fieldset.mobile-nav {
+    width: 50%;
+    select {
+      width: 100%;
+      font-size: .8em;
+      border: 1px solid #888;
+    }
   }
   ul { display: none; }
   @media only screen and (min-width: 550px) {
