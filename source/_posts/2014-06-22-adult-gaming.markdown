@@ -125,5 +125,5 @@ The next time you come across a person that have never played and you can tell
 that he or she probably *never will* play:
 
 Please, understand that they *won't* understand. Leave it, save your breath and
-live happy in the knowledge that despite them not having a damn clue about
-games, they'll still be just as enjoyable.
+live happy in the knowledge that regardless of whether others get it or not,
+the games will still be just as enjoyable.
