@@ -91,10 +91,10 @@ a movie.
 Every time a non-gamer gets past the difficulties of just *playing* the game,
 remember that there's a mountain of things that they're not accustomed to;
 every one of these things can, depending on the person, be a thing that will
-scare away or intrigue. The big problem is that when these things come at the
-person ten at a time or more, "scare away" is probably more likely. At the very
-least immersion will probably be broken, which is the last thing you want while
-playing.
+either scare away or intrigue. The big problem is that when these things come at
+the person ten at a time or more, "scare away" is probably more likely. At the
+very least immersion will probably be broken, which is the last thing you want
+while playing.
 
 ## The prejudices
 
