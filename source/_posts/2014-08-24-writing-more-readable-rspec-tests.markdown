@@ -313,7 +313,7 @@ A number of different things have happened to the tests:
 
 While not entirely related, an issue that I've found reoccurring in tests that make heavy use of `subject`, `let` and `before` is deeply nested `describe` blocks.
 
-[This spec file is a great example of it](user-pages-spec) (too long to include here).
+[This spec file is a great example of it][user-pages-spec] (too long to include here).
 
   [user-pages-spec]: https://github.com/mhartl/sample_app/blob/master/spec/requests/user_pages_spec.rb
 
