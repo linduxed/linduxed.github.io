@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tech | Rants of a geek]]></title>
   <link href="http://linduxed.github.io/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-11-11T13:40:44+01:00</updated>
+  <updated>2015-05-16T17:39:22+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -627,7 +627,7 @@ Regardless, there&rsquo;s a lot of things that could be improved, and it&rsquo;s
   <entry>
     <title type="html"><![CDATA[Currying and other Haskell spices]]></title>
     <link href="http://linduxed.github.io/blog/2014/01/21/currying-and-other-haskell-spices/"/>
-    <updated>2014-01-21T23:24:04+01:00</updated>
+    <updated>2014-01-21T22:24:04+00:00</updated>
     <id>http://linduxed.github.io/blog/2014/01/21/currying-and-other-haskell-spices</id>
     <content type="html"><![CDATA[<p>Most people who start looking at Haskell come from a background of one of the
 more established languages. Be it Java, Ruby, Python or something else; most
@@ -875,7 +875,7 @@ GREEN APPLES, YOU NEED ONE!
   <entry>
     <title type="html"><![CDATA[Vim plugins - Why, How and Which]]></title>
     <link href="http://linduxed.github.io/blog/2013/04/13/vim-plugins-why/"/>
-    <updated>2013-04-13T23:12:33+02:00</updated>
+    <updated>2013-04-13T21:12:33+00:00</updated>
     <id>http://linduxed.github.io/blog/2013/04/13/vim-plugins-why</id>
     <content type="html"><![CDATA[<p>A lot of times when I meet &ldquo;Vim neophytes&rdquo; they mention that Vim is a great
 editor, but they miss certain features that they find in their previous

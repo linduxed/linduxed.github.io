@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tutorial | Rants of a geek]]></title>
   <link href="http://linduxed.github.io/blog/categories/tutorial/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-11-11T13:40:44+01:00</updated>
+  <updated>2015-05-16T17:39:22+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Configuring your Awesome 3.x install]]></title>
     <link href="http://linduxed.github.io/blog/2009/06/15/configuring-your-awesome-3-dot-x-install/"/>
-    <updated>2009-06-15T02:59:35+02:00</updated>
+    <updated>2009-06-15T00:59:35+00:00</updated>
     <id>http://linduxed.github.io/blog/2009/06/15/configuring-your-awesome-3-dot-x-install</id>
     <content type="html"><![CDATA[<p>After posting my guide on installing Awesome 3.x I got the inevitable question
 of how to actually configure it. This WM is not for the faint of heart.<br/>
@@ -243,7 +243,7 @@ I&rsquo;d be glad to post them here.</p>
   <entry>
     <title type="html"><![CDATA[Getting Awesome 3.x in Ubuntu 9.04]]></title>
     <link href="http://linduxed.github.io/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04/"/>
-    <updated>2009-05-25T17:19:06+02:00</updated>
+    <updated>2009-05-25T15:19:06+00:00</updated>
     <id>http://linduxed.github.io/blog/2009/05/25/getting-awesome-3-dot-x-in-ubuntu-9-dot-04</id>
     <content type="html"><![CDATA[<p>Awesome is awesome. That simple. The 3.x series introduced a tray which removed
 all hesitation and made Awesome the WM of choice for me. Unfortunately for
@@ -325,7 +325,7 @@ installing when it does. A more detailed guide to <code>checkinstall</code> can 
   <entry>
     <title type="html"><![CDATA[Sound in Ubuntu 9.04 on Acer Aspire 8930g]]></title>
     <link href="http://linduxed.github.io/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g/"/>
-    <updated>2009-05-24T18:56:20+02:00</updated>
+    <updated>2009-05-24T16:56:20+00:00</updated>
     <id>http://linduxed.github.io/blog/2009/05/24/sound-in-ubuntu-9-dot-04-on-acer-aspire-8930g</id>
     <content type="html"><![CDATA[<p>The Acer Aspire 8930g has got a sound card that has not only been unsupported
 in GNU/Linux for a long time, it has also (to this day) never been a case of

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Rants of a geek]]></title>
   <link href="http://linduxed.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-11-11T13:40:44+01:00</updated>
+  <updated>2015-05-16T17:39:22+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Vim search and replace in bulk]]></title>
     <link href="http://linduxed.github.io/blog/2013/09/16/vim-search-and-replace-in-bulk/"/>
-    <updated>2013-09-16T13:57:07+02:00</updated>
+    <updated>2013-09-16T11:57:07+00:00</updated>
     <id>http://linduxed.github.io/blog/2013/09/16/vim-search-and-replace-in-bulk</id>
     <content type="html"><![CDATA[<p>Every once in a while you&rsquo;ll have some word or phrase that is present in
 multiple files across your project. Finding all of instances can be done with
@@ -180,7 +180,7 @@ buffer, you could probably improve your experience even more by using the
   <entry>
     <title type="html"><![CDATA[Screencasts in Linux]]></title>
     <link href="http://linduxed.github.io/blog/2013/09/08/screencasts-in-linux/"/>
-    <updated>2013-09-08T16:42:54+02:00</updated>
+    <updated>2013-09-08T14:42:54+00:00</updated>
     <id>http://linduxed.github.io/blog/2013/09/08/screencasts-in-linux</id>
     <content type="html"><![CDATA[<p>Some time ago I wrote a rant about the
 <a href="/blog/2012/03/15/when-the-tools-just-dont-work/">sorry state of streaming on Linux</a>. About a month ago I needed to
@@ -295,7 +295,7 @@ yet.</p>
   <entry>
     <title type="html"><![CDATA[Macros and the expression register in Vim]]></title>
     <link href="http://linduxed.github.io/blog/2013/05/28/macros-and-the-expression-register-in-vim/"/>
-    <updated>2013-05-28T18:30:28+02:00</updated>
+    <updated>2013-05-28T16:30:28+00:00</updated>
     <id>http://linduxed.github.io/blog/2013/05/28/macros-and-the-expression-register-in-vim</id>
     <content type="html"><![CDATA[<p>Macros and expressions are two tools that serve the purpose of saving you from
 either repeating a tedious process or the time switching back and forth between
@@ -520,7 +520,7 @@ the use case, but that&rsquo;s something you&rsquo;ll get to explore on your own
   <entry>
     <title type="html"><![CDATA[Vim plugins - Why, How and Which]]></title>
     <link href="http://linduxed.github.io/blog/2013/04/13/vim-plugins-why/"/>
-    <updated>2013-04-13T23:12:33+02:00</updated>
+    <updated>2013-04-13T21:12:33+00:00</updated>
     <id>http://linduxed.github.io/blog/2013/04/13/vim-plugins-why</id>
     <content type="html"><![CDATA[<p>A lot of times when I meet &ldquo;Vim neophytes&rdquo; they mention that Vim is a great
 editor, but they miss certain features that they find in their previous
@@ -773,7 +773,7 @@ any problems, just fire up your IRC client of choice and head over to
   <entry>
     <title type="html"><![CDATA[Not ready for the switch]]></title>
     <link href="http://linduxed.github.io/blog/2012/05/10/not-ready-for-the-switch/"/>
-    <updated>2012-05-10T14:12:25+02:00</updated>
+    <updated>2012-05-10T12:12:25+00:00</updated>
     <id>http://linduxed.github.io/blog/2012/05/10/not-ready-for-the-switch</id>
     <content type="html"><![CDATA[<p>Yesterday, for some unknown reason, <a href="http://5digits.org/pentadactyl/">Pentadactyl</a> decided that it didn&rsquo;t want to work any more.
 I still have no idea why, and since I&rsquo;ve been suspending my computer for quite

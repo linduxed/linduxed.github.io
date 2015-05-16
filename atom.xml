@@ -4,7 +4,7 @@
   <title><![CDATA[Rants of a geek]]></title>
   <link href="http://linduxed.github.io/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2014-11-11T13:40:44+01:00</updated>
+  <updated>2015-05-16T17:39:22+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -71,7 +71,7 @@ Here&rsquo;s some backstory that might answer the following question:</p>
   <entry>
     <title type="html"><![CDATA[Currying and other Haskell spices]]></title>
     <link href="http://linduxed.github.io/blog/2014/01/21/currying-and-other-haskell-spices/"/>
-    <updated>2014-01-21T23:24:04+01:00</updated>
+    <updated>2014-01-21T22:24:04+00:00</updated>
     <id>http://linduxed.github.io/blog/2014/01/21/currying-and-other-haskell-spices</id>
     <content type="html"><![CDATA[<p>Most people who start looking at Haskell come from a background of one of the
 more established languages. Be it Java, Ruby, Python or something else; most
@@ -87,7 +87,7 @@ increased flexibility when it comes to usage of functions in general.</p>
   <entry>
     <title type="html"><![CDATA[Vim search and replace in bulk]]></title>
     <link href="http://linduxed.github.io/blog/2013/09/16/vim-search-and-replace-in-bulk/"/>
-    <updated>2013-09-16T13:57:07+02:00</updated>
+    <updated>2013-09-16T11:57:07+00:00</updated>
     <id>http://linduxed.github.io/blog/2013/09/16/vim-search-and-replace-in-bulk</id>
     <content type="html"><![CDATA[<p>Every once in a while you&rsquo;ll have some word or phrase that is present in
 multiple files across your project. Finding all of instances can be done with
@@ -103,7 +103,7 @@ kind of multi-file search and replace inside Vim?</p>
   <entry>
     <title type="html"><![CDATA[Adult gaming]]></title>
     <link href="http://linduxed.github.io/blog/2013/09/12/adult-gaming/"/>
-    <updated>2013-09-12T13:00:00+02:00</updated>
+    <updated>2013-09-12T11:00:00+00:00</updated>
     <id>http://linduxed.github.io/blog/2013/09/12/adult-gaming</id>
     <content type="html"><![CDATA[<p>Based on an rather small amount of unscientifically acquired data, a handful of
 anecdotes and a healthy dose of prejudice, I&rsquo;m going to make the following
@@ -120,7 +120,7 @@ something I think there will be much of a debate about. It&rsquo;s just me venti
   <entry>
     <title type="html"><![CDATA[Planescape: Torment could have been more]]></title>
     <link href="http://linduxed.github.io/blog/2013/09/09/planescape-torment-could-have-been-more/"/>
-    <updated>2013-09-09T13:00:00+02:00</updated>
+    <updated>2013-09-09T11:00:00+00:00</updated>
     <id>http://linduxed.github.io/blog/2013/09/09/planescape-torment-could-have-been-more</id>
     <content type="html"><![CDATA[<p>In contrast to Fallout 2, which I finished in my early teens, I got around to
 playing through <em>Planescape: Torment</em> about half a year ago. Just as everyone
@@ -141,7 +141,7 @@ reading.</p>
   <entry>
     <title type="html"><![CDATA[Screencasts in Linux]]></title>
     <link href="http://linduxed.github.io/blog/2013/09/08/screencasts-in-linux/"/>
-    <updated>2013-09-08T16:42:54+02:00</updated>
+    <updated>2013-09-08T14:42:54+00:00</updated>
     <id>http://linduxed.github.io/blog/2013/09/08/screencasts-in-linux</id>
     <content type="html"><![CDATA[<p>Some time ago I wrote a rant about the
 <a href="http://linduxed.github.io/blog/2012/03/15/when-the-tools-just-dont-work/">sorry state of streaming on Linux</a>. About a month ago I needed to
@@ -162,7 +162,7 @@ audio.</p>
   <entry>
     <title type="html"><![CDATA[Old favourites]]></title>
     <link href="http://linduxed.github.io/blog/2013/09/07/old-favourites/"/>
-    <updated>2013-09-07T15:36:57+02:00</updated>
+    <updated>2013-09-07T13:36:57+00:00</updated>
     <id>http://linduxed.github.io/blog/2013/09/07/old-favourites</id>
     <content type="html"><![CDATA[<p>At times I forget why I loved a certain artist or composition. The same happens
 with books, video games and movies. Time has passed and having indulged in the
@@ -175,7 +175,7 @@ place.</p>
   <entry>
     <title type="html"><![CDATA[Anime is still anime]]></title>
     <link href="http://linduxed.github.io/blog/2013/06/29/anime-is-still-anime/"/>
-    <updated>2013-06-29T16:33:04+02:00</updated>
+    <updated>2013-06-29T14:33:04+00:00</updated>
     <id>http://linduxed.github.io/blog/2013/06/29/anime-is-still-anime</id>
     <content type="html"><![CDATA[<p>Recently my co-worker recommended me an anime series called &ldquo;Attack on Titan&rdquo;.
 The clips on Youtube looked good; the style was pretty cool, it looked like an
@@ -197,7 +197,7 @@ wrapped in the shitty package of being an anime.</p>
   <entry>
     <title type="html"><![CDATA[Macros and the expression register in Vim]]></title>
     <link href="http://linduxed.github.io/blog/2013/05/28/macros-and-the-expression-register-in-vim/"/>
-    <updated>2013-05-28T18:30:28+02:00</updated>
+    <updated>2013-05-28T16:30:28+00:00</updated>
     <id>http://linduxed.github.io/blog/2013/05/28/macros-and-the-expression-register-in-vim</id>
     <content type="html"><![CDATA[<p>Macros and expressions are two tools that serve the purpose of saving you from
 either repeating a tedious process or the time switching back and forth between
@@ -212,7 +212,7 @@ used separately, but can be used in tandem to do some pretty cool stuff.</p>
   <entry>
     <title type="html"><![CDATA[Vim plugins - Why, How and Which]]></title>
     <link href="http://linduxed.github.io/blog/2013/04/13/vim-plugins-why/"/>
-    <updated>2013-04-13T23:12:33+02:00</updated>
+    <updated>2013-04-13T21:12:33+00:00</updated>
     <id>http://linduxed.github.io/blog/2013/04/13/vim-plugins-why</id>
     <content type="html"><![CDATA[<p>A lot of times when I meet &ldquo;Vim neophytes&rdquo; they mention that Vim is a great
 editor, but they miss certain features that they find in their previous
@@ -231,7 +231,7 @@ features that go beyond &ldquo;editing text&rdquo;.</p>
   <entry>
     <title type="html"><![CDATA[Not ready for the switch]]></title>
     <link href="http://linduxed.github.io/blog/2012/05/10/not-ready-for-the-switch/"/>
-    <updated>2012-05-10T14:12:25+02:00</updated>
+    <updated>2012-05-10T12:12:25+00:00</updated>
     <id>http://linduxed.github.io/blog/2012/05/10/not-ready-for-the-switch</id>
     <content type="html"><![CDATA[<p>Yesterday, for some unknown reason, <a href="http://5digits.org/pentadactyl/">Pentadactyl</a> decided that it didn&rsquo;t want to work any more.
 I still have no idea why, and since I&rsquo;ve been suspending my computer for quite
@@ -249,7 +249,7 @@ mine:</p>
   <entry>
     <title type="html"><![CDATA[When the tools just don't work]]></title>
     <link href="http://linduxed.github.io/blog/2012/03/15/when-the-tools-just-dont-work/"/>
-    <updated>2012-03-15T12:38:30+01:00</updated>
+    <updated>2012-03-15T11:38:30+00:00</updated>
     <id>http://linduxed.github.io/blog/2012/03/15/when-the-tools-just-dont-work</id>
     <content type="html"><![CDATA[<p>Every once in a while you stumble on that area of software that Linux just
 doesn&rsquo;t have covered. You might now be thinking that I&rsquo;d like to talk about
@@ -263,7 +263,7 @@ sophisticated software available. But this isn&rsquo;t what I&rsquo;m going to t
   <entry>
     <title type="html"><![CDATA[Code I enjoy]]></title>
     <link href="http://linduxed.github.io/blog/2012/02/27/code-i-enjoy/"/>
-    <updated>2012-02-27T18:59:41+01:00</updated>
+    <updated>2012-02-27T17:59:41+00:00</updated>
     <id>http://linduxed.github.io/blog/2012/02/27/code-i-enjoy</id>
     <content type="html"><![CDATA[<p>Being a CS student means that I will be forced to code in a variety of
 languages. A lot of our code will be written in Java or C++, but we&rsquo;ll
@@ -282,9 +282,9 @@ language to be as “simple” as possible for me to be able to formulate ideas?
   
   <entry>
     <title type="html"><![CDATA[Att stå still gåendes]]></title>
-    <link href="http://linduxed.github.io/blog/2012/01/26/att-sta-still-gaendes/"/>
-    <updated>2012-01-26T00:36:52+01:00</updated>
-    <id>http://linduxed.github.io/blog/2012/01/26/att-sta-still-gaendes</id>
+    <link href="http://linduxed.github.io/blog/2012/01/25/att-sta-still-gaendes/"/>
+    <updated>2012-01-25T23:36:52+00:00</updated>
+    <id>http://linduxed.github.io/blog/2012/01/25/att-sta-still-gaendes</id>
     <content type="html"><![CDATA[<p>En ny vecka gryr och jag står med hopp.</p>
 
 ]]></content>
@@ -293,7 +293,7 @@ language to be as “simple” as possible for me to be able to formulate ideas?
   <entry>
     <title type="html"><![CDATA[Just a toy]]></title>
     <link href="http://linduxed.github.io/blog/2010/08/17/just-a-toy/"/>
-    <updated>2010-08-17T17:14:11+02:00</updated>
+    <updated>2010-08-17T15:14:11+00:00</updated>
     <id>http://linduxed.github.io/blog/2010/08/17/just-a-toy</id>
     <content type="html"><![CDATA[<p>Yesterday I had an experience that was moving. It felt special, yet to the
 casual observer it would have been anything but special.</p>
@@ -308,7 +308,7 @@ how to solve a 2x2x2, so this one shouldn&rsquo;t have posed a problem.</p>
   <entry>
     <title type="html"><![CDATA[Laughs from nowhere]]></title>
     <link href="http://linduxed.github.io/blog/2010/05/25/laughs-from-nowhere/"/>
-    <updated>2010-05-25T12:18:00+02:00</updated>
+    <updated>2010-05-25T10:18:00+00:00</updated>
     <id>http://linduxed.github.io/blog/2010/05/25/laughs-from-nowhere</id>
     <content type="html"><![CDATA[<p>Humour is a force that binds and divides.</p>
 
@@ -324,7 +324,7 @@ I expect most people to have encountered love they cannot understand.</p>
   <entry>
     <title type="html"><![CDATA[Unreal Tournament vs. Quake]]></title>
     <link href="http://linduxed.github.io/blog/2010/01/12/unreal-tournament-vs-quake/"/>
-    <updated>2010-01-12T18:54:49+01:00</updated>
+    <updated>2010-01-12T17:54:49+00:00</updated>
     <id>http://linduxed.github.io/blog/2010/01/12/unreal-tournament-vs-quake</id>
     <content type="html"><![CDATA[<p>Within the genre of first person shooters there is a sub-genre that are often
 called arena shooters.</p>
@@ -342,9 +342,9 @@ thinking about adding new gameplay elements on top of the foundation.</p>
   
   <entry>
     <title type="html"><![CDATA[The black sheep of social media]]></title>
-    <link href="http://linduxed.github.io/blog/2009/09/28/the-black-sheep-of-social-media/"/>
-    <updated>2009-09-28T00:16:15+02:00</updated>
-    <id>http://linduxed.github.io/blog/2009/09/28/the-black-sheep-of-social-media</id>
+    <link href="http://linduxed.github.io/blog/2009/09/27/the-black-sheep-of-social-media/"/>
+    <updated>2009-09-27T22:16:15+00:00</updated>
+    <id>http://linduxed.github.io/blog/2009/09/27/the-black-sheep-of-social-media</id>
     <content type="html"><![CDATA[<p>Last week the company had a group activity where the following question had to
 be answered:</p>
 
