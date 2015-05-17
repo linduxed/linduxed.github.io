@@ -15,4 +15,4 @@ If you're interested in my CV it can be found
 [here](http://careers.stackoverflow.com/linduxed).
 
 If we're not acquainted, e-mail is the best way to get a hold of me. Encrypt
-and get address using GPG Key-ID `42A563BE`.
+and get address using GPG Key-ID `2120DE95`.
