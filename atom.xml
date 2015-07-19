@@ -4,7 +4,7 @@
   <title><![CDATA[Rants of a geek]]></title>
   <link href="http://linduxed.github.io/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2015-07-18T17:45:36+02:00</updated>
+  <updated>2015-07-19T22:59:14+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[RMagick - A year later]]></title>
+    <link href="http://linduxed.github.io/blog/2015/07/19/rmagick-a-year-later/"/>
+    <updated>2015-07-19T18:30:25+02:00</updated>
+    <id>http://linduxed.github.io/blog/2015/07/19/rmagick-a-year-later</id>
+    <content type="html"><![CDATA[<p>Just a few days short of a year ago, I explained <a href="http://linduxed.github.io/blog/2014/07/25/the-state-of-rmagick-development">the sorry state of RMagick development</a> and claimed the following:</p>
+
+<blockquote><p>RMagick isn’t going to go anywhere until a fork takes off, because the sole maintainer doesn&#8217;t seem to be likely to do anything.</p></blockquote>
+
+
+<p>Fortunately, it did take off.</p>
+
+<p>Here&rsquo;s a summary of what has happened during the last year.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Writing more readable RSpec tests]]></title>
@@ -336,22 +353,6 @@ games are forced to make the basics right, the core shooting and the movement
 in the world. The expectations on the breadth of the game are lowered in favor
 of a perfect &ldquo;feel&rdquo;. Only when the very basics are perfect, the creators start
 thinking about adding new gameplay elements on top of the foundation.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[The black sheep of social media]]></title>
-    <link href="http://linduxed.github.io/blog/2009/09/27/the-black-sheep-of-social-media/"/>
-    <updated>2009-09-27T22:16:15+00:00</updated>
-    <id>http://linduxed.github.io/blog/2009/09/27/the-black-sheep-of-social-media</id>
-    <content type="html"><![CDATA[<p>Last week the company had a group activity where the following question had to
-be answered:</p>
-
-<h4>&ldquo;How can we make our company seen?&rdquo;</h4>
-
-<p>A broad but familiar question, one that I assume most companies try to figure
-out the answer to.</p>
 
 ]]></content>
   </entry>

@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>RMagick - A year later - Rants of a geek</title>
+  <meta name="author" content="linduxed">
+
+  
+  <meta name="description" content="Just a few days short of a year ago, I explained the sorry state of RMagick development and claimed the following: RMagick isn’t going to go anywhere &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://linduxed.github.io/blog/2015/07/19/rmagick-a-year-later">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Rants of a geek" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-52175024-1', 'linduxed.com');
+    ga('send', 'pageview');
+  </script>
+
+
+</head>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<logo>
+
+<img src="/logo.png" alt="Website Logo. Upload to /source/logo.png ; disable in /source/_includes/logo.html" height="32px" width="32px">
+</logo>
+
+
+
+<body >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Rants of a geek</a></h1>
+  
+    <h2>linduxed's ramblings</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+<br>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:linduxed.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<!--
+<ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+-->
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">RMagick - A year later</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-07-19T18:30:25+02:00" pubdate data-updated="true">Jul 19<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Just a few days short of a year ago, I explained <a href="/blog/2014/07/25/the-state-of-rmagick-development">the sorry state of RMagick development</a> and claimed the following:</p>
+
+<blockquote><p>RMagick isn’t going to go anywhere until a fork takes off, because the sole maintainer doesn&#8217;t seem to be likely to do anything.</p></blockquote>
+
+
+<p>Fortunately, it did take off.</p>
+
+<p>Here&rsquo;s a summary of what has happened during the last year.</p>
+
+<!--more-->
+
+
+<h2>The early days of the fork</h2>
+
+<p>It all started with <a href="https://github.com/bf4">Benjamin Fleischer</a> getting tired of how thoroughly orphaned the project was.
+He happened to be the creator of the <a href="https://github.com/gemhome">Gem Home Github group</a>, a place where orphaned gems could <em>maybe</em> have their development picked up by a new maintainer.</p>
+
+<p>He made <a href="https://github.com/rmagick-temp/rmagick/issues/18#issuecomment-50022523">this post</a>.</p>
+
+<p>Issues imported and a few volunteers ready to pitch in, all set to continue on his fork, right?
+Remember, however, that there were plenty of forks of RMagick.
+Due to the glacial pace of development on the main repository, people forked RMagick left and right to make their minor fixes.
+That, or they orphaned RMagick altogether, if they could.</p>
+
+<p>The thing that turned it into &ldquo;The one true fork&rdquo; was when, just four days after forking, Fleischer announced that <a href="https://github.com/rmagick-temp/rmagick/issues/18#issuecomment-50288329">he had obtained push access</a> on Rubygems for the <code>rmagick</code> gem.
+Versions <a href="https://rubygems.org/gems/rmagick/versions/2.13.3.rc1"><code>2.13.3-rc1</code></a> and <a href="https://rubygems.org/gems/rmagick/versions/2.13.3"><code>2.13.3</code></a> came just a few days after.</p>
+
+<h2>Work continues</h2>
+
+<p>Things started off slow but steady: some discussion about code style, going trough old issues that were no longer relevant and starting new issues for all the various failing test cases.</p>
+
+<p>Soon enough we started to get new contributors and development once again picked up its pace.
+With <a href="https://github.com/rmagick/rmagick/commits?author=vassilevsky">Ilia Vassilevsky</a> emerging as a stalwart core maintainer of the project, and with contributors like <a href="mockdeep">Robert Fletcher</a> and <a href="u338steven">u338steven</a> joining after hearing news about the fork, it became clear that the project once more had a future.</p>
+
+<p>At the time of writing, since the fork started the repository has grown by 295 commits, attracted 18 new contributors and <a href="https://github.com/search?o=asc&amp;q=rmagick+repo%3Armagick%2Frmagick+created%3A%3E2014-07-25&amp;ref=searchresults&amp;s=created&amp;type=Issues&amp;utf8=%E2%9C%93">has opened 101 new issues</a> (excluding the imported ones from the old repository).</p>
+
+<p>However there was one thing left, one thing that was left itching.
+Very recently the work in the fork was vindicated:</p>
+
+<h2>Transfer of repository</h2>
+
+<p>For most of the fork&rsquo;s life, despite <a href="https://github.com/bf4">Fleischer</a> contacting Github, we had to live with the fact that <code>https://github.com/rmagick/rmagick</code> pointed to a repository that was as dead as they get.
+We had to occasionally head over to the old repository&rsquo;s issue tracker and tell people to submit their issues and contribute over at the fork.</p>
+
+<p><a href="https://github.com/rmagick/rmagick/issues/205">Early June this all changed.</a></p>
+
+<p>The old repository has been moved to <a href="https://github.com/rmagick-temp/rmagick">https://github.com/rmagick-temp/rmagick</a> and the fork has been moved to <a href="https://github.com/rmagick/rmagick/">https://github.com/rmagick/rmagick</a>!</p>
+
+<h2>A project revived</h2>
+
+<p>It started with one guy getting tired of seeing yet another widely used gem getting orphaned.</p>
+
+<p>A bunch of people came together, took up the torch and eventually took over the name of the project.</p>
+
+<p>Looking upon this past year, I wish some other orphaned projects would enjoy this kind of revival.</p>
+</div>
+
+
+  <footer>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://linduxed.github.io/blog/2015/07/19/rmagick-a-year-later/" data-via="linduxed" data-counturl="http://linduxed.github.io/blog/2015/07/19/rmagick-a-year-later/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Text authored by <span class="fn">linduxed</span></span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/24/writing-more-readable-rspec-tests/"
+           title="Previous Post: Writing more readable RSpec tests">&laquo; Writing more readable RSpec tests</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Website copyright &copy; 2015 - linduxed |
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/TheChymera/Koenigspress">Königspress</a></span>.
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
