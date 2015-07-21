@@ -4,7 +4,7 @@
   <title><![CDATA[Rants of a geek]]></title>
   <link href="http://linduxed.github.io/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2015-07-19T22:59:14+02:00</updated>
+  <updated>2015-07-21T03:30:24+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,22 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Pair programming with multiple keyboard layouts]]></title>
+    <link href="http://linduxed.github.io/blog/2015/07/21/pair-programming-with-multiple-keyboard-layouts/"/>
+    <updated>2015-07-21T03:10:33+02:00</updated>
+    <id>http://linduxed.github.io/blog/2015/07/21/pair-programming-with-multiple-keyboard-layouts</id>
+    <content type="html"><![CDATA[<p>I enjoy pair programming: I find it&rsquo;s a way to both solve problems quicker and exchange knowledge easier.
+With that said, due to my habit of extensively <a href="https://github.com/linduxed/dotfiles">customizing my environment</a>, there&rsquo;s a fair chance that my computer will be borderline unusable for other people.
+A year or two ago I was forced to solve a couple of aspects of this problem, to enable my colleagues to pair program with me on my computer.</p>
+
+<p>Let&rsquo;s tackle the one of those hurdles:</p>
+
+<p>You and your pairing partner use different keyboard layouts.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[RMagick - A year later]]></title>
@@ -334,25 +350,6 @@ out into an honest laughter, just as with love, it just happens.<br/>
 Similarly, what may be infatuating for one, might be repulsive to the other.
 I expect everyone to have wondered why person next to them is laughing, just as
 I expect most people to have encountered love they cannot understand.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Unreal Tournament vs. Quake]]></title>
-    <link href="http://linduxed.github.io/blog/2010/01/12/unreal-tournament-vs-quake/"/>
-    <updated>2010-01-12T17:54:49+00:00</updated>
-    <id>http://linduxed.github.io/blog/2010/01/12/unreal-tournament-vs-quake</id>
-    <content type="html"><![CDATA[<p>Within the genre of first person shooters there is a sub-genre that are often
-called arena shooters.</p>
-
-<p>Arena shooters focus on dropping you and a bunch of opponents into enclosed
-arenas with a bunch weapons with the sole objective of making your opponents
-less intact than you are. With such a simple premise, the creators of such
-games are forced to make the basics right, the core shooting and the movement
-in the world. The expectations on the breadth of the game are lowered in favor
-of a perfect &ldquo;feel&rdquo;. Only when the very basics are perfect, the creators start
-thinking about adding new gameplay elements on top of the foundation.</p>
 
 ]]></content>
   </entry>
