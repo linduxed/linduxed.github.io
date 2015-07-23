@@ -21,15 +21,15 @@ Here's a summary of what has happened during the last year.
 
 ## The early days of the fork
 
-It all started with [Benjamin Fleischer](https://github.com/bf4) getting tired of how thoroughly orphaned the project was.
+It all started with [Benjamin Fleischer](https://github.com/bf4) getting tired of how thoroughly abandoned the project was.
 He happened to be the creator of the [Gem Home Github group](https://github.com/gemhome), a place where orphaned gems could *maybe* have their development picked up by a new maintainer.
 
 He made [this post](https://github.com/rmagick-temp/rmagick/issues/18#issuecomment-50022523).
 
-Issues imported and a few volunteers ready to pitch in, all set to continue on his fork, right?
+Issues imported and a few volunteers ready to pitch in; all set to continue on his fork, right?
 Remember, however, that there were plenty of forks of RMagick.
 Due to the glacial pace of development on the main repository, people forked RMagick left and right to make their minor fixes.
-That, or they orphaned RMagick altogether, if they could.
+That, or they abandoned RMagick altogether, if they could.
 
 The thing that turned it into "The one true fork" was when, just four days after forking, Fleischer announced that [he had obtained push access][push-access-post] on Rubygems for the `rmagick` gem.
 Versions [`2.13.3-rc1`][rc1] and [`2.13.3`][point3] came just a few days after.
