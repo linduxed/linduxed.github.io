@@ -105,7 +105,7 @@ Eren has died:
 
 Eren is probably the only fleshed out character that gets to have an arc. We
 get to see his origins, his motivations, his failures and convictions. There's
-actually some depth to him. Sure there are some clichÃ©s, but you don't
+actually some depth to him. Sure there are some clichés, but you don't
 complain when he's one of the few characters that feel three dimensional.
 
 You know it's bad when characters that have very little screen time become more
