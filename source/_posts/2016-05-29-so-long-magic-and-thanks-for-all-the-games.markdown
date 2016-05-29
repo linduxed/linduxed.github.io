@@ -127,7 +127,7 @@ In an LCG, there's no reason to make terrible cards.
 Instead, the designers become tasked with exploring new mechanics and card interactions.
 
 Sure, there are terrible cards in LCGs as well, and they don't come without disappointment, but there's no inherent reason for them existing.
-In Magic, if I've understood the situation correctly, terrible (and just "somewhat bad") cards *have* to exist.
+In Magic, if I've [understood the situation correctly](http://magic.wizards.com/en/articles/archive/making-magic/when-cards-go-bad-2002-01-28), terrible (and just "somewhat bad") cards *have* to exist.
 
 ### The needless complexity
 
