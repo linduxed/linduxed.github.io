@@ -24,7 +24,7 @@ Instead, I'd like to talk about what I felt was missing in this beautiful game.
 
 (There will be spoilers, so you might want to finish the game first.)
 
-{% imgcap http://th08.deviantart.net/fs11/PRE/i/2006/182/0/8/The_Planescape_Multiverse_by_zen79.jpg [The Planescape Multiverse](http://zen79.deviantart.com/art/The-Planescape-Multiverse-35619350) %}
+{% imgcap http://th08.deviantart.net/fs11/PRE/i/2006/182/0/8/The_Planescape_Multiverse_by_zen79.jpg <a href="http://zen79.deviantart.com/art/The-Planescape-Multiverse-35619350">The Planescape Multiverse</a> %}
 
 ## Planescape smorgasbord
 

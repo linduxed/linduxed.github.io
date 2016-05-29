@@ -28,10 +28,12 @@ module Jekyll
     def render(context)
       output = super
       if @img
-        "<span class='#{('caption-wrapper ' + @class).rstrip}'>" +
-          "<img class='caption' src='#{@img}' width='#{@width}' height='#{@height}'>" +
-          "<span class='caption-text'>#{@title}</span>" +
-        "</span>"
+        "<center>" +
+          "<span class='#{('caption-wrapper ' + @class).rstrip}'>" +
+            "<img class='caption' src='#{@img}' width='#{@width}' height='#{@height}'>" +
+            "<span class='caption-text'>#{@title}</span>" +
+          "</span>" +
+        "</center>"
       else
         "Error processing input, expected syntax: {% img [class name(s)] /url/to/image [width height] [title text] %}"
       end
