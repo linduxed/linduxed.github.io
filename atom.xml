@@ -4,7 +4,7 @@
   <title><![CDATA[Rants of a geek]]></title>
   <link href="http://linduxed.github.io/atom.xml" rel="self"/>
   <link href="http://linduxed.github.io/"/>
-  <updated>2016-05-28T10:33:44+02:00</updated>
+  <updated>2016-05-29T15:55:28+02:00</updated>
   <id>http://linduxed.github.io/</id>
   <author>
     <name><![CDATA[linduxed]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[So long Magic, and thanks for all the games]]></title>
+    <link href="http://linduxed.github.io/blog/2016/05/29/so-long-magic-and-thanks-for-all-the-games/"/>
+    <updated>2016-05-29T16:00:00+02:00</updated>
+    <id>http://linduxed.github.io/blog/2016/05/29/so-long-magic-and-thanks-for-all-the-games</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s been a long time since I left Magic the Gathering, and by now it&rsquo;s also been a while since I&rsquo;ve found some great games to scratch the same itch.</p>
+
+<p>This will be a long post, serving as a way to wrap up my time with Magic.
+I want one place where I&rsquo;ve gathered my thoughts about the game, and my gripes with it.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Pair programming with multiple keyboard layouts]]></title>
@@ -334,22 +347,6 @@ casual observer it would have been anything but special.</p>
 <p>It involved a <a href="http://www.puzl.co.uk/product_thumb.php?img=images/mini2_3_500.jpg&amp;w=400&amp;h=400">Rubik puzzle</a>
 that I hadn’t solved yet, and I just felt like finishing it. After all, I know
 how to solve a 2x2x2, so this one shouldn&rsquo;t have posed a problem.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Laughs from nowhere]]></title>
-    <link href="http://linduxed.github.io/blog/2010/05/25/laughs-from-nowhere/"/>
-    <updated>2010-05-25T10:18:00+00:00</updated>
-    <id>http://linduxed.github.io/blog/2010/05/25/laughs-from-nowhere</id>
-    <content type="html"><![CDATA[<p>Humour is a force that binds and divides.</p>
-
-<p>It is as hard to define as the force of love and yet as simple. When you burst
-out into an honest laughter, just as with love, it just happens.<br/>
-Similarly, what may be infatuating for one, might be repulsive to the other.
-I expect everyone to have wondered why person next to them is laughing, just as
-I expect most people to have encountered love they cannot understand.</p>
 
 ]]></content>
   </entry>
